@@ -4,6 +4,12 @@
 We have remodeled the INAS homepage with a modern **3D Gradient / Claymorphism** aesthetic, inspired by premium educational platforms (SENA/Betowa). The design features vibrant colors, rounded glass cards, and high-quality 3D assets.
 
 ## Visual Verification
+### AI Assistant (New)
+The site now features a **Smart Chatbot** powered by Google Gemini.
+- **Location**: Bottom-right floating action button.
+- **Capabilities**: Answers questions about payments, uniforms, schedule, and location.
+- **Context**: Aware of INAS institutional details (Mission, Vision, Banks).
+
 ### Hero Section
 The "Storefront" of the school.
 - **Gradient Background**: Deep Purple to Cyan transition.
@@ -48,5 +54,32 @@ Showcasing the school uniforms with 3D Pixar-style characters.
 - `assets/`: Folder containing all generated 3D images and the user's photo.
 
 ## How to Test
-1.  Open the `index.html` file in any modern browser.
-2.  Scroll through all sections to see animations and hover effects.
+1.  **Run Locally (Recommended)**:
+    - Open a terminal in the project folder.
+    - Run `npx vite` (or `npm run dev`).
+    - Open the local URL (usually `http://localhost:5173` or `http://localhost:3000`).
+2.  **Static File**:
+    - Open the `index.html` file directly in any modern browser.
+3.  Scroll through all sections to see animations and hover effects.
+4.  **Mobile Test**:
+    - Resize browser to mobile width.
+    - Click the hamburger icon to open the navigation drawer.
+
+## Mobile Navigation (Refined)
+Implemented a premium **Floating Glass Drawer** for mobile users.
+- **Glassmorphism**: High-quality blur and transparency (`backdrop-filter: blur(25px)`).
+- **Floating Panel**: Rounded corners and reduced width (280px) for a non-intrusive experience.
+- **Interactive Links**: Links turn into colorful "pills" on interaction.
+- **Smooth Animation**: Bouncy slide-in effect.
+
+## Desktop Navigation (Refined)
+Enhanced the header links with a **"Glass Pill"** hover effect.
+- **Visuals**: Links transform into semi-transparent, rounded pills on hover.
+- **Effect**: Includes background blur (`backdrop-filter`) and a subtle lift (`transform: translateY`).
+
+## Payment Information (Redesigned)
+The **Pagos** page now fully matches the site's premium aesthetic.
+- **Glass Cards**: Bank cards feature `backdrop-filter: blur(10px)`, semi-transparent gradients, and an interactive "Shine" overlay on hover.
+- **Glass Panel Information**: The payment instructions are now presented in a centered, floating glass panel with clear typography and consistent icons.
+- **Visuals**: Enhanced shadows and hover lift effects match the homepage's specific design language.
+
