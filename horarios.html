@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horarios - INAS</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- User's Schedule Dependencies -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Titan+One&family=Fredoka+One&family=Quicksand:wght@500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* Scoped styles for the schedule section to avoid global conflicts where possible */
+        :root {
+            --schedule-bg-color: #f7edd4;
+            /* Warm Cream */
+            --schedule-primary-yellow: #f1c40f;
+            --schedule-primary-blue: #85c1e9;
+            /* Slightly darker blue */
+            --schedule-text-color: #5d6d7e;
+            --schedule-live-color: #2ecc71;
+            /* Replaced paper texture with CSS pattern matching the reference (Cream bg + Pink circles) */
+            --circle-pattern:
+                radial-gradient(circle at 10% 20%, rgba(229, 152, 155, 0.4) 0%, rgba(229, 152, 155, 0) 20%),
+                radial-gradient(circle at 90% 80%, rgba(229, 152, 155, 0.4) 0%, rgba(229, 152, 155, 0) 25%),
+                radial-gradient(circle at 50% 50%, rgba(230, 170, 172, 0.2) 0%, rgba(230, 170, 172, 0) 40%),
+                radial-gradient(circle at 20% 80%, rgba(229, 152, 155, 0.3) 0%, rgba(229, 152, 155, 0) 15%),
+                radial-gradient(circle at 80% 10%, rgba(230, 170, 172, 0.3) 0%, rgba(230, 170, 172, 0) 20%);
+        }
+
+        /* Apply the user's body style to the entire page */
+        body {
+            background-color: var(--schedule-bg-color);
+            background-image: var(--circle-pattern);
+            background-attachment: fixed;
+            /* Keep pattern fixed while scrolling */
+            font-family: 'Quicksand', sans-serif;
+            color: var(--schedule-text-color);
+        }
+
+        .schedule-wrapper {
+            /* Removed background from here to let body background show */
+            /* kept other layout styles */
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .schedule-wrapper h1,
+        .schedule-wrapper h2 {
+            font-family: 'Fredoka One', cursive;
+            letter-spacing: 2px;
+        }
+
+        .main-title {
+            color: #d4ac0d;
+            text-shadow: 3px 3px 0px #fff, 6px 6px 0px rgba(0, 0, 0, 0.05);
+            line-height: 1;
+        }
+
+        .pill {
+            border-radius: 50px;
+            padding: 12px 24px;
+            display: inline-block;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 4px 0px rgba(0, 0, 0, 0.05);
+        }
+
+        .pill-blue {
+            background-color: var(--schedule-primary-blue);
+            color: white;
+        }
+
+        .pill-yellow {
+            background-color: var(--schedule-primary-yellow);
+            color: white;
+        }
+
+        .materia-card {
+            background-color: white;
+            border-radius: 20px;
+            padding: 8px;
+            /* Reduced padding */
+            width: 100%;
+            text-align: center;
+            font-size: 0.95rem;
+            /* Reduced font size */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            min-height: 70px;
+            /* Reduced height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            /* Ensure centering */
+            position: relative;
+            overflow: hidden;
+            font-weight: 800;
+            text-transform: uppercase;
+            line-height: 1.1;
+            /* Tighter line height */
+            white-space: nowrap;
+            /* Ensure single line text */
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .is-live {
+            border-color: var(--schedule-live-color);
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(46, 204, 113, 0.2);
+            z-index: 10;
+        }
+
+        .live-tag {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--schedule-live-color);
+            color: white;
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            border-bottom-left-radius: 12px;
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 8px;
+            background: var(--schedule-live-color);
+            transition: width 1s linear;
+        }
+
+        .today-header {
+            background-color: var(--schedule-primary-yellow) !important;
+            /* transform: translateY(-5px); Removed to keep alignment */
+            box-shadow: 0 8px 15px rgba(241, 196, 15, 0.3);
+        }
+
+        .clock-box {
+            font-family: 'Fredoka One', cursive;
+            color: var(--schedule-primary-blue);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            border: 3px dashed var(--schedule-primary-blue);
+            background: rgba(255, 255, 255, 0.9);
+            width: fit-content;
+            margin: 0 auto;
+            /* Flex layout to keep everything in one line */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+            /* Responsive font size */
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
+        }
+
+        .info-header {
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 30px;
+            padding: 25px;
+            border: 2px solid #fff;
+            margin-bottom: 30px;
+        }
+
+        .bloque-label {
+            font-family: 'Fredoka One', cursive;
+            font-size: 0.9rem;
+            color: var(--schedule-primary-blue);
+            text-transform: uppercase;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .sketch-rainbow {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 140px;
+            opacity: 0.6;
+        }
+
+        .sketch-plane {
+            position: absolute;
+            top: 20px;
+            right: 15px;
+            width: 100px;
+            opacity: 0.6;
+        }
+
+        @media (max-width: 768px) {
+            .grid-cols-6 {
+                grid-template-columns: 110px 1fr;
+            }
+
+            .day-label-desktop {
+                display: none;
+            }
+
+            .mobile-label {
+                display: block;
+                font-size: 0.8rem;
+                color: #cbd5e0;
+                margin-bottom: 4px;
+            }
+
+            .sketch-rainbow,
+            .sketch-plane {
+                width: 80px;
+            }
+
+            .materia-card {
+                font-size: 1rem;
+                padding: 12px;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .mobile-label {
+                display: none;
+            }
+        }
+
+        /* Fix Tailwind conflict with existing Navbar */
+        .navbar a {
+            text-decoration: none;
+        }
+
+        /* Spheres Overlay Style */
+        .spheres-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            /* Simplified SVG with solid colors for reliability */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 800' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='150' cy='150' r='100' fill='%23d16d72' opacity='0.4'/%3E%3Ccircle cx='400' cy='600' r='60' fill='%23d16d72' opacity='0.3'/%3E%3Ccircle cx='800' cy='250' r='80' fill='%23d16d72' opacity='0.3'/%3E%3Ccircle cx='1050' cy='550' r='120' fill='%23d16d72' opacity='0.4'/%3E%3Ccircle cx='950' cy='100' r='40' fill='%23d16d72' opacity='0.5'/%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: center;
+            animation: floatSpheres 15s ease-in-out infinite alternate;
+        }
+
+        /* Tabs Styles */
+        .grade-tab {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            border-radius: 999px;
+            /* Pill shape */
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #6c5ce7;
+            /* Soft Purple text */
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            white-space: nowrap;
+            /* Flex grow to distribute evenly if needed, or just auto */
+            flex: 1 0 auto;
+            text-align: center;
+        }
+
+        .grade-tab:hover {
+            background: rgba(108, 92, 231, 0.1);
+            transform: translateY(-2px);
+            border-color: #a29bfe;
+        }
+
+        .grade-tab.active {
+            background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+            transform: scale(1.05);
+            animation: tabPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes tabPop {
+            0% {
+                transform: scale(0.95);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
+
+            100% {
+                transform: scale(1.05);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Animated Spheres Overlay -->
+    <div class="spheres-overlay"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="assets/inas_shield.png" alt="Escudo INAS" class="logo-img">
+            <span class="logo-text">Instituto Nueva América <br> de Suba</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-item">Inicio</a>
+            <a href="instalaciones.html" class="nav-item">Instalaciones</a>
+            <a href="horizonte.html" class="nav-item">Horizonte</a>
+            <a href="horarios.html" class="nav-item active">Horarios</a>
+            <a href="pagos.html" class="nav-item">Pagos</a>
+            <a href="https://www.inas.edu.co/lista-%C3%BAtiles" class="nav-item" target="_blank">Lista de Útiles</a>
+            <a href="contacto.html" class="nav-item">Contáctenos</a>
+        </div>
+        <div class="social-nav">
+            <a href="#" class="social-icon-link instagram" aria-label="Instagram">
+                <!-- SVG omitted for brevity -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="social-svg">
+                    <path
+                        d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M18,5A1.25,1.25 0 0,1 19.25,6.25A1.25,1.25 0 0,1 18,7.5A1.25,1.25 0 0,1 16.75,6.25A1.25,1.25 0 0,1 18,5Z" />
+                </svg>
+            </a>
+            <a href="#" class="social-icon-link youtube" aria-label="YouTube">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="social-svg">
+                    <path
+                        d="M10,15L15.19,12L10,9V15M21.56,7.17C21.69,7.64 21.78,8.27 21.84,9.07C21.91,9.87 21.94,10.56 21.94,11.16L22,12C22,14.19 21.84,15.8 21.56,16.83C21.31,17.73 20.73,18.31 19.83,18.56C19.36,18.69 18.5,18.78 17.18,18.84C15.88,18.91 14.69,18.94 13.59,18.94L12,19C7.81,19 5.2,18.84 4.17,18.56C3.27,18.31 2.69,17.73 2.44,16.83C2.31,16.36 2.22,15.73 2.16,14.93C2.09,14.13 2.06,13.44 2.06,12.84L2,12C2,9.81 2.16,8.2 2.44,7.17C2.69,6.27 3.27,5.69 4.17,5.44C4.64,5.31 5.5,5.22 6.82,5.16C8.12,5.09 9.31,5.06 10.41,5.06L12,5C16.19,5 18.8,5.16 19.83,5.44C20.73,5.69 21.31,6.27 21.56,7.17Z" />
+                </svg>
+            </a>
+            <!-- Mobile Menu Toggle -->
+            <button class="menu-toggle" aria-label="Abrir menú">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Schedule Content (User's Code Adapted) -->
+    <!-- Main Schedule Content -->
+    <!-- Main Schedule Content -->
+    <div
+        class="schedule-wrapper w-full max-w-[95%] lg:max-w-[90%] xl:max-w-7xl mx-0 relative z-10 pt-16 pb-32 px-4 md:px-8">
+
+
+        <svg class="sketch-plane" viewBox="0 0 100 100">
+            <path d="M10,50 L90,20 L50,90 L40,50 Z" fill="none" stroke="var(--schedule-primary-blue)" stroke-width="3"
+                stroke-dasharray="5,5" />
+        </svg>
+
+        <header class="flex flex-col md:flex-row justify-between items-end mb-1 px-4">
+            <!-- Grade Title - Left -->
+            <div class="text-left mb-2 md:mb-0 order-2 md:order-1">
+                <h2 id="grade-title" class="text-3xl md:text-5xl text-gray-500 font-bold uppercase tracking-wider"></h2>
+            </div>
+
+            <!-- Main Title - Right -->
+            <div class="text-right order-1 md:order-2">
+                <h1 class="main-title text-4xl md:text-6xl lg:text-7xl mb-0">
+                    <span style="color: #d88185;">HORARIOS</span>
+                    <span style="color: #555;">2026</span>
+                </h1>
+            </div>
+        </header>
+
+        <!-- Grade Selection Tabs (Moved inside grid container) -->
+
+        <div class="flex flex-col lg:flex-row gap-4">
+            <!-- Left Column: Schedule Grid (Takes up remaining space) -->
+            <div class="flex-grow">
+                <!-- Added overflow-x-auto to allow scrolling if schedule gets very wide -->
+                <div class="overflow-x-auto pb-4 no-scrollbar">
+
+                    <!-- Tabs aligned with Grid -->
+                    <!-- Added p-4 to prevent clipping of shadows/transforms -->
+                    <div class="flex flex-wrap gap-2 mb-4 p-4 min-w-max" id="grade-tabs-container">
+                        <!-- We will inject tabs here via JS, targeting a new ID if needed or reusing 'grade-tabs' -->
+                        <div class="flex w-full gap-2 justify-between" id="grade-tabs"></div>
+                    </div>
+
+                    <div
+                        class="grid grid-cols-1 md:grid-cols-[repeat(6,minmax(200px,1fr))] gap-4 mb-6 hidden md:grid min-w-max">
+                        <div class="text-center font-bold text-blue-300 flex items-center justify-center w-full">HORA
+                        </div>
+                        <div id="day-1"
+                            class="pill pill-yellow day-label-desktop text-xl flex items-center justify-center w-full">
+                            LUNES</div>
+                        <div id="day-2"
+                            class="pill pill-yellow day-label-desktop text-xl flex items-center justify-center w-full">
+                            MARTES</div>
+                        <div id="day-3"
+                            class="pill pill-yellow day-label-desktop text-xl flex items-center justify-center w-full">
+                            MIÉRCOLES</div>
+                        <div id="day-4"
+                            class="pill pill-yellow day-label-desktop text-xl flex items-center justify-center w-full">
+                            JUEVES</div>
+                        <div id="day-5"
+                            class="pill pill-yellow day-label-desktop text-xl flex items-center justify-center w-full">
+                            VIERNES</div>
+                    </div>
+
+                    <div id="horario-container" class="space-y-6 min-w-max">
+                        <!-- Se llena con JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Info Box & Status (Fixed width on desktop) -->
+            <!-- Reduced width from w-80 to w-64 to fit better -->
+            <div class="w-full lg:w-64 flex-shrink-0 -mt-12 z-20">
+                <div class="sticky top-16 space-y-1">
+                    <div class="info-header shadow-sm block w-full bg-white/80 backdrop-blur" style="padding: 10px;">
+                        <div class="flex flex-col items-center gap-1 text-center">
+                            <h3 class="font-bold text-gray-500 uppercase tracking-widest text-[10px]">Tiempo Real</h3>
+                            <div class="clock-box shadow-inner" id="current-time"
+                                style="padding: 0.2rem 1rem; font-size: clamp(1.5rem, 4vw, 2rem);">00:00:00</div>
+
+                            <div class="w-full border-t border-dashed border-gray-300"></div>
+
+                            <div class="text-center">
+                                <p class="uppercase text-gray-400 font-bold text-[10px] tracking-widest mb-1">Director
+                                    de
+                                    grupo:</p>
+                                <h3 id="director-name" class="text-lg md:text-xl font-bold text-blue-500">Merly Tapias
+                                </h3>
+                            </div>
+
+                            <div class="w-full border-t border-dashed border-gray-300"></div>
+
+                            <div class="text-center" id="teacher-info-box"
+                                style="opacity: 0.5; transition: opacity 0.3s;">
+                                <p class="uppercase text-gray-400 font-bold text-[10px] tracking-widest mb-1">Docente de
+                                    Asignatura:</p>
+                                <h3 id="subject-teacher" class="text-base md:text-lg font-bold text-purple-500">---</h3>
+                                <p id="selected-subject" class="text-[10px] text-gray-500 font-semibold mt-1">Selecciona
+                                    una
+                                    materia</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="status-display"
+                    class="font-bold text-lg text-gray-400 italic text-center p-2 bg-white/50 rounded-3xl border-2 border-dashed border-gray-200 mt-2">
+                    Verificando horario escolar...
+                </div>
+
+                <!-- Available Teachers Container -->
+                <div id="available-teachers-box"
+                    class="hidden font-medium text-center p-2 bg-white/80 rounded-3xl shadow-sm border border-gray-100 mt-2">
+                    <h4
+                        class="text-xs uppercase tracking-widest text-[#2ecc71] font-bold mb-2 border-b border-gray-100 pb-1">
+                        Docentes Disponibles
+                    </h4>
+                    <div id="available-list" class="flex flex-wrap justify-center gap-1 text-[10px] text-gray-500">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- New Column: Parent Attention (Rightmost) -->
+            <div class="w-full lg:w-64 flex-shrink-0 -mt-12 z-20">
+                <div
+                    class="sticky top-16 bg-white/80 backdrop-blur rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+                    <div class="bg-[#2c3e50] p-2 text-center">
+                        <h3 class="text-white font-bold uppercase text-[10px] tracking-widest leading-relaxed">
+                            Horario de Atención<br>a Padres
+                        </h3>
+                    </div>
+                    <div class="p-2 space-y-1 overflow-y-auto custom-scrollbar bg-white/50" id="parent-attention-list"
+                        style="max-height: calc(100vh - 120px);">
+                        <!-- Filled by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Script to Render Attention List -->
+    <script>
+        window.addEventListener('load', () => {
+            const list = document.getElementById('parent-attention-list');
+            if (list && typeof TEACHER_ATTENTION !== 'undefined') {
+                Object.keys(TEACHER_ATTENTION).forEach(name => {
+                    const time = TEACHER_ATTENTION[name];
+                    const item = document.createElement('div');
+                    // Style: Clickable, white bg, rounded
+                    item.className = "group relative p-3 bg-white hover:bg-blue-50 rounded-xl cursor-pointer transition-all duration-200 border-b border-gray-50 last:border-0";
+
+                    // Interaction: Toggle details on click
+                    item.onclick = function () {
+                        const details = this.querySelector('.schedule-details');
+                        const arrow = this.querySelector('.arrow-icon');
+
+                        // Toggle Hidden
+                        if (details.classList.contains('hidden')) {
+                            // Close others (Optional, usually better for space)
+                            document.querySelectorAll('.schedule-details').forEach(el => el.classList.add('hidden'));
+                            document.querySelectorAll('.arrow-icon').forEach(el => el.style.transform = 'rotate(0deg)');
+
+                            details.classList.remove('hidden');
+                            arrow.style.transform = 'rotate(180deg)';
+                            this.classList.add('bg-blue-50'); // Keep highlighted
+                        } else {
+                            details.classList.add('hidden');
+                            arrow.style.transform = 'rotate(0deg)';
+                            this.classList.remove('bg-blue-50');
+                        }
+                    };
+
+                    item.innerHTML = `
+                        <div class="flex justify-between items-center">
+                            <p class="font-bold text-gray-600 text-sm group-hover:text-blue-600 transition-colors">${name}</p>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="arrow-icon w-4 h-4 text-gray-400 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </div>
+                        
+                        <!-- Details (Hidden by default) -->
+                        <div class="schedule-details hidden mt-3 p-3 bg-blue-100 rounded-lg text-xs text-blue-800 animate-fadeIn">
+                            <p class="font-bold mb-1 text-blue-900 uppercase tracking-wide text-[10px]">Horario de Atención:</p>
+                            <p class="font-medium text-sm flex items-center gap-2">
+                                <span class="text-xl">🕒</span> ${time}
+                            </p>
+                        </div>
+                    `;
+                    list.appendChild(item);
+                });
+            }
+        });
+    </script>
+
+    <!-- Footer (Same as Index) -->
+    <footer class="main-footer">
+        <div class="footer-overlay"></div>
+        <div class="footer-content">
+            <!-- Col 1: Brand -->
+            <div class="footer-col brand-col">
+                <div class="footer-logo">
+                    <img src="assets/inas_shield.png" alt="Escudo INAS">
+                    <span>INAS</span>
+                </div>
+                <p class="footer-tagline">"Ciencia, Cultura y Vida"</p>
+                <p class="footer-desc">Formando líderes integrales para el futuro, con excelencia académica y
+                    valores humanos.</p>
+            </div>
+            <div class="footer-col links-col">
+                <h3 class="footer-heading">Navegación</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="instalaciones.html">Instalaciones</a></li>
+                    <li><a href="horizonte.html">Horizonte</a></li>
+                    <li><a href="horarios.html">Horarios</a></li>
+                    <li><a href="pagos.html">Pagos</a></li>
+                    <li><a href="#">Admisiones</a></li>
+                </ul>
+            </div>
+            <div class="footer-col contact-col">
+                <h3 class="footer-heading">Contáctanos</h3>
+                <ul class="contact-list">
+                    <li><span class="icon">📍</span><span>Calle 139 # 101D - 15, Suba, Bogotá</span></li>
+                    <li><span class="icon">📞</span><span>(601) 682 9283</span></li>
+                    <li><span class="icon">📧</span><span>contacto@inas.edu.co</span></li>
+                </ul>
+                <div class="social-icons">
+                    <a href="#" class="social-btn instagram" aria-label="Instagram"><svg
+                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                            class="social-svg-footer">
+                            <path
+                                d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M18,5A1.25,1.25 0 0,1 19.25,6.25A1.25,1.25 0 0,1 18,7.5A1.25,1.25 0 0,1 16.75,6.25A1.25,1.25 0 0,1 18,5Z" />
+                        </svg></a>
+                    <a href="#" class="social-btn youtube" aria-label="YouTube"><svg xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24" fill="currentColor" class="social-svg-footer">
+                            <path
+                                d="M10,15L15.19,12L10,9V15M21.56,7.17C21.69,7.64 21.78,8.27 21.84,9.07C21.91,9.87 21.94,10.56 21.94,11.16L22,12C22,14.19 21.84,15.8 21.56,16.83C21.31,17.73 20.73,18.31 19.83,18.56C19.36,18.69 18.5,18.78 17.18,18.84C15.88,18.91 14.69,18.94 13.59,18.94L12,19C7.81,19 5.2,18.84 4.17,18.56C3.27,18.31 2.69,17.73 2.44,16.83C2.31,16.36 2.22,15.73 2.16,14.93C2.09,14.13 2.06,13.44 2.06,12.84L2,12C2,9.81 2.16,8.2 2.44,7.17C2.69,6.27 3.27,5.69 4.17,5.44C4.64,5.31 5.5,5.22 6.82,5.16C8.12,5.09 9.31,5.06 10.41,5.06L12,5C16.19,5 18.8,5.16 19.83,5.44C20.73,5.69 21.31,6.27 21.56,7.17Z" />
+                        </svg></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Instituto Nueva América de Suba. Todos los derechos reservados.</p>
+            <div class="footer-line"></div>
+        </div>
+    </footer>
+
+    <script src="mobile-menu.js"></script>
+    <script type="module" src="chatbot.js"></script>
+
+    <!-- User's Schedule Logic -->
+    <script>
+        // --- CONSTANTS & CONFIG ---
+        const diasSemana = ["", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes"];
+
+        // Base time slots (Franjas) - Shared structure, end time varies
+        const BASE_FRANJAS = [
+            { inicio: "06:15", fin: "08:00", bloque: "BLOQUE 1" },
+            { inicio: "08:00", fin: "08:30", especial: "Descanso" },
+            { inicio: "08:30", fin: "10:20", bloque: "BLOQUE 2" },
+            { inicio: "10:20", fin: "12:00", bloque: "BLOQUE 3" },
+            { inicio: "12:00", fin: "12:30", especial: "Descanso" },
+            { inicio: "21:00", fin: "23:50", bloque: "BLOQUE 4" } // End time dynamic
+        ];
+
+        // Database of Schedules
+        const SCHEDULE_DB = {
+            "transicion": {
+                name: "Transición",
+                director: "Merly Tapias",
+                endTime: "23:50",
+                // Format: [Mon, Tue, Wed, Thu, Fri] per Block
+                blocks: [
+                    ["Lenguaje", "Ed. Física", "Inglés", "Biología", "Lenguaje"],
+                    ["Matemáticas", "Tecnología", "Matemáticas", "Artes", "Biología"],
+                    ["Inglés", "Inglés", "Lenguaje", "Lenguaje", "Inglés"],
+                    ["Sociales", "Matemáticas", "Ética–Religión", "Matemáticas", "Sociales"]
+                ]
+            },
+            "101": {
+                name: "101",
+                director: "Sonia Agudelo",
+                endTime: "23:50", // Assuming standard
+                blocks: [
+                    ["Matemáticas", "Inglés", "Matemáticas", "Lenguaje", "Sociales"],
+                    ["Inglés", "Biología", "Inglés", "Geometría", "Inglés"],
+                    ["Ed. Física", "Ética-Religión", "Sociales", "Artes", "Biología"],
+                    ["Lenguaje", "Lenguaje", "Lenguaje", "Tecnología", "Matemáticas"]
+                ]
+            },
+            "201": {
+                name: "201",
+                director: "Katherine Suarez",
+                endTime: "23:50",
+                blocks: [
+                    ["Sociales", "Geometría", "Lenguaje", "Matemáticas", "Inglés"],
+                    ["Lenguaje", "Inglés", "Ética-Religión", "Lenguaje", "Lenguaje"],
+                    ["Biología", "Artes", "Inglés", "Ed. Física", "Tecnología"],
+                    ["Matemáticas", "Sociales", "Matemáticas", "Sociales", "Biología"]
+                ]
+            },
+            "301": {
+                name: "301",
+                director: "Flor Angela Calvo",
+                endTime: "23:50",
+                blocks: [
+                    ["Inglés", "Lenguaje", "Biología", "Ed. Física", "Geometría"],
+                    ["Artes", "Ética-Religión", "Lenguaje", "Tecnología", "Matemáticas"],
+                    ["Matemáticas", "Sociales", "Matemáticas", "Sociales", "Lenguaje"],
+                    ["Biología", "Química", "Inglés", "Inglés", "Sociales"]
+                ]
+            },
+            "401": {
+                name: "401",
+                director: "Luis Carlos Carvajal",
+                endTime: "23:50",
+                blocks: [
+                    ["Biología", "Química", "Ed. Física", "Tecnología", "Sociales"],
+                    ["Matemáticas", "Lenguaje", "Biología", "Sociales", "Matemáticas"],
+                    ["Sociales", "Matemáticas", "Geometría", "Inglés", "Ética-Religión"],
+                    ["Inglés", "Inglés", "Artes", "Lenguaje", "Lenguaje"]
+                ]
+            },
+            "501": {
+                name: "501",
+                director: "Yuli Gonzalez",
+                endTime: "23:50",
+                blocks: [
+                    ["Inglés", "Biología", "Química", "Ética-Religión", "Biología"],
+                    ["Lenguaje", "Ed. Física", "Lenguaje", "Inglés", "Lenguaje"],
+                    ["Tecnología", "Matemáticas", "Inglés", "Matemáticas", "Matemáticas"],
+                    ["Artes", "Geometría", "Sociales", "Sociales", "Sociales"]
+                ]
+            },
+            "601": {
+                name: "601",
+                director: "Alexandra Díaz",
+                endTime: "23:50",
+                blocks: [
+                    ["Matemáticas", "Matemáticas", "Lenguaje", "Lenguaje", "Biología"],
+                    ["Sociales", "Sociales", "Geometría", "Química", "Sociales"],
+                    ["Artes", "Biología", "Ed. Física", "Ética-Religión", "Inglés"],
+                    ["Lenguaje", "Inglés", "Inglés", "Matemáticas", "Tecnología"]
+                ]
+            },
+            "602": {
+                name: "602",
+                director: "Carlos Gómez",
+                endTime: "23:50",
+                blocks: [
+                    ["Lenguaje", "Sociales", "Tecnología", "Inglés", "Lenguaje"],
+                    ["Biología", "Geometría", "Sociales", "Ética-Religión", "Inglés"],
+                    ["Inglés", "Ed. Física", "Química", "Matemáticas", "Sociales"],
+                    ["Matemáticas", "Artes", "Lenguaje", "Biología", "Matemáticas"]
+                ]
+            },
+            "701": {
+                name: "701",
+                director: "José Jiménez",
+                endTime: "23:50",
+                blocks: [
+                    ["Lenguaje", "Sociales", "Matemáticas", "Matemáticas", "Tecnología"],
+                    ["Matemáticas", "Inglés", "Sociales", "Ed. Física", "Biología"],
+                    ["Sociales", "Lenguaje", "Geometría", "Inglés", "Artes"],
+                    ["Biología", "Ética-Religión", "Lenguaje", "Química", "Inglés"]
+                ]
+            },
+            "801": {
+                name: "801",
+                director: "Ibón Angélica Pulido",
+                endTime: "23:50",
+                blocks: [
+                    ["Ed. Física", "Lenguaje", "Inglés", "Física", "Inglés"],
+                    ["Biología", "Matemáticas", "Artes", "Sociales", "Lenguaje"],
+                    ["Lenguaje", "Geometría", "Química", "Tecnología", "Matemáticas"],
+                    ["Inglés", "Sociales", "Sociales", "Ética-Religión", "Biología"]
+                ]
+            },
+            "802": {
+                name: "802",
+                director: "Laura",
+                endTime: "23:50",
+                blocks: [
+                    ["Biología", "Inglés", "Ética-Religión", "Biología", "Ed. Física"],
+                    ["Sociales", "Lenguaje", "Inglés", "Lenguaje", "Artes"],
+                    ["Matemáticas", "Química", "Geometría", "Sociales", "Sociales"],
+                    ["Lenguaje", "Física", "Tecnología", "Inglés", "Matemáticas"]
+                ]
+            },
+            "901": {
+                name: "901",
+                director: "Esteban Morales",
+                endTime: "23:50",
+                blocks: [
+                    ["Sociales", "Ética-Religión", "Inglés", "Inglés", "Sociales"],
+                    ["Ed. Física", "Lenguaje", "Tecnología", "Geometría", "Matemáticas"],
+                    ["Lenguaje", "Sociales", "Lenguaje", "Inglés", "Química"],
+                    ["Física", "Biología", "Matemáticas", "Artes", "Inglés"]
+                ]
+            },
+            "1001": {
+                name: "1001",
+                director: "Maritza Triana",
+                endTime: "23:50",
+                blocks: [
+                    ["Matemáticas", "Lenguaje", "Sociales", "Filosofía", "Matemáticas"],
+                    ["Inglés", "Artes", "Matemáticas", "Lenguaje", "Ed. Física"],
+                    ["Ética-Religión", "Física", "Inglés", "Química", "Inglés"],
+                    ["Sociales", "Tecnología", "Química", "Física", "Lenguaje"]
+                ]
+            },
+            "1101": {
+                name: "1101",
+                director: "Luis Mujica",
+                endTime: "23:50",
+                blocks: [
+                    ["Ética-Religión", "Física", "Filosofía", "Sociales", "Inglés"],
+                    ["Matemáticas", "Química", "Ed. Física", "Física", "Matemáticas"],
+                    ["Química", "Lenguaje", "Sociales", "Lenguaje", "Lenguaje"],
+                    ["Tecnología", "Inglés", "Matemáticas", "Inglés", "Artes"]
+                ]
+            }
+        };
+
+        // Current State
+        let currentGrade = "transicion";
+        let activeData = null;
+
+        // --- FUNCTIONS ---
+
+        function timeToMin(t) {
+            const [h, m] = t.split(':').map(Number);
+            return h * 60 + m;
+        }
+
+        // Explicit Order for Tabs (JS Object keys sort integers first, putting 'transicion' last otherwise)
+        const GRADE_ORDER = [
+            'transicion', '101', '201', '301', '401', '501',
+            '601', '602', '701', '801', '802', '901', '1001', '1101'
+        ];
+
+        // Teacher Assignments DB
+        // Maps Subject -> { "grade": "Teacher Name", "default": "Teacher Name" }
+        // We normalize keys (lowercase) for matching
+        const TEACHER_ASSIGNMENTS = {
+            "sociales": {
+                "transicion": "Merly Tapias", "101": "Merly Tapias",
+                "201": "Carlos Gómez", "301": "Carlos Gómez", "401": "Carlos Gómez",
+                "501": {
+                    "default": "Esteban Morales",
+                    "exceptions": [
+                        { day: 3, block: 3, teacher: "Carlos Gómez" } // Wednesday (3), Block 4 (Index 3 - 12:30?) Wait.
+                        // In JS file I used day 2 (0-indexed?). Here day indices are 1-5 (Mon-Fri).
+                        // JS file: blocks: [ ["Lenguaje", ...], ... ] -> blockRow.forEach((subj, dayIdx) ... )
+                        // dayIdx was 0-4.
+                        // My JS replacement: "day: 2" (Wednesday).
+                        // Here I treat Days as 1-5. So Wednesday is 3.
+                        // Block Index:
+                        // "Miercoles de 12:30 a 2:15".
+                        // This is usually the last block.
+                        // Block 0: 6:15-8:00
+                        // Block 1: 8:30-10:20
+                        // Block 2: 10:20-12:00
+                        // Block 3: 21:00-23:50 (The "End Time" one). Wait, 12:30 start?
+                        // Base Franjas: 
+                        // 0: 06:15-08:00 (B1)
+                        // 2: 08:30-10:20 (B2)
+                        // 3: 10:20-12:00 (B3)
+                        // 5: 21:00-23:50 (B4)
+
+                        // BUT "12:30 a 2:15" implies a block starting at 12:30.
+                        // Franja 4 is 12:00-12:30 (Descanso).
+                        // So Franja 5 is the block starting AFTER 12:30. 
+                        // It seems User's schedule data structure for Block 4 (index 3) covers this slot.
+                        // So Block Index 3 is correct.
+                    ]
+                },
+                "601": "Carlos Gómez",
+                "701": "Esteban Morales", "801": "Esteban Morales", "802": "Esteban Morales", "901": "Esteban Morales", "1001": "Esteban Morales", "1101": "Esteban Morales"
+            },
+            "ética-religión": {
+                "default": "Merly Tapias"
+            },
+            "ética–religión": { // handling variations
+                "default": "Merly Tapias"
+            },
+            "inglés": {
+                "transicion": "Sonia Agudelo", "101": "Sonia Agudelo", "201": "Sonia Agudelo", "301": "Sonia Agudelo", "401": "Sonia Agudelo",
+                "501": "Laura Carolina Bernal", "601": "Laura Carolina Bernal", "602": "Laura Carolina Bernal", "701": "Laura Carolina Bernal", "801": "Laura Carolina Bernal", "802": "Laura Carolina Bernal",
+                "901": {
+                    "default": "Maritza Triana",
+                    "exceptions": [
+                        { day: 4, block: 0, teacher: "Sonia Agudelo" } // Thursday (4), Block 1 (Index 0)
+                    ]
+                },
+                "1001": "Maritza Triana", "1101": "Maritza Triana"
+            },
+            "lenguaje": {
+                "transicion": "Katherine Suarez", "101": "Katherine Suarez", "201": "Katherine Suarez", "301": "Katherine Suarez", "401": "Katherine Suarez",
+                "501": "Alexandra Díaz", "601": "Alexandra Díaz", "601": "Alexandra Díaz", "901": "Alexandra Díaz", "1001": "Alexandra Díaz", "1101": "Alexandra Díaz",
+                "701": "Maritza Triana", "801": "Maritza Triana", "802": "Maritza Triana"
+            },
+            "biología": {
+                "transicion": "Flor Angela Calvo", "101": "Flor Angela Calvo", "201": "Flor Angela Calvo", "301": "Flor Angela Calvo", "401": "Flor Angela Calvo", "601": "Flor Angela Calvo",
+                "501": "Ibón Angélica Pulido", "701": "Ibón Angélica Pulido", "801": "Ibón Angélica Pulido", "901": "Ibón Angélica Pulido"
+            },
+            "química": {
+                "301": "Flor Angela Calvo", "401": "Flor Angela Calvo", "601": "Flor Angela Calvo",
+                "1001": "Ibón Angélica Pulido", "1101": "Ibón Angélica Pulido", "501": "Ibón Angélica Pulido"
+            },
+            "tecnología": {
+                "default": "Luis Carlos Carvajal"
+            },
+            "matemáticas": {
+                "401": "Luis Carlos Carvajal / Yuli Gonzalez (Geom)", // Check logic
+                "transicion": "Yuli Gonzalez", "101": "Yuli Gonzalez", "201": "Yuli Gonzalez", "301": "Yuli Gonzalez", "501": "Yuli Gonzalez",
+                "601": "José Jiménez", "602": "José Jiménez", "701": "José Jiménez", "901": "José Jiménez",
+                "801": "Luis Mujica", "802": "Luis Mujica", "1001": "Luis Mujica", "1101": "Luis Mujica"
+            },
+            "geometría": {
+                "401": "Luis Carlos Carvajal",
+                "101": "Yuli Gonzalez", "201": "Yuli Gonzalez",
+                "301": "José Jiménez", "501": "José Jiménez", "601": "José Jiménez", "602": "José Jiménez", "801": "José Jiménez", "802": "José Jiménez", "901": "José Jiménez",
+                "701": "Luis Mujica"
+            },
+            "filosofía": {
+                "1001": "Carlos Gómez", "1101": "Carlos Gómez"
+            },
+            "física": {
+                "801": "Luis Mujica", "802": "Luis Mujica", "901": "Luis Mujica", "1001": "Luis Mujica", "1101": "Luis Mujica"
+            },
+            "ed. física": {
+                "default": "Freddy Pacheco"
+            },
+            "artes": {
+                "default": "Carolina Acosta"
+            }
+        };
+
+        function getTeacher(subject, grade, dayIndex, blockIndex) { // dayIndex (1-5), blockIndex (0-3)
+            if (!subject || subject === "DESCANSO" || subject === "---") return "";
+
+            const subjKey = subject.toLowerCase().trim();
+            const assignment = TEACHER_ASSIGNMENTS[subjKey]; // Look for exact match
+
+            if (assignment) {
+                // Check for specific grade config
+                let gradeConfig = assignment[grade];
+
+                // Handle string vs object config
+                if (typeof gradeConfig === 'string') {
+                    return gradeConfig;
+                } else if (typeof gradeConfig === 'object' && gradeConfig !== null) {
+                    // Check exceptions
+                    if (gradeConfig.exceptions) {
+                        const exception = gradeConfig.exceptions.find(ex => ex.day === dayIndex && ex.block === blockIndex);
+                        if (exception) return exception.teacher;
+                    }
+                    return gradeConfig.default || "Desconocido";
+                }
+
+                return assignment["default"] || "Desconocido";
+            }
+
+            // Fallback for variations?
+            return "---";
+        }
+
+
+        // Init Tabs
+        function initTabs() {
+            const tabsContainer = document.getElementById('grade-tabs');
+            tabsContainer.innerHTML = '';
+
+            // Use explicit order
+            GRADE_ORDER.forEach(key => {
+                const grade = SCHEDULE_DB[key];
+                if (!grade) return; // Safety check
+
+                const btn = document.createElement('button');
+                btn.className = `grade-tab ${key === currentGrade ? 'active' : ''}`;
+                btn.innerText = grade.name;
+                btn.onclick = () => {
+                    loadGrade(key);
+                    // Scroll tab into view
+                    btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                };
+                tabsContainer.appendChild(btn);
+            });
+        }
+
+        // Load Grade Data
+        function loadGrade(key) {
+            currentGrade = key;
+            const raw = SCHEDULE_DB[key];
+
+            // Update Title & Director
+            document.getElementById('grade-title').innerText = raw.name;
+            const dirEl = document.getElementById('director-name');
+            if (dirEl) dirEl.innerText = raw.director;
+
+            // Reset teacher info box
+            document.getElementById('teacher-info-box').style.opacity = '0.5';
+            document.getElementById('subject-teacher').innerText = "---";
+            document.getElementById('selected-subject').innerText = "Selecciona una materia";
+
+            // Update Tabs UI
+            document.querySelectorAll('.grade-tab').forEach(t => {
+                t.classList.toggle('active', t.innerText === raw.name); // Simple check
+            });
+
+            // Process Data: Transpose Block-Rows to Day-Cols
+            // Structure: materias[dayIndex 1-5][franjaIndex 0-5]
+            const materias = {
+                1: [], 2: [], 3: [], 4: [], 5: []
+            };
+
+            // Indices in Franjas: 0=B1, 1=Desc, 2=B2, 3=B3, 4=Desc, 5=B4
+            // User Data Blocks: 0=B1, 1=B2, 2=B3, 3=B4
+            const mapBlockToFranja = [0, 2, 3, 5];
+
+            // Initialize with empty/breaks
+            for (let d = 1; d <= 5; d++) {
+                materias[d] = new Array(6).fill("");
+                materias[d][1] = "DESCANSO";
+                materias[d][4] = "DESCANSO";
+            }
+
+            // Fill Subjects
+            raw.blocks.forEach((blockRow, blockIdx) => {
+                const franjaIdx = mapBlockToFranja[blockIdx];
+                blockRow.forEach((subject, dayIdx0) => {
+                    const day = dayIdx0 + 1; // 1-based
+                    materias[day][franjaIdx] = subject;
+                });
+            });
+
+            // Adjust Franjas (End Time)
+            const franjas = JSON.parse(JSON.stringify(BASE_FRANJAS));
+            franjas[5].fin = raw.endTime;
+
+            activeData = { franjas, materias };
+            render();
+            update(); // Trigger instant update
+        }
+
+        function render() {
+            if (!activeData) return;
+
+            const container = document.getElementById('horario-container');
+            container.innerHTML = '';
+
+            activeData.franjas.forEach((franja, fIdx) => {
+                const row = document.createElement('div');
+                row.className = "grid grid-cols-1 md:grid-cols-[repeat(6,minmax(200px,1fr))] gap-4 items-center";
+
+                const timeBox = document.createElement('div');
+                timeBox.className = "text-center relative flex justify-center";
+
+                let bloqueHtml = franja.bloque ? `<span class="bloque-label absolute -top-6 left-0 w-full text-blue-400 font-bold text-xs uppercase tracking-wider">${franja.bloque}</span>` : '';
+
+                timeBox.innerHTML = `
+                    ${bloqueHtml}
+                    <div class="pill pill-blue w-full text-sm md:text-base flex items-center justify-center whitespace-nowrap px-4 py-2">
+                        ${franja.inicio} - ${franja.fin}
+                    </div>
+                `;
+                row.appendChild(timeBox);
+
+                for (let dIdx = 1; dIdx <= 5; dIdx++) {
+                    const card = document.createElement('div');
+                    card.className = `materia-card fila-${fIdx}`;
+                    card.dataset.dia = dIdx;
+
+                    // Safety check
+                    const materia = activeData.materias[dIdx] ? activeData.materias[dIdx][fIdx] : "---";
+
+                    // Derive blockIndex from Franja Index (fIdx)
+                    let blockIndex = -1;
+                    if (fIdx === 0) blockIndex = 0;
+                    else if (fIdx === 2) blockIndex = 1;
+                    else if (fIdx === 3) blockIndex = 2;
+                    else if (fIdx === 5) blockIndex = 3;
+
+                    const teacher = getTeacher(materia, currentGrade, dIdx, blockIndex);
+
+                    card.innerHTML = `<span class="mobile-label">${diasSemana[dIdx]}</span><strong>${materia}</strong>`;
+
+                    if (materia === "DESCANSO" || franja.especial) {
+                        card.style.backgroundColor = "#fff9db";
+                        card.style.color = "#d4ac0d";
+                        card.style.borderStyle = "dashed";
+                        card.style.borderColor = "#fef5d1";
+                    } else {
+                        // Interaction for Subjects
+                        card.style.cursor = "pointer";
+                        card.onmouseenter = () => updateTeacherInfo(materia, teacher);
+                        // card.onclick = () => updateTeacherInfo(materia, teacher); // Click as backup
+                    }
+
+                    row.appendChild(card);
+                }
+                container.appendChild(row);
+            });
+        }
+
+        // DYNAMIC ATTENTION HOURS LOGIC
+        function calculateAttentionHours() {
+            // 1. Initialize Busy Map
+            // Map: TeacherName -> { dayIndex (1-5) -> Set(blockIndex 0-3) }
+            const busyMap = {};
+            ALL_TEACHERS.forEach(t => {
+                busyMap[t] = { 1: new Set(), 2: new Set(), 3: new Set(), 4: new Set(), 5: new Set() };
+            });
+
+            // 2. Scan ALL Schedules to mark busy times
+            Object.keys(SCHEDULE_DB).forEach(gradeKey => {
+                const gradeData = SCHEDULE_DB[gradeKey];
+                gradeData.blocks.forEach((blockRow, blockIdx) => { // blockIdx 0-3
+                    blockRow.forEach((subject, dayIdx0) => { // dayIdx0 0-4
+                        const day = dayIdx0 + 1;
+                        if (!subject || subject === "---") return;
+
+                        const teacherName = getTeacher(subject, gradeKey, dayIdx0 + 1, blockIdx);
+                        if (teacherName && teacherName !== "---" && teacherName !== "Desconocido") {
+                            // Handle splits "Name1 / Name2"
+                            teacherName.split("/").forEach(rawT => {
+                                const t = rawT.trim();
+                                if (busyMap[t]) {
+                                    busyMap[t][day].add(blockIdx);
+                                }
+                            });
+                        }
+                    });
+                });
+            });
+
+            // 3. Find Free Slots & Format
+            // We define "Attention Hour" as a specific block where they are FREE.
+            // Rule: Just show the FIRST 2 free slots found to avoid clutter, or all? 
+            // Let's try to group continuous free time or just list blocks.
+            // User example: "Wednesday 6:15 - 8:00" (Block 1)
+
+            const teacherAttention = {};
+
+            // Map Block Index to Label/Time
+            // B1=0 (06:15-08:00), B2=1 (08:30-10:20), B3=2 (10:20-12:00), B4=3 (varies)
+            const blockTimes = [
+                { start: "06:15", end: "08:00", label: "Bloque 1" },
+                { start: "08:30", end: "10:20", label: "Bloque 2" },
+                { start: "10:20", end: "12:00", label: "Bloque 3" },
+                { start: "12:00", end: "12:30", label: "Descanso" } // Not a block, but maybe useful? No, stick to blocks.
+            ];
+
+            ALL_TEACHERS.forEach(t => {
+                const freeSlots = [];
+                for (let d = 1; d <= 5; d++) {
+                    // Check Blocks 0, 1, 2 (Standard Morning Blocks)
+                    // We focus on B1, B2, B3 for "Attention" as B4 is usually late/exit for some.
+                    [0, 1, 2].forEach(bIdx => {
+                        if (!busyMap[t][d].has(bIdx)) {
+                            // He is free!
+                            freeSlots.push({ day: diasSemana[d], ...blockTimes[bIdx] });
+                        }
+                    });
+                }
+
+                // Select specific slots to display (avoid showing too many)
+                // Heuristics: Prefer gaps or specific days. 
+                // For now, let's take the first 1 or 2 distinct days.
+                if (freeSlots.length > 0) {
+                    // Group by day
+                    const perDay = {};
+                    freeSlots.forEach(slot => {
+                        if (!perDay[slot.day]) perDay[slot.day] = [];
+                        perDay[slot.day].push(slot);
+                    });
+
+                    // Format String
+                    // Ex: "Miércoles 06:15 - 08:00"
+                    // Join up to 2 slots
+                    const parts = [];
+                    Object.keys(perDay).slice(0, 2).forEach(day => {
+                        const s = perDay[day][0]; // Take first free slot of that day
+                        parts.push(`${day} ${s.start} - ${s.end}`);
+                    });
+
+                    teacherAttention[t] = parts.join(" y <br>");
+                } else {
+                    teacherAttention[t] = "Por asignar";
+                }
+            });
+
+            return teacherAttention;
+        }
+
+        // --- RENDER SIDEBAR ---
+        function renderAttentionSidebar() {
+            const list = document.getElementById('parent-attention-list');
+            if (!list) return;
+
+            list.innerHTML = ''; // Clear previous
+
+            const schedule = calculateAttentionHours();
+
+            Object.keys(schedule).sort().forEach(name => {
+                const time = schedule[name];
+                const item = document.createElement('div');
+                item.className = "group relative p-2 bg-white hover:bg-blue-50 rounded-xl cursor-pointer transition-all duration-200 border-b border-gray-50 last:border-0";
+
+                item.onclick = function () {
+                    const details = this.querySelector('.schedule-details');
+                    const arrow = this.querySelector('.arrow-icon');
+
+                    if (details.classList.contains('hidden')) {
+                        document.querySelectorAll('.schedule-details').forEach(el => el.classList.add('hidden'));
+                        document.querySelectorAll('.arrow-icon').forEach(el => el.style.transform = 'rotate(0deg)');
+
+                        details.classList.remove('hidden');
+                        arrow.style.transform = 'rotate(180deg)';
+                        this.classList.add('bg-blue-50');
+                    } else {
+                        details.classList.add('hidden');
+                        arrow.style.transform = 'rotate(0deg)';
+                        this.classList.remove('bg-blue-50');
+                    }
+                };
+
+                item.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <p class="font-bold text-gray-600 text-xs group-hover:text-blue-600 transition-colors">${name}</p>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="arrow-icon w-3 h-3 text-gray-400 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </div>
+                    <div class="schedule-details hidden mt-1 p-2 bg-blue-100 rounded-lg text-xs text-blue-800 animate-fadeIn">
+                        <p class="font-bold mb-0.5 text-blue-900 uppercase tracking-wide text-[10px]">Horario de Atención:</p>
+                        <p class="font-medium text-xs flex items-center gap-1 leading-tight">
+                            <span class="text-base">🕒</span> <span>${time}</span>
+                        </p>
+                    </div>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+
+        function updateTeacherInfo(subject, teacher) {
+            const infoBox = document.getElementById('teacher-info-box');
+            const teacherEl = document.getElementById('subject-teacher');
+            const subjectEl = document.getElementById('selected-subject');
+
+            // Find or Create Image Element
+            let imgEl = document.getElementById('teacher-photo');
+            if (!imgEl) {
+                imgEl = document.createElement('img');
+                imgEl.id = 'teacher-photo';
+                imgEl.className = "w-24 h-24 rounded-full object-cover mx-auto mt-2 border-2 border-white shadow-md hidden";
+                // Insert after the teacher name
+                teacherEl.parentNode.insertBefore(imgEl, teacherEl.nextSibling);
+            }
+
+            infoBox.style.opacity = '1';
+            teacherEl.innerText = teacher || "---";
+            subjectEl.innerText = subject;
+
+            // Image Logic
+            if (teacher && teacher !== "---" && teacher !== "Desconocido") {
+                const safeName = teacher.replace(/ /g, "_");
+                imgEl.src = `assets/profesores/${safeName}.png`;
+                imgEl.onload = () => imgEl.classList.remove('hidden');
+                imgEl.onerror = () => imgEl.classList.add('hidden');
+            } else {
+                imgEl.classList.add('hidden');
+            }
+        }
+
+        const ALL_TEACHERS = [
+            "Merly Tapias", "Sonia Agudelo", "Katherine Suarez", "Flor Angela Calvo",
+            "Luis Carlos Carvajal", "Yuli Gonzalez", "Alexandra Díaz", "Carlos Gómez",
+            "José Jiménez", "Ibón Angélica Pulido", "Laura Carolina Berbal", "Esteban Morales",
+            "Maritza Triana", "Luis Mujica", "Freddy Pacheco", "Carolina Acosta"
+        ];
+
+        function update() {
+            if (!activeData) return;
+
+            const ahora = new Date();
+            const minHoy = ahora.getHours() * 60 + ahora.getMinutes();
+            const diaHoy = ahora.getDay();
+
+            // Clock
+            const timeString = ahora.toLocaleTimeString('es-CO', {
+                hour: 'numeric',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true
+            }).replace(/\./g, '').toUpperCase();
+            document.getElementById('current-time').textContent = timeString;
+
+            // Day Highlight
+            for (let i = 1; i <= 5; i++) {
+                const el = document.getElementById(`day-${i}`);
+                if (el) el.classList.toggle('today-header', i === diaHoy);
+            }
+
+            // Live Class Highlight & Global Busy Check
+            let claseActual = null;
+            let currentBlockIndex = -1;
+
+            activeData.franjas.forEach((franja, index) => {
+                const inicio = timeToMin(franja.inicio);
+                const fin = timeToMin(franja.fin);
+                const cards = document.querySelectorAll(`.fila-${index}`);
+
+                cards.forEach(card => {
+                    const esHoy = card.dataset.dia == diaHoy;
+                    const esAhora = minHoy >= inicio && minHoy < fin;
+
+                    if (esHoy && esAhora) {
+                        card.classList.add('is-live');
+                        // Clean text for status
+                        claseActual = card.innerText.replace(diasSemana[diaHoy], "").replace("AHORA", "").trim();
+                        currentBlockIndex = index; // Capture active block index
+
+                        if (!card.querySelector('.live-tag')) {
+                            card.innerHTML += `<div class="live-tag">AHORA</div><div class="progress-bar"></div>`;
+                        }
+                        const pct = ((minHoy - inicio) / (fin - inicio)) * 100;
+                        const progressBar = card.querySelector('.progress-bar');
+                        if (progressBar) progressBar.style.width = pct + '%';
+                    } else {
+                        card.classList.remove('is-live');
+                        const tag = card.querySelector('.live-tag');
+                        const bar = card.querySelector('.progress-bar');
+                        if (tag) tag.remove();
+                        if (bar) bar.remove();
+                    }
+                });
+            });
+
+            // Status Text
+            const status = document.getElementById('status-display');
+            const availableBox = document.getElementById('available-teachers-box');
+
+            if (claseActual) {
+                // Calculate dbBlockIdx for the current class BEFORE calling getTeacher
+                let dbBlockIdx = -1;
+                if (currentBlockIndex === 0) dbBlockIdx = 0;      // B1
+                else if (currentBlockIndex === 2) dbBlockIdx = 1; // B2
+                else if (currentBlockIndex === 3) dbBlockIdx = 2; // B3
+                else if (currentBlockIndex === 5) dbBlockIdx = 3; // B4
+
+                const teacher = getTeacher(claseActual, currentGrade, diaHoy, dbBlockIdx);
+
+                // Build HTML with styles using Flexbox for clean stacking
+                let html = `<div class="flex flex-col items-center justify-center gap-1">
+                                <span class="text-gray-400 font-medium italic text-base">Estamos en</span>
+                                <span class="text-[#e67e22] font-black uppercase text-2xl md:text-3xl tracking-wide leading-tight text-center px-2">${claseActual}</span>`;
+
+                if (teacher && teacher !== "---" && teacher !== "Desconocido") {
+                    const femaleNames = ["Merly", "Sonia", "Katherine", "Flor", "Yuli", "Alexandra", "Ibón", "Laura", "Maritza", "Carolina"];
+                    const first = teacher.split(" ")[0];
+                    const prefix = femaleNames.includes(first) ? "la profesora" : "el profesor";
+
+                    html += `<div class="flex flex-col items-center mt-1">
+                                <span class="text-gray-400 text-sm italic">con ${prefix}</span> 
+                                <span class="text-[#3498db] font-bold text-xl text-center">${teacher}</span>
+                             </div>`;
+                }
+                html += `</div>`;
+
+                status.innerHTML = html;
+
+                // Reset/Set container styles
+                status.style.color = "";
+                status.style.borderColor = "#f39c12";
+                status.style.backgroundColor = "#fffbf2";
+
+                // --- CALCULATE AVAILABLE TEACHERS ---
+                if (currentBlockIndex !== -1 && diaHoy >= 1 && diaHoy <= 5) {
+                    const busyTeachers = new Set();
+
+                    // DB Blocks: 0=B1, 1=B2, 2=B3, 3=B4
+                    // Franjas: 0=B1, 1=Desc, 2=B2, 3=B3, 4=Desc, 5=B4 (indices 2,3,5 match DB 1,2,3)
+                    // Map Franja Index to DB Block Index manually
+                    let dbBlockIdx = -1;
+                    if (currentBlockIndex === 0) dbBlockIdx = 0;      // B1
+                    else if (currentBlockIndex === 2) dbBlockIdx = 1; // B2
+                    else if (currentBlockIndex === 3) dbBlockIdx = 2; // B3
+                    else if (currentBlockIndex === 5) dbBlockIdx = 3; // B4
+
+                    if (dbBlockIdx !== -1) {
+                        // Scan ALL grades
+                        Object.keys(SCHEDULE_DB).forEach(gradeKey => {
+                            const gradeData = SCHEDULE_DB[gradeKey];
+                            if (gradeData.blocks[dbBlockIdx]) {
+                                const subject = gradeData.blocks[dbBlockIdx][diaHoy - 1]; // day is 1-based in loop, array is 0-based
+                                const t = getTeacher(subject, gradeKey, diaHoy, dbBlockIdx);
+                                if (t && t !== "---" && t !== "Desconocido") {
+                                    // Handle splits like "Name1 / Name2"
+                                    t.split("/").forEach(subT => busyTeachers.add(subT.trim()));
+                                }
+                            }
+                        });
+                    }
+
+                    const available = ALL_TEACHERS.filter(t => !busyTeachers.has(t));
+
+                    if (available.length > 0) {
+                        availableBox.classList.remove('hidden');
+                        const listEl = document.getElementById('available-list');
+                        listEl.innerHTML = available.map(t =>
+                            `<span class="bg-green-50 text-green-700 px-2 py-1 rounded-full border border-green-100">${t}</span>`
+                        ).join('');
+                    } else {
+                        availableBox.classList.add('hidden');
+                    }
+                } else {
+                    availableBox.classList.add('hidden'); // Break time or error
+                }
+
+            } else {
+                status.innerText = "Fuera de jornada escolar";
+                status.style.color = "#cbd5e0";
+                status.style.borderColor = "#edf2f7";
+                status.style.backgroundColor = "rgba(255,255,255,0.5)";
+                if (availableBox) availableBox.classList.add('hidden');
+            }
+        }
+
+        // --- INIT ---
+        window.addEventListener('load', () => {
+            initTabs();
+            loadGrade('transicion'); // Default
+            renderAttentionSidebar(); // New Dynamic Sidebar
+            setInterval(update, 1000);
+        });
+    </script>
+</body>
+
+</html>
