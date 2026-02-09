@@ -22,7 +22,7 @@
             <a href="horizonte.html" class="nav-item">Horizonte</a>
             <a href="horarios.html" class="nav-item">Horarios</a>
             <a href="pagos.html" class="nav-item active">Pagos</a>
-            <a href="https://www.inas.edu.co/lista-%C3%BAtiles" class="nav-item" target="_blank">Lista de Útiles</a>
+            <a href="utiles.html" class="nav-item">Lista de Útiles</a>
             <a href="contacto.html" class="nav-item">Contáctenos</a>
         </div>
         <div class="social-nav">
@@ -58,68 +58,79 @@
         <div class="pattern-overlay"></div>
     </header>
 
-    <section class="content-section">
-        <div class="payments-title-wrapper">
-            <h2 class="section-title dark-title">Cuentas Autorizadas</h2>
-            <div style="text-align: center;">
-                <p class="payment-security-notice">Por favor utilice únicamente estas cuentas para sus transacciones.
+    <!-- Main Payments Section -->
+    <section class="section-full bg-soft with-spheres-warm"
+        style="min-height: 80vh; align-items: center; position: relative;">
+        <!-- Hero Orbs Removed - Using SVG Spheres via .with-spheres class -->
+
+        <div class="container-centered">
+
+            <div class="payments-intro">
+                <h2 class="section-title text-center" style="color: #4527a0;">Cuentas Autorizadas</h2>
+                <p class="section-desc text-center" style="max-width: 600px; margin: 0 auto 3rem; color: #546e7a;">
+                    Utilice únicamente los siguientes canales oficiales para realizar sus pagos de matrícula y
+                    pensiones.
                 </p>
             </div>
-        </div>
 
-        <div class="payments-container-new">
+            <!-- 3D Cards Container -->
+            <div class="cards-3d-stage" style="gap: 5rem; align-items: center;">
 
-            <!-- Banco Caja Social Block -->
-            <div class="payment-block caja-social">
-                <div class="bank-header">
-                    <!-- Optional: You could add a small icon/logo here if desired -->
-                    <span class="bank-name-large">Banco Caja Social</span>
-                </div>
-                <div class="account-number-large">2403 0000 0015</div>
-                <span class="account-type-badge">Cuenta Corriente</span>
-
-                <div class="account-details-grid">
-                    <div class="detail-item">
-                        <span>Titular</span>
-                        <strong>INSTITUTO NUEVA AMÉRICA</strong>
+                <!-- Card: Davivienda (Larger) -->
+                <div class="payment-card-3d card-davi card-large">
+                    <div class="card-glass-content">
+                        <div class="card-top">
+                            <span class="chip-icon"></span>
+                            <span class="bank-logo-text">Davivienda</span>
+                        </div>
+                        <div class="card-number">
+                            <span>1089</span>
+                            <span>0060</span>
+                            <span>1783</span>
+                        </div>
+                        <div class="card-details-row">
+                            <div class="card-holder">
+                                <span class="label">TITULAR</span>
+                                <div class="value" style="font-size: 0.9rem; line-height: 1.2;">INSTITUTO NUEVA <br>
+                                    AMÉRICA DE SUBA</div>
+                            </div>
+                            <div class="card-type">
+                                <span>Ahorros</span>
+                            </div>
+                        </div>
+                        <div class="card-extra-info"
+                            style="opacity: 1; position: relative; bottom: auto; right: auto; text-align: left; margin-top: 1rem; font-size: 0.9rem;">
+                            NIT: <strong>900.030.860</strong>
+                            <!-- Key info removed from here -->
+                        </div>
                     </div>
-                    <!-- Add more details if needed -->
                 </div>
+
+                <!-- Key Visual Section -->
+                <div class="key-visual-container">
+                    <div class="key-glass-icon glass-frame">
+                        <div class="floating-key">🔑</div>
+                    </div>
+                    <div class="key-info-text">
+                        <span class="key-label">LLAVE (CONVENIO)</span>
+                        <span class="key-value">@DAVIINSTAMERSUBA</span>
+                    </div>
+                </div>
+
             </div>
 
-            <!-- Davivienda Block -->
-            <div class="payment-block davivienda">
-                <div class="bank-header">
-                    <span class="bank-name-large">Davivienda</span>
-                </div>
-                <div class="account-number-large">1089 0060 1783</div>
-                <span class="account-type-badge">Cuenta de Ahorros</span>
-
-                <div class="account-details-grid">
-                    <div class="detail-item">
-                        <span>Titular</span>
-                        <strong>INSTITUTO NUEVA AMÉRICA DE SUBA</strong>
-                    </div>
-                    <div class="detail-item">
-                        <span>NIT</span>
-                        <strong>900.030.860</strong>
-                    </div>
-                    <div class="detail-item">
-                        <span>Llave (Convenio)</span>
-                        <strong>@DAVIINSTAMERSUBA</strong>
+            <!-- Info Box -->
+            <div class="payment-info-glass glass-frame">
+                <div class="info-icon-3d">📧</div>
+                <div class="info-text-content">
+                    <h3>Reportar Transacción</h3>
+                    <p>Envíe su comprobante a <strong>secretaria@inas.edu.co</strong> indicando:</p>
+                    <div class="tags-row">
+                        <span class="info-tag">Nombre Estudiante</span>
+                        <span class="info-tag">Grado</span>
+                        <span class="info-tag">Motivo</span>
                     </div>
                 </div>
-            </div>
-
-            <!-- Warning/Info Box (Kept mostly the same style but optimized width) -->
-            <div class="payment-info-box" style="width: 100%; max-width: none;">
-                <h3>⚠️ Importante: Reportar Pago</h3>
-                <p>Enviar soporte de la transacción al correo: <strong>secretaria@inas.edu.co</strong></p>
-                <ul class="payment-requirements">
-                    <li><strong>Nombre:</strong> Nombre completo del estudiante</li>
-                    <li><strong>Curso:</strong> Grado actual</li>
-                    <li><strong>Motivo:</strong> Pensión, Guías, etc.</li>
-                </ul>
             </div>
 
         </div>

@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Útiles Escolares - INAS</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- React App Dependencies -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'hand': ['"Comic Neue"', 'cursive'],
+                        'sans': ['"Inter"', 'sans-serif'],
+                    },
+                    colors: {
+                        'board-green': '#1e3a2f',
+                        'paper-yellow': '#fdfbf7',
+                    },
+                    animation: {
+                        blob: "blob 7s infinite",
+                    },
+                    keyframes: {
+                        blob: {
+                            "0%": { transform: "translate(0px, 0px) scale(1)" },
+                            "33%": { transform: "translate(30px, -50px) scale(1.1)" },
+                            "66%": { transform: "translate(-20px, 20px) scale(0.9)" },
+                            "100%": { transform: "translate(0px, 0px) scale(1)" },
+                        },
+                    },
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Inter:wght@400;600&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/@babel/standalone@7.23.6/babel.min.js"></script>
+    <script type="importmap">
+    {
+      "imports": {
+        "react": "https://esm.sh/react@18.2.0",
+        "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+        "lucide-react": "https://esm.sh/lucide-react@0.263.1"
+      }
+    }
+    </script>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="assets/inas_shield.png" alt="Escudo INAS" class="logo-img">
+            <span class="logo-text">Instituto Nueva América <br> de Suba</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-item">Inicio</a>
+            <a href="instalaciones.html" class="nav-item">Instalaciones</a>
+            <a href="horizonte.html" class="nav-item">Horizonte</a>
+            <a href="horarios.html" class="nav-item">Horarios</a>
+            <a href="pagos.html" class="nav-item">Pagos</a>
+            <a href="utiles.html" class="nav-item active">Lista de Útiles</a>
+            <a href="contacto.html" class="nav-item">Contáctenos</a>
+        </div>
+        <div class="social-nav">
+            <a href="#" class="social-icon-link instagram" aria-label="Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="social-svg">
+                    <path
+                        d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M18,5A1.25,1.25 0 0,1 19.25,6.25A1.25,1.25 0 0,1 18,7.5A1.25,1.25 0 0,1 16.75,6.25A1.25,1.25 0 0,1 18,5Z" />
+                </svg>
+            </a>
+            <a href="#" class="social-icon-link youtube" aria-label="YouTube">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="social-svg">
+                    <path
+                        d="M10,15L15.19,12L10,9V15M21.56,7.17C21.69,7.64 21.78,8.27 21.84,9.07C21.91,9.87 21.94,10.56 21.94,11.16L22,12C22,14.19 21.84,15.8 21.56,16.83C21.31,17.73 20.73,18.31 19.83,18.56C19.36,18.69 18.5,18.78 17.18,18.84C15.88,18.91 14.69,18.94 13.59,18.94L12,19C7.81,19 5.2,18.84 4.17,18.56C3.27,18.31 2.69,17.73 2.44,16.83C2.31,16.36 2.22,15.73 2.16,14.93C2.09,14.13 2.06,13.44 2.06,12.84L2,12C2,9.81 2.16,8.2 2.44,7.17C2.69,6.27 3.27,5.69 4.17,5.44C4.64,5.31 5.5,5.22 6.82,5.16C8.12,5.09 9.31,5.06 10.41,5.06L12,5C16.19,5 18.8,5.16 19.83,5.44C20.73,5.69 21.31,6.27 21.56,7.17Z" />
+                </svg>
+            </a>
+            <button class="menu-toggle" aria-label="Abrir menú">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <header class="page-hero">
+        <div class="page-hero-content">
+            <h1 class="page-title">Lista de Útiles Escolares 2026</h1>
+            <p class="page-subtitle">Prepara tu regreso a clases con todo lo necesario.</p>
+        </div>
+        <div class="pattern-overlay"></div>
+    </header>
+
+    <!-- React App Container -->
+    <section class="section-full bg-soft" style="padding: 2rem 0; background: #f5f5f4;">
+        <div id="root" style="width: 100%;"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-overlay"></div>
+        <div class="footer-content">
+            <!-- Col 1: Brand -->
+            <div class="footer-col brand-col">
+                <div class="footer-logo">
+                    <img src="assets/inas_shield.png" alt="Escudo INAS">
+                    <span>INAS</span>
+                </div>
+                <p class="footer-tagline">"Ciencia, Cultura y Vida"</p>
+                <p class="footer-desc">Formando líderes integrales para el futuro, con excelencia académica y values
+                    humanos.</p>
+            </div>
+            <div class="footer-col links-col">
+                <h3 class="footer-heading">Navegación</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="instalaciones.html">Instalaciones</a></li>
+                    <li><a href="horizonte.html">Horizonte</a></li>
+                    <li><a href="horarios.html">Horarios</a></li>
+                    <li><a href="pagos.html">Pagos</a></li>
+                    <li><a href="utiles.html">Lista de Útiles</a></li>
+                    <li><a href="contacto.html">Contáctenos</a></li>
+                </ul>
+            </div>
+            <div class="footer-col contact-col">
+                <h3 class="footer-heading">Contáctanos</h3>
+                <ul class="contact-list">
+                    <li><span class="icon">📍</span><span>Calle 139 # 101D - 15, Suba, Bogotá</span></li>
+                    <li><span class="icon">📞</span><span>(601) 682 9283</span></li>
+                    <li><span class="icon">📧</span><span>contacto@inas.edu.co</span></li>
+                </ul>
+                <div class="social-icons">
+                    <a href="#" class="social-btn instagram" aria-label="Instagram">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                            class="social-svg-footer">
+                            <path
+                                d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M18,5A1.25,1.25 0 0,1 19.25,6.25A1.25,1.25 0 0,1 18,7.5A1.25,1.25 0 0,1 16.75,6.25A1.25,1.25 0 0,1 18,5Z" />
+                        </svg>
+                    </a>
+                    <a href="#" class="social-btn youtube" aria-label="YouTube">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                            class="social-svg-footer">
+                            <path
+                                d="M10,15L15.19,12L10,9V15M21.56,7.17C21.69,7.64 21.78,8.27 21.84,9.07C21.91,9.87 21.94,10.56 21.94,11.16L22,12C22,14.19 21.84,15.8 21.56,16.83C21.31,17.73 20.73,18.31 19.83,18.56C19.36,18.69 18.5,18.78 17.18,18.84C15.88,18.91 14.69,18.94 13.59,18.94L12,19C7.81,19 5.2,18.84 4.17,18.56C3.27,18.31 2.69,17.73 2.44,16.83C2.31,16.36 2.22,15.73 2.16,14.93C2.09,14.13 2.06,13.44 2.06,12.84L2,12C2,9.81 2.16,8.2 2.44,7.17C2.69,6.27 3.27,5.69 4.17,5.44C4.64,5.31 5.5,5.22 6.82,5.16C8.12,5.09 9.31,5.06 10.41,5.06L12,5C16.19,5 18.8,5.16 19.83,5.44C20.73,5.69 21.31,6.27 21.56,7.17Z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Instituto Nueva América de Suba. Todos los derechos reservados.</p>
+            <div class="footer-line"></div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="mobile-menu.js"></script>
+    <script type="module" src="chatbot.js"></script>
+
+    <!-- React Logic -->
+    <script type="text/babel" data-type="module">
+        import React, { useState, useEffect } from 'react';
+        import { createRoot } from 'react-dom/client';
+        import { Book, Backpack, Palette, FileText, Check, Square, GraduationCap, Sparkles, PartyPopper } from 'lucide-react';
+
+        // --- DATA ---
+        const CATEGORY_ICONS = {
+            cuadernos: <Book className="w-5 h-5 text-blue-600" />,
+            papeleria: <FileText className="w-5 h-5 text-yellow-600" />,
+            arte: <Palette className="w-5 h-5 text-purple-600" />,
+            otros: <Backpack className="w-5 h-5 text-green-600" />,
+        };
+
+        const GRADE_DATA = {
+            transicion: {
+                id: 'transicion',
+                title: 'TRANSICIÓN',
+                supplies: [
+                    { id: 't-1', text: '1 Cartuchera con: colores jumbo triangular x12, 1 borrador de nata, 1 lápiz negro eco, 1 lápiz rojo chequeo, 1 tajalápiz con deposito (Marcado uno a uno)', category: 'papeleria' },
+                    { id: 't-2', text: '1 Pegante en barra', category: 'arte' },
+                    { id: 't-3', text: '1 Rollo de cinta enmascarar', category: 'papeleria' },
+                    { id: 't-4', text: '1 Paquete de papel silueta', category: 'arte' },
+                    { id: 't-5', text: '1 Bata blanca', category: 'otros' },
+                    { id: 't-6', text: '1 Paquete de cartulina de colores iris y brístol', category: 'arte' },
+                    { id: 't-7', text: '1 Paquete de filigrana', category: 'arte' },
+                    { id: 't-8', text: '1 Ovillo de lana', category: 'arte' },
+                    { id: 't-9', text: '1 Resma de papel tamaño Oficio', category: 'papeleria' },
+                    { id: 't-10', text: '1 Juego didáctico para 5 años', category: 'otros' },
+                    { id: 't-11', text: '1 Carpeta plástica tamaño oficio con gancho legajador y caucho', category: 'papeleria' },
+                    { id: 't-12', text: 'Tijeras punta roma', category: 'arte' },
+                    { id: 't-13', text: 'Kit de bioseguridad (Pañitos húmedos, jabón, papel higiénico, gel)', category: 'otros' },
+                ]
+            },
+            primero: {
+                id: 'primero',
+                title: 'GRADO PRIMERO',
+                supplies: [
+                    { id: '1-1', text: '6 Cuadernos cuadriculados de 100 hojas cosidos grandes (Artes, Biología, Sociales, Ingles, Matemáticas, Ética)', category: 'cuadernos' },
+                    { id: '1-2', text: '4 Cuadernos cuadriculados de 50 hojas grandes cosidos (Tecnología, Ed. Física, Geometría, Plan Lector)', category: 'cuadernos' },
+                    { id: '1-3', text: '1 Cuaderno ferrocarril de 100 hojas grande cosido (Español)', category: 'cuadernos' },
+                    { id: '1-4', text: '1 Abaco horizontal', category: 'papeleria' },
+                    { id: '1-5', text: '1 Cartuchera con: 1 caja de colores x12 mina 4mm gruesa, 1 borrador de nata, 1 lápiz negro eco, 1 lápiz rojo chequeo, 1 tajalápiz', category: 'papeleria' },
+                    { id: '1-6', text: '1 Regla de 30 cm', category: 'papeleria' },
+                    { id: '1-7', text: '1 Bata blanca', category: 'otros' },
+                    { id: '1-8', text: '1 Resma de papel tamaño Oficio', category: 'papeleria' },
+                    { id: '1-9', text: '1 Pegante en barra y 1 Pegante líquido', category: 'arte' },
+                    { id: '1-10', text: '1 Paquete de cartulina iris y brístol', category: 'arte' },
+                    { id: '1-11', text: '1 Rollo de cinta de enmascarar', category: 'papeleria' },
+                    { id: '1-12', text: '1 Carpeta plástica tamaño oficio con gancho legajador y caucho', category: 'papeleria' },
+                    { id: '1-13', text: '1 Tijera punta roma', category: 'arte' },
+                    { id: '1-14', text: 'Kit de bioseguridad (Pañitos húmedos, jabón, papel higiénico, gel)', category: 'otros' },
+                ]
+            },
+            segundo: {
+                id: 'segundo',
+                title: 'GRADO SEGUNDO',
+                supplies: [
+                    { id: '2-1', text: '5 Cuadernos cuadriculados de 100 hojas cosidos grandes', category: 'cuadernos' },
+                    { id: '2-2', text: '4 Cuadernos cuadriculados de 50 hojas grandes cosidos', category: 'cuadernos' },
+                    { id: '2-3', text: '1 Cuaderno ferrocarril de 100 hojas grande cosido', category: 'cuadernos' },
+                    { id: '2-4', text: '1 Cartuchera completa (colores, borrador, lápices, tajalápiz)', category: 'papeleria' },
+                    { id: '2-5', text: '1 Regla de 30 cm', category: 'papeleria' },
+                    { id: '2-6', text: '1 Pegante líquido', category: 'arte' },
+                    { id: '2-7', text: '1 Pegante en barra', category: 'arte' },
+                    { id: '2-8', text: '1 Resma de papel tamaño Oficio', category: 'papeleria' },
+                    { id: '2-9', text: '1 Carpeta plástica tamaño oficio con gancho legajador y caucho', category: 'papeleria' },
+                    { id: '2-10', text: 'Kit de bioseguridad', category: 'otros' },
+                    { id: '2-11', text: '1 Bata blanca', category: 'otros' },
+                ]
+            },
+            tercero: {
+                id: 'tercero',
+                title: 'GRADO TERCERO',
+                supplies: [
+                    { id: '3-1', text: '6 Cuadernos cuadriculados de 100 hojas cosidos grandes', category: 'cuadernos' },
+                    { id: '3-2', text: '2 Cuadernos cuadriculados de 50 hojas cosidos grandes', category: 'cuadernos' },
+                    { id: '3-3', text: '1 Cuaderno ferrocarril de 100 hojas grande cosido (Español)', category: 'cuadernos' },
+                    { id: '3-4', text: '1 Cartuchera completa', category: 'papeleria' },
+                    { id: '3-5', text: '1 Regla de 30 cm', category: 'papeleria' },
+                    { id: '3-6', text: '1 Tijeras punta roma', category: 'arte' },
+                    { id: '3-7', text: '1 Pegante líquido y 1 en barra', category: 'arte' },
+                    { id: '3-8', text: '1 Resma de papel tamaño Oficio', category: 'papeleria' },
+                    { id: '3-9', text: '1 Carpeta plástica tamaño oficio con gancho', category: 'papeleria' },
+                    { id: '3-10', text: '1 Tabla periódica', category: 'papeleria' },
+                    { id: '3-11', text: 'Kit de bioseguridad', category: 'otros' },
+                    { id: '3-12', text: '1 Bata blanca', category: 'otros' },
+                ]
+            },
+            cuarto: {
+                id: 'cuarto',
+                title: 'GRADO CUARTO',
+                supplies: [
+                    { id: '4-1', text: '5 Cuadernos cuadriculados de 100 hojas cosidos grandes', category: 'cuadernos' },
+                    { id: '4-2', text: '6 Cuadernos cuadriculados de 50 hojas grande cosido', category: 'cuadernos' },
+                    { id: '4-3', text: '1 Cuaderno cuadriculado de 50 hojas pequeño cosido', category: 'cuadernos' },
+                    { id: '4-4', text: '1 Cuaderno ferrocarril de 100 hojas grande cosido', category: 'cuadernos' },
+                    { id: '4-5', text: '1 Cartuchera completa', category: 'papeleria' },
+                    { id: '4-6', text: '1 Regla de 30 cm', category: 'papeleria' },
+                    { id: '4-7', text: '1 Escuadra de 45° y 60°', category: 'papeleria' },
+                    { id: '4-8', text: '1 Compás y 1 Transportador 360°', category: 'papeleria' },
+                    { id: '4-9', text: 'Pegante líquido y en barra', category: 'arte' },
+                    { id: '4-10', text: '1 Tabla periódica', category: 'papeleria' },
+                    { id: '4-11', text: '1 Resma de papel tamaño Oficio', category: 'papeleria' },
+                    { id: '4-12', text: '1 Paquete de hojas examen', category: 'papeleria' },
+                    { id: '4-13', text: '1 Block Din 4 (Artes)', category: 'arte' },
+                    { id: '4-14', text: '1 Carpeta plástica tamaño oficio', category: 'papeleria' },
+                    { id: '4-15', text: 'Kit de bioseguridad', category: 'otros' },
+                    { id: '4-16', text: '1 Bata blanca', category: 'otros' },
+                ]
+            },
+            quinto: {
+                id: 'quinto',
+                title: 'GRADO QUINTO',
+                supplies: [
+                    { id: '5-1', text: '6 Cuadernos cuadriculados de 100 hojas cosidos grandes', category: 'cuadernos' },
+                    { id: '5-2', text: '6 Cuadernos cuadriculados de 50 hojas grande cosido', category: 'cuadernos' },
+                    { id: '5-3', text: '1 Cuaderno cuadriculado de 50 hojas grande cosido', category: 'cuadernos' },
+                    { id: '5-4', text: '1 Cartuchera completa (incluir bolígrafos y lápiz 2B)', category: 'papeleria' },
+                    { id: '5-5', text: '1 Regla de 30 cm', category: 'papeleria' },
+                    { id: '5-6', text: '1 Escuadra de 45° y 60°', category: 'papeleria' },
+                    { id: '5-7', text: '1 Compás y 1 Transportador 360°', category: 'papeleria' },
+                    { id: '5-8', text: '1 Resma de papel tamaño Oficio', category: 'papeleria' },
+                    { id: '5-9', text: '1 Block Din A4', category: 'arte' },
+                    { id: '5-10', text: '1 Tabla periódica Walter', category: 'papeleria' },
+                    { id: '5-11', text: '1 Paquete de hojas examen', category: 'papeleria' },
+                    { id: '5-12', text: 'Kit de bioseguridad', category: 'otros' },
+                    { id: '5-13', text: '1 Bata blanca', category: 'otros' },
+                ]
+            },
+            sexto: {
+                id: 'sexto',
+                title: 'GRADO SEXTO',
+                supplies: [
+                    { id: '6-1', text: '12 Cuadernos cuadriculados de 100 hojas cosidos grandes', category: 'cuadernos' },
+                    { id: '6-2', text: '1 Cuaderno cuadriculado de 50 hojas pequeño', category: 'cuadernos' },
+                    { id: '6-3', text: 'Kit de escritura: bolígrafos, lápiz B y 2B', category: 'papeleria' },
+                    { id: '6-4', text: 'Cartuchera completa', category: 'papeleria' },
+                    { id: '6-5', text: '1 Resma de papel tamaño Oficio', category: 'papeleria' },
+                    { id: '6-6', text: 'Juego geométrico (Regla, Escuadras, Transportador)', category: 'papeleria' },
+                    { id: '6-7', text: '1 Compás', category: 'papeleria' },
+                    { id: '6-8', text: '1 Block Din A4 y 1 Block papel milimetrado', category: 'arte' },
+                    { id: '6-9', text: '1 Tabla periódica Walter', category: 'papeleria' },
+                    { id: '6-10', text: '1 Paquete de hojas examen', category: 'papeleria' },
+                    { id: '6-11', text: '1 Carpeta plástica tamaño oficio', category: 'papeleria' },
+                    { id: '6-12', text: 'Kit de bioseguridad', category: 'otros' },
+                    { id: '6-13', text: '1 Bata blanca', category: 'otros' },
+                ]
+            },
+            septimo: {
+                id: 'septimo',
+                title: 'GRADO SÉPTIMO',
+                supplies: [
+                    { id: '7-1', text: '12 Cuadernos cuadriculados de 100 hojas cosidos grandes', category: 'cuadernos' },
+                    { id: '7-2', text: '1 Cuaderno cuadriculado de 50 hojas pequeño', category: 'cuadernos' },
+                    { id: '7-3', text: 'Kit de escritura: bolígrafos, lápiz B y 2B', category: 'papeleria' },
+                    { id: '7-4', text: 'Cartuchera completa', category: 'papeleria' },
+                    { id: '7-5', text: '1 Regla de 30 cm metálica', category: 'papeleria' },
+                    { id: '7-6', text: 'Juego geométrico y compás', category: 'papeleria' },
+                    { id: '7-7', text: '1 Block Din A4', category: 'arte' },
+                    { id: '7-8', text: '1 Tabla periódica Walter', category: 'papeleria' },
+                    { id: '7-9', text: '1 Resma de papel tamaño Oficio', category: 'papeleria' },
+                    { id: '7-10', text: '1 Calculadora científica', category: 'otros' },
+                    { id: '7-11', text: '1 Paquete de hojas examen', category: 'papeleria' },
+                    { id: '7-12', text: '1 Carpeta plástica tamaño oficio', category: 'papeleria' },
+                    { id: '7-13', text: 'Kit de bioseguridad', category: 'otros' },
+                    { id: '7-14', text: '1 Bata blanca', category: 'otros' },
+                ]
+            },
+            octavo: {
+                id: 'octavo',
+                title: 'GRADO OCTAVO',
+                supplies: [
+                    { id: '8-1', text: '12 Cuadernos cuadriculados de 100 hojas cosidos grandes', category: 'cuadernos' },
+                    { id: '8-2', text: 'Kit de escritura completo', category: 'papeleria' },
+                    { id: '8-3', text: 'Cartuchera completa', category: 'papeleria' },
+                    { id: '8-4', text: '1 Regla de 30 cm', category: 'papeleria' },
+                    { id: '8-5', text: '1 Resma de papel tamaño Oficio', category: 'papeleria' },
+                    { id: '8-6', text: 'Juego geométrico y compás', category: 'papeleria' },
+                    { id: '8-7', text: '1 Block Din A4', category: 'arte' },
+                    { id: '8-8', text: '1 Tabla periódica Walter', category: 'papeleria' },
+                    { id: '8-9', text: '1 Regla T', category: 'papeleria' },
+                    { id: '8-10', text: '1 Calculadora científica', category: 'otros' },
+                    { id: '8-11', text: 'Kit de bioseguridad', category: 'otros' },
+                    { id: '8-12', text: '1 Bata blanca', category: 'otros' },
+                ]
+            },
+            noveno: {
+                id: 'noveno',
+                title: 'GRADO NOVENO',
+                supplies: [
+                    { id: '9-1', text: '10 Cuadernos cuadriculados de 100 hojas cosidos grandes', category: 'cuadernos' },
+                    { id: '9-2', text: '2 Cuadernos de 50 hojas', category: 'cuadernos' },
+                    { id: '9-3', text: 'Kit de escritura completo', category: 'papeleria' },
+                    { id: '9-4', text: 'Cartuchera completa', category: 'papeleria' },
+                    { id: '9-5', text: '1 Regla de 30 cm', category: 'papeleria' },
+                    { id: '9-6', text: '1 Resma de papel tamaño Oficio', category: 'papeleria' },
+                    { id: '9-7', text: 'Juego geométrico y compás', category: 'papeleria' },
+                    { id: '9-8', text: '1 Block Din A4', category: 'arte' },
+                    { id: '9-9', text: '1 Tabla periódica Walter', category: 'papeleria' },
+                    { id: '9-10', text: '1 Calculadora científica', category: 'otros' },
+                    { id: '9-11', text: 'Kit de bioseguridad', category: 'otros' },
+                    { id: '9-12', text: '1 Bata blanca', category: 'otros' },
+                ]
+            },
+            decimo: {
+                id: 'decimo',
+                title: 'GRADO DÉCIMO',
+                supplies: [
+                    { id: '10-1', text: '10 Cuadernos cuadriculados de 100 hojas cosidos grandes', category: 'cuadernos' },
+                    { id: '10-2', text: '2 Cuadernos cuadriculados de 50 hojas', category: 'cuadernos' },
+                    { id: '10-3', text: 'Kit de escritura completo', category: 'papeleria' },
+                    { id: '10-4', text: 'Cartuchera completa', category: 'papeleria' },
+                    { id: '10-5', text: '1 Regla de 30 cm y 1 Compás', category: 'papeleria' },
+                    { id: '10-6', text: '1 Resma de papel tamaño Oficio', category: 'papeleria' },
+                    { id: '10-7', text: '1 Transportador 360°', category: 'papeleria' },
+                    { id: '10-8', text: '1 Block de papel milimetrado', category: 'papeleria' },
+                    { id: '10-9', text: '1 Calculadora científica', category: 'otros' },
+                    { id: '10-10', text: '1 Tabla periódica Walter', category: 'papeleria' },
+                    { id: '10-11', text: 'Kit de bioseguridad', category: 'otros' },
+                    { id: '10-12', text: '1 Bata blanca', category: 'otros' },
+                ]
+            },
+            once: {
+                id: 'once',
+                title: 'GRADO ONCE',
+                supplies: [
+                    { id: '11-1', text: '10 Cuadernos cuadriculados de 100 hojas cosidos grandes', category: 'cuadernos' },
+                    { id: '11-2', text: '2 Cuaderno cuadriculado de 50 hojas', category: 'cuadernos' },
+                    { id: '11-3', text: 'Kit de escritura completo', category: 'papeleria' },
+                    { id: '11-4', text: 'Cartuchera completa', category: 'papeleria' },
+                    { id: '11-5', text: '1 Resma de papel tamaño Oficio', category: 'papeleria' },
+                    { id: '11-6', text: '1 Caja kit de colores x12', category: 'papeleria' },
+                    { id: '11-7', text: '1 Regla de 30 cm metálica', category: 'papeleria' },
+                    { id: '11-8', text: '1 Calculadora científica', category: 'otros' },
+                    { id: '11-9', text: 'Kit de bioseguridad', category: 'otros' },
+                    { id: '11-10', text: '1 Bata blanca', category: 'otros' },
+                ]
+            }
+        };
+
+        // --- COMPONENTS ---
+
+        const GradeSelector = ({ currentGrade, onSelect }) => {
+            const grades = [
+                'transicion',
+                'primero',
+                'segundo',
+                'tercero',
+                'cuarto',
+                'quinto',
+                'sexto',
+                'septimo',
+                'octavo',
+                'noveno',
+                'decimo',
+                'once'
+            ];
+            return (
+                <div className="flex flex-wrap gap-2 justify-center mb-6 w-full px-2 max-w-5xl mx-auto">
+                    {grades.map((grade) => (
+                        <button
+                            key={grade}
+                            onClick={() => onSelect(grade)}
+                            className={`
+                  px-3 py-2 text-xs md:px-5 md:py-2 md:text-sm lg:text-base
+                  rounded-full font-bold uppercase tracking-wide transition-all duration-300 transform border-2
+                  ${currentGrade === grade
+                                    ? 'bg-board-green text-white border-board-green shadow-lg scale-105 z-10'
+                                    : 'bg-white/80 text-board-green border-board-green/20 hover:border-board-green/50 hover:bg-white'
+                                }
+                `}
+                        >
+                            {grade}
+                        </button>
+                    ))}
+                </div>
+            );
+        };
+
+        const ChecklistItem = ({ item, isChecked, onToggle }) => {
+            return (
+                <div
+                    onClick={() => onToggle(item.id)}
+                    className={`
+              group flex items-start p-2 md:p-3 mb-2 rounded-lg cursor-pointer transition-all duration-200 border-b border-dashed border-gray-300
+              ${isChecked ? 'bg-green-50/50' : 'hover:bg-yellow-50'}
+            `}
+                >
+                    <div className="flex-shrink-0 mt-1 mr-3 text-gray-400 group-hover:text-board-green transition-colors">
+                        {isChecked ? (
+                            <div className="bg-green-500 text-white rounded shadow-sm p-0.5">
+                                <Check size={16} strokeWidth={3} />
+                            </div>
+                        ) : (
+                            <Square size={20} />
+                        )}
+                    </div>
+
+                    <div className="flex-1">
+                        <p
+                            className={`
+                  font-hand text-base md:text-lg leading-tight transition-all
+                  ${isChecked ? 'text-gray-400 line-through' : 'text-gray-800'}
+                `}
+                        >
+                            {item.text}
+                        </p>
+                    </div>
+
+                    <div className={`ml-2 opacity-50 ${isChecked ? 'grayscale' : ''}`}>
+                        {CATEGORY_ICONS[item.category]}
+                    </div>
+                </div>
+            );
+        };
+
+        const App = () => {
+            const [activeGrade, setActiveGrade] = useState('primero');
+            const [checkedItems, setCheckedItems] = useState({});
+
+            const handleToggle = (id) => {
+                setCheckedItems((prev) => ({
+                    ...prev,
+                    [id]: !prev[id],
+                }));
+            };
+
+            const currentData = GRADE_DATA[activeGrade];
+            const totalItems = currentData.supplies.length;
+            const checkedCount = currentData.supplies.filter((i) => checkedItems[i.id]).length;
+            const progress = totalItems > 0 ? Math.round((checkedCount / totalItems) * 100) : 0;
+            const isComplete = progress === 100 && totalItems > 0;
+
+            return (
+                <div className="min-h-screen bg-[#f5f5f4] flex flex-col items-center py-4 md:py-8 relative font-sans print:bg-white print:py-0 text-slate-800">
+
+                    {/* Background Decor */}
+                    <div className="fixed inset-0 z-0 pointer-events-none opacity-10 print:hidden"
+                        style={{
+                            backgroundImage: 'url("https://www.transparenttextures.com/patterns/graphy.png")',
+                            backgroundSize: 'auto'
+                        }}>
+                    </div>
+
+                    {/* Animated Blobs (Fixed Delays using Inline Styles) */}
+                    <div className="fixed top-0 left-0 w-64 h-64 bg-yellow-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob print:hidden"></div>
+
+                    <div className="fixed top-0 right-0 w-64 h-64 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob print:hidden"
+                        style={{ animationDelay: '2s' }}></div>
+
+                    <div className="fixed -bottom-32 left-20 w-64 h-64 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob print:hidden"
+                        style={{ animationDelay: '4s' }}></div>
+
+                    {/* Main Container */}
+                    <div className="w-full max-w-4xl z-10 px-2 md:px-4">
+
+                        {/* Header */}
+                        <header className="text-center mb-6 md:mb-8 relative">
+                            <div className="inline-block bg-white px-4 md:px-6 py-2 rounded-full shadow-md mb-4 border border-gray-200">
+                                <span className="flex items-center gap-2 text-xs md:text-sm font-bold text-gray-500 uppercase tracking-widest">
+                                    <GraduationCap size={16} className="md:w-[18px] md:h-[18px]" />
+                                    PERIODO ESCOLAR 2026
+                                </span>
+                            </div>
+                            <h1 className="text-3xl md:text-5xl font-black text-board-green drop-shadow-sm mb-2 font-hand text-[#1e3a2f]">
+                                Lista de Útiles
+                            </h1>
+                            <p className="text-sm md:text-base text-gray-600 italic">Marca los materiales que ya tienes listos</p>
+                        </header>
+
+                        {/* Grade Selector */}
+                        <GradeSelector currentGrade={activeGrade} onSelect={setActiveGrade} />
+
+                        {/* Clipboard Main Area */}
+                        <main className="bg-[#fdfbf7] w-full rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.2)] relative overflow-hidden mb-12">
+
+                            {/* Tape */}
+                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-12 bg-yellow-200/80 transform -rotate-2 -translate-y-6 shadow-sm z-20 print:hidden"></div>
+
+                            {/* Margin Line */}
+                            <div className="absolute top-0 bottom-0 left-6 md:left-12 w-px bg-red-300 z-0 print:hidden"></div>
+
+                            <div className="p-5 md:p-12 relative z-10">
+
+                                {/* List Title & Progress */}
+                                <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-6 border-b-2 border-gray-800 pb-2 gap-2">
+                                    <h2 className="text-2xl md:text-3xl font-bold text-gray-800 font-hand uppercase">
+                                        {currentData.title}
+                                    </h2>
+                                    <div className="text-right print:hidden self-end md:self-auto">
+                                        <span className="text-[10px] md:text-xs font-bold text-gray-400 block uppercase">Progreso</span>
+                                        <span className={`text-lg md:text-xl font-bold transition-colors duration-300 ${isComplete ? 'text-green-600' : 'text-[#1e3a2f]'}`}>
+                                            {progress}%
+                                        </span>
+                                    </div>
+                                </div>
+
+                                {/* Progress Bar */}
+                                <div className="w-full bg-gray-200 rounded-full h-2.5 mb-6 md:mb-8 print:hidden overflow-hidden">
+                                    <div
+                                        className={`h-2.5 rounded-full transition-all duration-500 ease-out ${isComplete ? 'bg-green-500' : 'bg-[#1e3a2f]'}`}
+                                        style={{ width: `${progress}%` }}
+                                    ></div>
+                                </div>
+
+                                {/* List Items */}
+                                <div className="space-y-1">
+                                    {currentData.supplies.map((item) => (
+                                        <ChecklistItem
+                                            key={item.id}
+                                            item={item}
+                                            isChecked={!!checkedItems[item.id]}
+                                            onToggle={handleToggle}
+                                        />
+                                    ))}
+                                </div>
+
+                                {/* Footer Note */}
+                                <div className="mt-8 md:mt-10 p-4 bg-yellow-50 border border-yellow-200 rounded-lg text-sm text-yellow-800 flex items-start gap-3">
+                                    <Sparkles className="flex-shrink-0 mt-0.5" size={18} />
+                                    <p>
+                                        <strong>Nota Importante:</strong> Recuerda marcar todos los útiles escolares con el nombre completo del estudiante para evitar pérdidas.
+                                    </p>
+                                </div>
+
+                                {/* Congratulation Message */}
+                                {isComplete && (
+                                    <div className="mt-8 p-6 bg-green-50 border-2 border-green-200 rounded-xl text-center transform animate-bounce shadow-lg" style={{ animationDuration: '2s' }}>
+                                        <div className="flex justify-center mb-2">
+                                            <div className="bg-green-100 p-3 rounded-full">
+                                                <PartyPopper className="text-green-600 w-8 h-8 md:w-10 md:h-10" />
+                                            </div>
+                                        </div>
+                                        <h3 className="text-xl md:text-2xl font-bold text-green-800 font-hand mb-1">
+                                            ¡Felicitaciones!
+                                        </h3>
+                                        <p className="text-green-700">
+                                            Tienes todo listo para el <strong>Periodo Escolar 2026</strong>.
+                                        </p>
+                                        <div className="flex justify-center mt-2 gap-1">
+                                            <span className="text-2xl animate-pulse">⭐</span>
+                                            <span className="text-2xl animate-pulse" style={{ animationDelay: '0.1s' }}>📚</span>
+                                            <span className="text-2xl animate-pulse" style={{ animationDelay: '0.2s' }}>🎓</span>
+                                        </div>
+                                    </div>
+                                )}
+
+                            </div>
+                        </main>
+                    </div>
+                </div>
+            );
+        };
+
+        const root = createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+
+</html>

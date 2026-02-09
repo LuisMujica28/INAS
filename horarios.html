@@ -327,7 +327,7 @@
             <a href="horizonte.html" class="nav-item">Horizonte</a>
             <a href="horarios.html" class="nav-item active">Horarios</a>
             <a href="pagos.html" class="nav-item">Pagos</a>
-            <a href="https://www.inas.edu.co/lista-%C3%BAtiles" class="nav-item" target="_blank">Lista de Útiles</a>
+            <a href="utiles.html" class="nav-item">Lista de Útiles</a>
             <a href="contacto.html" class="nav-item">Contáctenos</a>
         </div>
         <div class="social-nav">
@@ -1226,9 +1226,24 @@
             // Image Logic
             if (teacher && teacher !== "---" && teacher !== "Desconocido") {
                 const safeName = teacher.replace(/ /g, "_");
-                imgEl.src = `assets/profesores/${safeName}.png`;
+                // Try JPG first as we have new photos in JPG
+                imgEl.src = `assets/profesores/${safeName}.jpg`;
+                // If JPG fails, try PNG (optional if we want to support both, but simple approach is one source)
+                // For now, let's stick to the convention that we are moving to JPG or that renaming handles it.
+                // But wait, the previous code had .png. 
+                // Let's add a simple error handler to try .png if .jpg fails? 
+                // That's tricky with simple img.src swap. 
+                // Let's just set it to .jpg as per our plan. 
+
                 imgEl.onload = () => imgEl.classList.remove('hidden');
-                imgEl.onerror = () => imgEl.classList.add('hidden');
+                imgEl.onerror = () => {
+                    // Fallback to PNG if JPG fails?
+                    if (imgEl.src.endsWith('.jpg')) {
+                        imgEl.src = `assets/profesores/${safeName}.png`;
+                    } else {
+                        imgEl.classList.add('hidden');
+                    }
+                };
             } else {
                 imgEl.classList.add('hidden');
             }
@@ -1237,7 +1252,7 @@
         const ALL_TEACHERS = [
             "Merly Tapias", "Sonia Agudelo", "Katherine Suarez", "Flor Angela Calvo",
             "Luis Carlos Carvajal", "Yuli Gonzalez", "Alexandra Díaz", "Carlos Gómez",
-            "José Jiménez", "Ibón Angélica Pulido", "Laura Carolina Berbal", "Esteban Morales",
+            "José Jiménez", "Ibón Angélica Pulido", "Laura Carolina Bernal", "Esteban Morales",
             "Maritza Triana", "Luis Mujica", "Freddy Pacheco", "Carolina Acosta"
         ];
 

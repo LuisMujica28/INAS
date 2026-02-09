@@ -67,7 +67,9 @@ chatWidget.innerHTML = `
             <button id="send-btn">➤</button>
         </div>
     </div>
-    <button id="chat-toggle-btn" class="chat-toggle-btn">💬</button>
+    <button id="chat-toggle-btn" class="chat-toggle-btn">
+        <img src="assets/robot.png" alt="Chat" />
+    </button>
 `;
 document.body.appendChild(chatWidget);
 

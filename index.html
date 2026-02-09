@@ -63,7 +63,7 @@
             <a href="horizonte.html" class="nav-item">Horizonte</a>
             <a href="horarios.html" class="nav-item">Horarios</a>
             <a href="pagos.html" class="nav-item">Pagos</a>
-            <a href="https://www.inas.edu.co/lista-%C3%BAtiles" class="nav-item" target="_blank">Lista de Útiles</a>
+            <a href="utiles.html" class="nav-item">Lista de Útiles</a>
             <a href="contacto.html" class="nav-item">Contáctenos</a>
         </div>
         <div class="social-nav">
@@ -104,7 +104,7 @@
         <!-- 3D Floating Scene (Behind Text) -->
         <div class="hero-3d-scene">
             <!-- Main Student Character (More prominent) -->
-            <img src="assets/inas_hero_student_v2.png" alt="Estudiante INAS" class="hero-3d-el el-main">
+            <img src="assets/inas_hero_students_final_v2.png" alt="Estudiantes INAS" class="hero-3d-el el-main">
 
             <!-- Floating Academic Elements REMOVED as per request -->
             <!-- 
@@ -131,129 +131,108 @@
                 Formando líderes con excelencia académica y valores humanos para un futuro brillante.
             </p>
 
-            <div class="hero-actions">
-                <button class="cta-btn primary-glow">
-                    Empezar Ahora
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                </button>
-                <button class="cta-btn secondary-glass">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M10 9v6l5-3-5-3z" />
-                        <path d="M22 12c0 5.52-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2s10 4.48 10 10z" />
-                    </svg>
-                    Ver Video
-                </button>
-            </div>
+            <!-- Buttons Removed as per request -->
         </div>
     </header>
 
-    <!-- Services Section -->
     <section class="services-section">
-        <h2 class="section-title">Accesos Rápidos</h2>
-        <div class="services-grid">
+        <!-- Title Removed for cleaner look -->
+        <div class="services-grid" id="quick-access-track">
 
-            <!-- Card 1: Oferta Educativa -->
-            <div class="service-card card-cyan">
-                <div class="card-content">
-                    <h3>Oferta Educativa</h3>
-                    <p>Descubre nuestra metodología</p>
+            <!-- Card 1: Circulares -->
+            <div class="quick-access-item special-circulares" onclick="window.location.href='circulares.html'">
+                <img src="assets/circulares_icon_3d.png" alt="Circulares" class="qa-image">
+                <div class="qa-content">
+                    <h3>Circulares</h3>
+                    <p>Mantente informado</p>
                 </div>
-                <img src="assets/icon_book_3d_1768927777474.png" alt="Oferta" class="card-icon">
-                <div class="card-overlay"></div>
             </div>
 
-            <!-- Card 2: Horarios (Using Calendar) -->
-            <div class="service-card card-purple">
-                <div class="card-content">
-                    <h3>Horario Docentes</h3>
+            <!-- Card 2: Horarios -->
+            <div class="quick-access-item special-horarios" onclick="window.location.href='horarios.html'">
+                <img src="assets/horarios_icon_3d.png" alt="Horarios" class="qa-image">
+                <div class="qa-content">
+                    <h3>Horario Escolar</h3>
                     <p>Atención a padres</p>
                 </div>
-                <img src="assets/icon_calendar_3d_1768927730510.png" alt="Horario" class="card-icon">
-                <div class="card-overlay"></div>
             </div>
 
             <!-- Card 3: Campeonatos -->
-            <div class="service-card card-orange">
-                <div class="card-content">
+            <!-- Item Especial: Deportes (Diseño Transparente) -->
+            <div class="quick-access-item special-sports">
+                <img src="assets/sports_character_group.png" alt="Deportes Team" class="qa-image">
+                <div class="qa-content">
                     <h3>Deportes</h3>
                     <p>Campeonatos y tabla</p>
                 </div>
-                <img src="assets/icon_trophy_3d_1768927750449.png" alt="Trofeo" class="card-icon">
-                <div class="card-overlay"></div>
             </div>
 
             <!-- Card 4: INAS Radio -->
-            <div class="service-card card-red">
-                <div class="card-content">
+            <!-- Item Especial: INAS Radio (Diseño Transparente) -->
+            <div class="quick-access-item special-radio">
+                <img src="assets/radio_station_3d.png" alt="INAS Radio Studio" class="qa-image">
+                <div class="qa-content">
                     <h3>INAS Radio</h3>
                     <p>Emisora Escolar</p>
                 </div>
-                <img src="assets/icon_radio_3d_1768927820862.png" alt="Radio" class="card-icon">
-                <div class="card-overlay"></div>
             </div>
 
             <!-- Card 5: Instalaciones -->
-            <div class="service-card card-blue">
-                <div class="card-content">
+            <div class="quick-access-item special-installations" onclick="window.location.href='instalaciones.html'">
+                <img src="assets/instalaciones_icon_3d.png" alt="Instalaciones" class="qa-image">
+                <div class="qa-content">
                     <h3>Instalaciones</h3>
                     <p>Conoce el colegio</p>
                 </div>
-                <img src="assets/icon_building_3d_1768927842164.png" alt="Edificio" class="card-icon">
-                <div class="card-overlay"></div>
             </div>
 
             <!-- DUPLICATED CARDS FOR INFINITE SCROLL -->
 
-            <!-- Card 1: Oferta Educativa -->
-            <div class="service-card card-cyan">
-                <div class="card-content">
-                    <h3>Oferta Educativa</h3>
-                    <p>Descubre nuestra metodología</p>
+            <!-- Card 1: Circulares -->
+            <div class="quick-access-item special-circulares" onclick="window.location.href='circulares.html'">
+                <img src="assets/circulares_icon_3d.png" alt="Circulares" class="qa-image">
+                <div class="qa-content">
+                    <h3>Circulares</h3>
+                    <p>Mantente informado</p>
                 </div>
-                <img src="assets/icon_book_3d_1768927777474.png" alt="Oferta" class="card-icon">
-                <div class="card-overlay"></div>
             </div>
 
-            <!-- Card 2: Horarios (Using Calendar) -->
-            <div class="service-card card-purple">
-                <div class="card-content">
-                    <h3>Horario Docentes</h3>
+            <!-- Card 2: Horarios -->
+            <div class="quick-access-item special-horarios" onclick="window.location.href='horarios.html'">
+                <img src="assets/horarios_icon_3d.png" alt="Horarios" class="qa-image">
+                <div class="qa-content">
+                    <h3>Horario Escolar</h3>
                     <p>Atención a padres</p>
                 </div>
-                <img src="assets/icon_calendar_3d_1768927730510.png" alt="Horario" class="card-icon">
-                <div class="card-overlay"></div>
             </div>
 
             <!-- Card 3: Campeonatos -->
-            <div class="service-card card-orange">
-                <div class="card-content">
+            <!-- Item Especial: Deportes (Diseño Transparente) -->
+            <div class="quick-access-item special-sports">
+                <img src="assets/sports_character_group.png" alt="Deportes Team" class="qa-image">
+                <div class="qa-content">
                     <h3>Deportes</h3>
                     <p>Campeonatos y tabla</p>
                 </div>
-                <img src="assets/icon_trophy_3d_1768927750449.png" alt="Trofeo" class="card-icon">
-                <div class="card-overlay"></div>
             </div>
 
             <!-- Card 4: INAS Radio -->
-            <div class="service-card card-red">
-                <div class="card-content">
+            <!-- Item Especial: INAS Radio (Diseño Transparente) -->
+            <div class="quick-access-item special-radio">
+                <img src="assets/radio_station_3d.png" alt="INAS Radio Studio" class="qa-image">
+                <div class="qa-content">
                     <h3>INAS Radio</h3>
                     <p>Emisora Escolar</p>
                 </div>
-                <img src="assets/icon_radio_3d_1768927820862.png" alt="Radio" class="card-icon">
-                <div class="card-overlay"></div>
             </div>
 
             <!-- Card 5: Instalaciones -->
-            <div class="service-card card-blue">
-                <div class="card-content">
+            <div class="quick-access-item special-installations" onclick="window.location.href='instalaciones.html'">
+                <img src="assets/instalaciones_icon_3d.png" alt="Instalaciones" class="qa-image">
+                <div class="qa-content">
                     <h3>Instalaciones</h3>
                     <p>Conoce el colegio</p>
                 </div>
-                <img src="assets/icon_building_3d_1768927842164.png" alt="Edificio" class="card-icon">
-                <div class="card-overlay"></div>
             </div>
 
         </div>
@@ -371,33 +350,67 @@
         </div>
     </section>
 
-    <!-- Uniforms Section -->
-    <section class="uniforms-section">
-        <h2 class="section-title">Nuestros Uniformes</h2>
-        <div class="uniforms-grid">
-            <!-- Sudadera -->
-            <div class="uniform-card">
-                <div class="uniform-bg-circle circle-blue"></div>
-                <img src="assets/user_uniform_sudadera.png" alt="Sudadera INAS" class="uniform-img">
-                <h3 class="uniform-title">Sudadera</h3>
-                <p class="uniform-desc">Comodidad y deporte</p>
+    <!-- Uniforms Section (Photo Studio) -->
+    <section class="uniforms-section" id="uniformes">
+        <!-- Wave Divider Top -->
+        <div class="custom-shape-divider-top-1">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"
+                preserveAspectRatio="none">
+                <path fill="#ffffff" fill-opacity="1"
+                    d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z">
+                </path>
+            </svg>
+        </div>
+
+        <h2 class="section-title" style="margin-bottom: 3rem;">Nuestros Uniformes</h2>
+
+        <div class="uniforms-split-layout">
+            <!-- Left Side: Models (75%) -->
+            <div class="models-area">
+                <div class="studio-stage">
+                    <!-- Diario Femenino -->
+                    <div class="uniform-model" onclick="selectUniform('femenino')"
+                        onmouseenter="selectUniform('femenino')">
+                        <img src="assets/uniform_daily_female.png" alt="Diario Femenino">
+                        <div class="model-shadow"></div>
+                        <caption>Diario Femenino</caption>
+                    </div>
+
+                    <!-- Deportivo -->
+                    <div class="uniform-model center-piece" onclick="selectUniform('deportivo')"
+                        onmouseenter="selectUniform('deportivo')">
+                        <img src="assets/uniform_sports_couple.png" alt="Uniforme Deportivo">
+                        <div class="model-shadow"></div>
+                        <caption>Deportivo</caption>
+                    </div>
+
+                    <!-- Diario Masculino -->
+                    <div class="uniform-model" onclick="selectUniform('masculino')"
+                        onmouseenter="selectUniform('masculino')">
+                        <img src="assets/uniform_daily_male.png" alt="Diario Masculino">
+                        <div class="model-shadow"></div>
+                        <caption>Diario Masculino</caption>
+                    </div>
+                </div>
             </div>
 
-            <!-- Diario Femenino -->
-            <div class="uniform-card">
-                <div class="uniform-bg-circle circle-purple"></div>
-                <img src="assets/user_uniform_female.png" alt="Diario Femenino" class="uniform-img">
-                <h3 class="uniform-title">Diario Femenino</h3>
-                <p class="uniform-desc">Elegancia y tradición</p>
+            <!-- Right Side: Details (25%) -->
+            <div class="details-panel">
+                <div id="uniform-desc-content" class="desc-content">
+                    <h3>Selecciona un uniforme</h3>
+                    <p>Haz clic en uno de los modelos para ver los detalles de la prenda.</p>
+                </div>
             </div>
+        </div>
 
-            <!-- Diario Masculino -->
-            <div class="uniform-card">
-                <div class="uniform-bg-circle circle-cyan"></div>
-                <img src="assets/user_uniform_male.png" alt="Diario Masculino" class="uniform-img">
-                <h3 class="uniform-title">Diario Masculino</h3>
-                <p class="uniform-desc">Presentación impecable</p>
-            </div>
+        <!-- Wave Divider Bottom (Melting into Community) -->
+        <div class="custom-shape-divider-bottom-2">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"
+                preserveAspectRatio="none">
+                <path fill="#ffffff" fill-opacity="1"
+                    d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
+                </path>
+            </svg>
         </div>
     </section>
 
@@ -416,13 +429,42 @@
                     <span class="tag">#FamiliaINAS</span>
                 </div>
             </div>
-            <div class="community-image-wrapper">
-                <div class="glass-frame">
-                    <img src="assets/community_collage.png" alt="Comunidad INAS collage" class="community-img">
-                    <!-- Floating Decorations (CSS or Images) -->
-                    <div class="floating-icon icon-1">❤️</div>
-                    <div class="floating-icon icon-2">🎨</div>
-                    <div class="floating-icon icon-3">📚</div>
+            <!-- Masonry Gallery Grid -->
+            <div class="community-gallery-grid">
+                <!-- Stack 1: Visual Arts (Tall) -->
+                <div class="gallery-card card-tall">
+                    <img src="assets/comunidad/community_1.jpg" alt="Arte y Cultura"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
+                    <div class="gallery-overlay">
+                        <span>Arte y Cultura</span>
+                    </div>
+                </div>
+
+                <!-- Stack 2: Friends (Square) & Reading (Wide) -->
+                <div class="gallery-col">
+                    <div class="gallery-card card-square">
+                        <img src="assets/comunidad/community_2.jpg" alt="Amistad"
+                            style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
+                        <div class="gallery-overlay">
+                            <span>Amistad</span>
+                        </div>
+                    </div>
+                    <div class="gallery-card card-wide">
+                        <img src="assets/comunidad/community_3.jpg" alt="Lectura"
+                            style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
+                        <div class="gallery-overlay">
+                            <span>Lectura</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stack 3: Sports (Tall) -->
+                <div class="gallery-card card-tall">
+                    <img src="assets/comunidad/community_4.jpg" alt="Deportes"
+                        style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">
+                    <div class="gallery-overlay">
+                        <span>Deportes</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -551,6 +593,158 @@
                 }
             }
         });
+
+        // Uniform Selection Logic
+        const uniformData = {
+            'deportivo': {
+                title: 'Uniforme Deportivo',
+                desc: 'Ambos géneros consta de sudadera azul oscuro con franjas grises, camiseta cuello redondo blanca, medias blancas y tenis blancos. Siempre manteniendo un porte adecuado y sin modificaciones.',
+                color: '#1a237e'
+            },
+            'femenino': {
+                title: 'Diario Femenino',
+                desc: 'Jardinera azul oscuro, camisa blanca, saco gris con logo INAS, medias azul oscuro y zapatos negros. Siempre manteniendo un porte adecuado y sin modificaciones.',
+                color: '#1a237e'
+            },
+            'masculino': {
+                title: 'Diario Masculino',
+                desc: 'Saco gris con logo INAS, camisa blanca, pantalón azul oscuro y zapatos negros. Siempre manteniendo un porte adecuado y sin modificaciones.',
+                color: '#1a237e'
+            }
+        };
+
+        function selectUniform(type) {
+            const data = uniformData[type];
+            if (!data) return;
+
+            // Highlight Model
+            document.querySelectorAll('.uniform-model').forEach(el => el.classList.remove('active'));
+            // Find the specific one clicked is tricky with inline onclick, but we can do it by index or passing 'this'
+            // For now, simpler: we need to identify the element. Let's rely on event.currentTarget logic in a cleaner way later or iterate matching source.
+            // Actually, let's fix the onclick in HTML to pass 'this' or use IDs.
+            // Re-querying by simple logic:
+
+            // Just update text first
+            const panel = document.querySelector('.details-panel');
+            const container = document.getElementById('uniform-desc-content');
+
+            // Fade out, swap, fade in
+            container.style.opacity = '0';
+            setTimeout(() => {
+                container.innerHTML = `
+                    <h3 style="color: ${data.color}">${data.title}</h3>
+                    <p>${data.desc}</p>
+                `;
+                container.style.opacity = '1';
+                panel.classList.add('active');
+            }, 200);
+        }
+
+        // Attach event listeners properly to avoid inline 'onclick' issues if possible, 
+        // but since I already wrote inline onclick in the HTML step, I need to make sure the function is global.
+        window.selectUniform = function (type) {
+            const data = uniformData[type];
+            // Visual Active State management
+            const models = document.querySelectorAll('.uniform-model');
+            models.forEach(m => {
+                m.classList.remove('active');
+                m.style.removeProperty('--active-glow'); // Reset custom color
+                m.style.removeProperty('filter');
+            });
+
+            // Identify which one was clicked. 
+            let index = 0;
+            if (type === 'deportivo') index = 1;
+            if (type === 'masculino') index = 2;
+
+            if (models[index]) {
+                const selected = models[index];
+                selected.classList.add('active');
+                // Set the glow color dynamically to match the text
+                selected.style.setProperty('--active-glow', data.color);
+            }
+
+            // Update Content
+            const panel = document.querySelector('.details-panel');
+            const container = document.getElementById('uniform-desc-content');
+
+            panel.classList.add('active'); // Ensure panel is visible
+
+            container.style.opacity = '0';
+            container.style.transform = 'translateY(10px)';
+
+            setTimeout(() => {
+                container.innerHTML = `
+                    <h3 style="color: ${data.color}; border-bottom: 3px solid ${data.color}; display: inline-block; padding-bottom: 0.5rem;">${data.title}</h3>
+                    <p style="font-size: 1.2rem;">${data.desc}</p>
+                `;
+                container.style.opacity = '1';
+                container.style.transform = 'translateY(0)';
+            }, 250);
+        };
+
+        // Quick Access Infinite Scroll & Drag Logic
+        const track = document.getElementById('quick-access-track');
+        /* Ensure track exists before running */
+        if (track) {
+            let position = 0;
+            let isDragging = false;
+            let startX = 0;
+            let startPos = 0;
+            let animationId;
+            const speed = 0.5; // Smooth auto-scroll speed
+
+            // Using unique items count to find reset point
+            // We have 5 unique items items duplicated -> 10 items total.
+            // Reset point is half the scrollWidth.
+
+            function animate() {
+                if (!isDragging) {
+                    position -= speed;
+                    const resetWidth = track.scrollWidth / 2;
+
+                    if (Math.abs(position) >= resetWidth) {
+                        position += resetWidth; // Seamless reset
+                    }
+                }
+                track.style.transform = `translateX(${position}px)`;
+                animationId = requestAnimationFrame(animate);
+            }
+
+            // Start Loop
+            animationId = requestAnimationFrame(animate);
+
+            // Drag Events
+            const startDrag = (e) => {
+                isDragging = true;
+                startX = e.pageX || e.touches[0].pageX;
+                startPos = position;
+                track.style.cursor = 'grabbing';
+                track.style.transition = 'none';
+            };
+
+            const doDrag = (e) => {
+                if (!isDragging) return;
+                const currentX = e.pageX || e.touches[0].pageX;
+                const diff = currentX - startX;
+                position = startPos + diff;
+                track.style.transform = `translateX(${position}px)`;
+            };
+
+            const endDrag = () => {
+                isDragging = false;
+                track.style.cursor = 'grab';
+            };
+
+            track.addEventListener('mousedown', startDrag);
+            track.addEventListener('touchstart', startDrag, { passive: true });
+
+            window.addEventListener('mousemove', doDrag);
+            window.addEventListener('touchmove', doDrag, { passive: true });
+
+            window.addEventListener('mouseup', endDrag);
+            window.addEventListener('touchend', endDrag);
+        }
     </script>
 
     <script src="intro-animation.js"></script>
