@@ -13,9 +13,9 @@ Responde de manera amable, profesional y concisa. Si no sabes algo, sugiere cont
 CONTEXTO INSTITUCIONAL:
 Nombre: Instituto Nueva América de Suba (INAS).
 Lema: "Ciencia, Cultura y Vida".
-Ubicación: Calle 139 # 101D - 15, Suba, Bogotá.
-Teléfonos: (601) 682 9283 / 601 768-9104.
-Correos: inamerica91@hotmail.com, contacto@inas.edu.co.
+Ubicación: Calle 136 # 95 B - 85, Villa Elisa - Suba, Bogotá D.C.
+Teléfonos: TEL: 601 768-9104 / CEL: 305 430-1113.
+Correos: secretaria@inas.edu.co, inamerica91@hotmail.com.
 Horario de Atención: Lunes a viernes de 6:00 a.m. a 3:00 p.m.
 
 PAGOS Y CUENTAS BANCARIAS:
