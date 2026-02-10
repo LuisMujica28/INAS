@@ -421,7 +421,11 @@
                             VIERNES</div>
                     </div>
 
-                    <div id="horario-container" class="space-y-6 min-w-max">
+                    <!-- Mobile Schedule Container (Vertical) -->
+                    <div id="mobile-horario-container" class="md:hidden space-y-6"></div>
+
+                    <!-- Desktop Schedule Container (Grid) -->
+                    <div id="horario-container" class="hidden md:grid space-y-6 min-w-max">
                         <!-- Se llena con JS -->
                     </div>
                 </div>
@@ -1016,6 +1020,7 @@
 
             activeData = { franjas, materias };
             render();
+            renderMobileSchedule();
             update(); // Trigger instant update
         }
 
@@ -1076,6 +1081,89 @@
                     row.appendChild(card);
                 }
                 container.appendChild(row);
+            });
+        }
+
+        function renderMobileSchedule() {
+            const container = document.getElementById('mobile-horario-container');
+            if (!container || !activeData) return;
+            container.innerHTML = '';
+
+            const days = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes"];
+
+            days.forEach((dayName, index) => {
+                const dayIdx = index + 1; // 1-based index for data
+
+                // Day Card
+                const dayCard = document.createElement('div');
+                dayCard.className = "bg-white/90 backdrop-blur rounded-3xl p-5 shadow-lg border border-white/50 relative overflow-hidden";
+
+                // Decorative Element
+                const deco = document.createElement('div');
+                deco.className = "absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-yellow-200/20 to-orange-200/20 rounded-bl-full -mr-4 -mt-4 z-0";
+                dayCard.appendChild(deco);
+
+                // Day Header
+                const dayHeader = document.createElement('h3');
+                dayHeader.className = "text-2xl font-black text-[#d88185] uppercase tracking-wider mb-4 border-b-4 border-[#f1c40f]/30 pb-1 inline-block relative z-10";
+                dayHeader.innerText = dayName;
+                dayCard.appendChild(dayHeader);
+
+                // List of Classes
+                const list = document.createElement('div');
+                list.className = "space-y-3 relative z-10";
+
+                activeData.franjas.forEach((franja, fIdx) => {
+                    const materia = activeData.materias[dayIdx][fIdx];
+                    if (!materia || materia === "---") return;
+
+                    // Block Index logic
+                    let blockIndex = -1;
+                    if (fIdx === 0) blockIndex = 0;
+                    else if (fIdx === 2) blockIndex = 1;
+                    else if (fIdx === 3) blockIndex = 2;
+                    else if (fIdx === 5) blockIndex = 3;
+
+                    const teacher = getTeacher(materia, currentGrade, dayIdx, blockIndex);
+
+                    // Row Item
+                    const item = document.createElement('div');
+                    item.className = "flex items-center gap-4 relative pl-4 border-l-[6px] transition-all duration-200 hover:translate-x-1";
+
+                    if (materia === "DESCANSO") {
+                        item.className += " border-yellow-400 bg-yellow-50/80 p-3 rounded-r-xl border-l-[6px]";
+                        item.innerHTML = `
+                            <div class="text-xs font-bold text-yellow-600 bg-yellow-100 px-2 py-1 rounded-md whitespace-nowrap shadow-sm">${franja.inicio} - ${franja.fin}</div>
+                            <div class="font-black text-yellow-500 uppercase tracking-widest flex-grow text-center text-sm md:text-base">✨ DESCANSO ✨</div>
+                         `;
+                    } else {
+                        item.className += " border-blue-400 bg-white/50 hover:bg-white p-2 rounded-r-xl shadow-sm";
+                        // Different look for content
+                        item.innerHTML = `
+                            <div class="min-w-[75px] flex flex-col items-center justify-center bg-gray-100 rounded-lg p-1.5 shadow-inner">
+                                <span class="text-[10px] font-black text-gray-500">${franja.inicio}</span>
+                                <div class="h-px w- full bg-gray-300 my-0.5"></div>
+                                <span class="text-[10px] font-black text-gray-400">${franja.fin}</span>
+                            </div>
+                            <div class="flex-grow pl-1">
+                                <div class="font-black text-gray-700 text-base md:text-lg leading-tight uppercase tracking-tight">${materia}</div>
+                                <div class="text-xs font-bold text-purple-500 mt-0.5 flex items-center gap-1">
+                                    ${teacher && teacher !== "---" ? `<span class="bg-purple-100 text-purple-600 px-1.5 py-0.5 rounded text-[10px]">PROFE</span> ${teacher}` : ""}
+                                </div>
+                            </div>
+                         `;
+                        item.style.cursor = "pointer";
+                        item.onclick = () => {
+                            updateTeacherInfo(materia, teacher);
+                            // Scroll to info box if needed? specific logic
+                            document.getElementById('teacher-info-box').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        };
+                    }
+                    list.appendChild(item);
+                });
+
+                dayCard.appendChild(list);
+                container.appendChild(dayCard);
             });
         }
 
