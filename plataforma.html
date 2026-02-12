@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma Virtual - INAS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Light Theme (Standard INAS Website) */
+        body {
+            background: radial-gradient(circle at top left, #ffffff 0%, #f0f7ff 40%, #f3e5f5 100%);
+            color: #333;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navbar handled by styles.css */
+
+        /* Hero Text Styles */
+        .tutorial-hero {
+            position: relative;
+            min-height: 50vh;
+            /* Reduced height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            /* Let body gradient show */
+            overflow: hidden;
+            color: #1a237e;
+            /* Navy */
+            text-align: center;
+            padding-top: 80px;
+            /* Navbar space */
+        }
+
+        .cyber-grid {
+            display: none;
+            /* Remove dark grid */
+        }
+
+        @keyframes cyberMove {
+            0% {
+                transform: perspective(500px) rotateX(60deg) translateY(0) translateZ(-200px);
+            }
+
+            100% {
+                transform: perspective(500px) rotateX(60deg) translateY(50px) translateZ(-200px);
+            }
+        }
+
+        .tutorial-content {
+            position: relative;
+            z-index: 10;
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .neon-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: #1a237e;
+            /* Navy */
+            text-shadow: none;
+            /* Clean text */
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .tutorial-content p {
+            color: #546e7a;
+            /* Blue Grey */
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Step Cards - Light Glassmorphism */
+        .step-section {
+            padding: 2rem 5% 8rem 5%;
+            position: relative;
+            background: transparent;
+            color: #333;
+        }
+
+        .step-card {
+            background: rgba(255, 255, 255, 0.85);
+            /* White Glass */
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 24px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            /* Soft Shadow */
+            transition: transform 0.3s, box-shadow 0.3s;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .step-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+        }
+
+        .step-number {
+            font-size: 4rem;
+            font-weight: 900;
+            color: #e3f2fd;
+            /* Very Light Blue Background Number */
+            -webkit-text-stroke: 2px #1a237e;
+            /* Navy Outline */
+            opacity: 1;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .step-info {
+            flex: 1;
+        }
+
+        .step-info h3 {
+            font-size: 1.8rem;
+            color: #1a237e;
+            /* Navy Blue */
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .step-info p {
+            color: #455a64;
+            /* Blue Grey Text */
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .platform-btn {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.8rem 2rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: white;
+            background: #1a237e;
+            /* Navy */
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(26, 35, 126, 0.3);
+            transition: 0.3s;
+        }
+
+        .platform-btn:hover {
+            background: #304ffe;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(26, 35, 126, 0.4);
+            color: white;
+        }
+
+        /* Access Portal Section - Light Theme */
+        .portal-section {
+            padding: 4rem 5%;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+            background: transparent;
+        }
+
+        .portal-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.4s;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .portal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border-color: #00c853;
+            background: rgba(255, 255, 255, 1);
+        }
+
+        .portal-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: #00e676;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+        }
+
+        /* Video Section - Light Theme */
+        .video-section {
+            padding: 0 10% 8rem 10%;
+            background: transparent;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            /* 16:9 */
+            height: 0;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+            /* Soft heavy shadow */
+            border: 5px solid #fff;
+            /* White Frame */
+            background: #000;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Grey Particles Background (Adjusted for Light Theme) */
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(26, 35, 126, 0.05);
+            /* Navy/Grey Very Low Opacity */
+            backdrop-filter: blur(0px);
+            animation: floatParticle 8s infinite alternate ease-in-out;
+        }
+
+        .p1 {
+            width: 300px;
+            height: 300px;
+            top: -50px;
+            left: -50px;
+            animation-duration: 12s;
+            background: rgba(0, 176, 255, 0.05);
+        }
+
+        .p2 {
+            width: 400px;
+            height: 400px;
+            top: 40%;
+            right: -100px;
+            animation-duration: 15s;
+            animation-delay: -2s;
+            background: rgba(213, 0, 249, 0.05);
+        }
+
+        .p3 {
+            width: 200px;
+            height: 200px;
+            bottom: 10%;
+            left: 10%;
+            animation-duration: 10s;
+            animation-delay: -5s;
+        }
+
+        .p4 {
+            width: 150px;
+            height: 150px;
+            top: 20%;
+            right: 20%;
+            animation-duration: 9s;
+            animation-delay: -7s;
+        }
+
+        .p5 {
+            width: 250px;
+            height: 250px;
+            bottom: -50px;
+            right: 30%;
+            animation-duration: 11s;
+            animation-delay: -9s;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            50% {
+                transform: translate(60px, -40px) scale(1.1);
+            }
+
+            100% {
+                transform: translate(-30px, 30px) scale(0.9);
+            }
+        }
+
+        /* Ensure content is above icons */
+        .step-card {
+            position: relative;
+            z-index: 2;
+        }
+
+        @keyframes floatBackground {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            100% {
+                transform: translateY(-50px) rotate(10deg);
+            }
+        }
+
+        /* Ensure content is above icons */
+        .step-card {
+            position: relative;
+            z-index: 2;
+        }
+
+        @media (max-width: 768px) {
+            .step-card {
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem;
+            }
+
+            .neon-title {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="assets/inas_shield.png" alt="Escudo INAS" class="logo-img">
+            <span class="logo-text">Instituto Nueva América <br> de Suba</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-item">Inicio</a>
+            <a href="instalaciones.html" class="nav-item">Instalaciones</a>
+            <a href="horizonte.html" class="nav-item">Horizonte</a>
+            <a href="horarios.html" class="nav-item">Horarios</a>
+            <a href="pagos.html" class="nav-item">Pagos</a>
+            <a href="plataforma.html" class="nav-item active">Plataforma</a>
+            <a href="utiles.html" class="nav-item">Lista de Útiles</a>
+            <a href="contacto.html" class="nav-item">Contáctenos</a>
+        </div>
+        <div class="social-nav">
+            <a href="https://www.instagram.com/inas_bta/" target="_blank" class="social-icon-link instagram"
+                aria-label="Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="social-svg">
+                    <path
+                        d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M18,5A1.25,1.25 0 0,1 19.25,6.25A1.25,1.25 0 0,1 18,7.5A1.25,1.25 0 0,1 16.75,6.25A1.25,1.25 0 0,1 18,5Z" />
+                </svg>
+            </a>
+            <a href="https://www.youtube.com/watch?v=ZdhfR9t8S4s" target="_blank" class="social-icon-link youtube"
+                aria-label="YouTube">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="social-svg">
+                    <path
+                        d="M10,15L15.19,12L10,9V15M21.56,7.17C21.69,7.64 21.78,8.27 21.84,9.07C21.91,9.87 21.94,10.56 21.94,11.16L22,12C22,14.19 21.84,15.8 21.56,16.83C21.31,17.73 20.73,18.31 19.83,18.56C19.36,18.69 18.5,18.78 17.18,18.84C15.88,18.91 14.69,18.94 13.59,18.94L12,19C7.81,19 5.2,18.84 4.17,18.56C3.27,18.31 2.69,17.73 2.44,16.83C2.31,16.36 2.22,15.73 2.16,14.93C2.09,14.13 2.06,13.44 2.06,12.84L2,12C2,9.81 2.16,8.2 2.44,7.17C2.69,6.27 3.27,5.69 4.17,5.44C4.64,5.31 5.5,5.22 6.82,5.16C8.12,5.09 9.31,5.06 10.41,5.06L12,5C16.19,5 18.8,5.16 19.83,5.44C20.73,5.69 21.31,6.27 21.56,7.17Z" />
+                </svg>
+            </a>
+            <button class="menu-toggle" aria-label="Abrir menú">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="tutorial-hero">
+        <div class="cyber-grid"></div>
+
+        <!-- Animated Background Orbs (Daylight Theme) -->
+        <div class="hero-bg-animation">
+            <div class="glow-orb orb-1"></div>
+            <div class="glow-orb orb-2"></div>
+            <div class="glow-orb orb-3"></div>
+        </div>
+
+        <div class="tutorial-content">
+            <h1 class="neon-title">AULA VIRTUAL</h1>
+            <p>Tu acceso al conocimiento</p>
+        </div>
+    </header>
+
+    <!-- Tutorial Steps -->
+    <section class="step-section">
+        <h2 style="text-align: center; margin-bottom: 4rem; position: relative; z-index: 10;">
+            GUÍA DE ACCESO RÁPIDO</h2>
+
+        <!-- Grey Particles Background -->
+        <div class="particles-container">
+            <div class="particle p1"></div>
+            <div class="particle p2"></div>
+            <div class="particle p3"></div>
+            <div class="particle p4"></div>
+            <div class="particle p5"></div>
+        </div>
+
+        <!-- Step 1 -->
+        <div class="step-card">
+            <div class="step-number">01</div>
+            <div class="step-info">
+                <h3>Activa tu Llave Maestra</h3>
+                <p>Tu correo institucional es la llave de acceso. Ingresa a <strong>Gmail</strong> con el usuario y la
+                    contraseña que recibiste en el colegio. <br><span
+                        style="color: #ff1744; font-weight: bold;">IMPORTANTE:</span> No cambies la contraseña; debes
+                    usar siempre la asignada por la institución.</p>
+                <a href="https://mail.google.com/" target="_blank" class="platform-btn">Ir a Gmail</a>
+            </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step-card">
+            <div class="step-number">02</div>
+            <div class="step-info">
+                <h3>El Portal del Saber</h3>
+                <p>Una vez dentro de tu correo, busca el menú de aplicaciones de Google (los 9 puntitos arriba a la
+                    derecha) y selecciona <strong>Classroom</strong>. O usa el botón directo aquí abajo.</p>
+                <a href="https://classroom.google.com/" target="_blank" class="platform-btn">Ir a Classroom</a>
+            </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step-card">
+            <div class="step-number">03</div>
+            <div class="step-info">
+                <h3>Identifícate y Únete</h3>
+                <p>Al ingresar a Classroom por primera vez, selecciona la opción <strong>"Soy Alumno"</strong> o
+                    <strong>"Soy Estudiante"</strong>. Verás todas tus asignaturas precargadas; solo debes hacer clic en
+                    el botón <strong>"Unirse"</strong> en cada una para empezar.
+                </p>
+            </div>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="step-card">
+            <div class="step-number">04</div>
+            <div class="step-info">
+                <h3>Centro de Comando (Tablón)</h3>
+                <p>En el <strong>Tablón</strong> (o Novedades) encontrarás los anuncios importantes de tu director de
+                    grupo y profesores. Mantente atento a este espacio para no perderte ninguna noticia o evento del
+                    curso.</p>
+            </div>
+        </div>
+
+        <!-- Step 5 -->
+        <div class="step-card">
+            <div class="step-number">05</div>
+            <div class="step-info">
+                <h3>Base de Operaciones (Trabajo en Clase)</h3>
+                <p>La pestaña <strong>Trabajo en Clase</strong> es donde ocurre la magia. Aquí verás la planeación
+                    semanal, guías, videos, lecturas complementarias y las tareas asignadas. Todo organizado por temas
+                    para facilitar tu aprendizaje.</p>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Video Section -->
+    <section class="video-section">
+        <h2 style="color: #1a237e; font-size: 2rem; margin-bottom: 2rem; text-transform: uppercase;">Video Tutorial
+            Explicativo</h2>
+        <div class="video-container">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/E4TsDuO5Mk0?si=platform-tutorial"
+                title="YouTube video player" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+    </section>
+
+    <!-- Google Chat Portal -->
+    <section class="portal-section" style="position: relative; overflow: hidden;">
+
+        <!-- Animated Background Orbs -->
+        <div class="hero-bg-animation">
+            <div class="glow-orb orb-1"></div>
+            <div class="glow-orb orb-2"></div>
+            <div class="glow-orb orb-3"></div>
+        </div>
+
+        <div class="portal-card"
+            style="width: 100%; max-width: 600px; height: auto; padding: 3rem; position: relative; z-index: 10;"
+            onclick="window.open('https://chat.google.com/', '_blank')">
+            <div class="portal-icon">💬</div>
+            <h3 style="font-size: 2.5rem; color: #1a237e; margin-bottom: 1rem;">Google Chat Institucional</h3>
+            <p style="color: #455a64; font-size: 1.2rem; line-height: 1.6; max-width: 500px; margin: 0 auto;">
+                Este es el canal oficial de comunicación directa. Aquí recibirás información de los <strong>Directores
+                    de Grupo</strong>, podrás comunicarte con tus profesores y ver las circulares importantes.<br><br>
+                <span style="color: #00c853; font-weight: bold;">Requisito:</span> Debes ingresar exclusivamente con tu
+                correo institucional.
+            </p>
+            <div class="platform-btn" style="margin-top: 2rem;">
+                Ir al Chat</div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-overlay"></div>
+        <div class="footer-content">
+            <div class="footer-col brand-col">
+                <div class="footer-logo">
+                    <img src="assets/inas_shield.png" alt="Escudo INAS">
+                    <span>INAS</span>
+                </div>
+                <p class="footer-tagline">"Ciencia, Cultura y Vida"</p>
+                <p class="footer-desc">Formando líderes integrales para el futuro, con excelencia académica y valores
+                    humanos.</p>
+            </div>
+            <div class="footer-col links-col">
+                <h3 class="footer-heading">Navegación</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="instalaciones.html">Instalaciones</a></li>
+                    <li><a href="horizonte.html">Horizonte</a></li>
+                    <li><a href="horarios.html">Horarios</a></li>
+                    <li><a href="pagos.html">Pagos</a></li>
+                    <li><a href="plataforma.html">Plataforma</a></li>
+                </ul>
+            </div>
+            <div class="footer-col contact-col">
+                <h3 class="footer-heading">Contáctanos</h3>
+                <ul class="contact-list">
+                    <li>
+                        <span class="icon">📍</span>
+                        <span>Calle 136 # 95 B - 85<br>Villa Elisa - Suba, Bogotá D.C.</span>
+                    </li>
+                    <li>
+                        <span class="icon">📞</span>
+                        <span>TEL: 601 768-9104<br>CEL: 305 430-1113</span>
+                    </li>
+                    <li>
+                        <span class="icon">📧</span>
+                        <span>secretaria@inas.edu.co<br>inamerica91@hotmail.com</span>
+                    </li>
+                    <li>
+                        <span class="icon">🕒</span>
+                        <span>Lunes a viernes de 6:00 a.m. a 2:30 p.m.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Instituto Nueva América de Suba. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="mobile-menu.js"></script>
+    <script type="module" src="chatbot.js"></script>
+    <script>
+        // Reveal Animations on Scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.2
+        });
+
+        document.querySelectorAll('.step-card').forEach(card => {
+            observer.observe(card);
+        });
+
+    </script>
+</body>
+
+</html>

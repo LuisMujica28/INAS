@@ -148,18 +148,19 @@ body {
     /* Added circular background for guaranteed contrast */
     width: 40px;
     height: 40px;
-    background: rgba(0, 0, 0, 0.2);
-    /* Semi-transparent dark bg */
+    background: rgba(255, 238, 88, 0.4);
+    /* Light Yellow Clear */
     border-radius: 50%;
     backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .social-icon-link:hover {
     transform: translateY(-3px);
-    background: rgba(255, 255, 255, 0.2);
-    color: var(--white);
-    border-color: var(--white);
+    background: #ffeb3b;
+    /* Yellow Strong */
+    color: var(--dark-blue);
+    border-color: #fbc02d;
 }
 
 .social-svg {

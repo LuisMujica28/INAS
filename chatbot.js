@@ -3,7 +3,7 @@
 // Configuration
 // IMPORTANT: Replace this with your Google AI Studio API Key
 // You can restrict this key to your domain in Google Cloud Console for security.
-const API_KEY = "AIzaSyCWNvY4n-1OyyFi3KpuVsIKBZSvw1i5TmM";
+const API_KEY = "AIzaSyAF5CKo3jV6kfZ9A0CouFtDYJccDpHmQJs";
 
 const SYSTEM_INSTRUCTION = `
 Rol: Eres el Asistente Virtual del "Instituto Nueva América de Suba" (INAS).
@@ -16,7 +16,7 @@ Lema: "Ciencia, Cultura y Vida".
 Ubicación: Calle 136 # 95 B - 85, Villa Elisa - Suba, Bogotá D.C.
 Teléfonos: TEL: 601 768-9104 / CEL: 305 430-1113.
 Correos: secretaria@inas.edu.co, inamerica91@hotmail.com.
-Horario de Atención: Lunes a viernes de 6:00 a.m. a 3:00 p.m.
+Horario de Atención: Lunes a viernes de 6:00 a.m. a 2:30 p.m.
 
 PAGOS Y CUENTAS BANCARIAS:
 1. Banco Caja Social: Cuenta Corriente No. 2403 0000 0015. Titular: Instituto Nueva América.
@@ -162,7 +162,7 @@ inputEl.addEventListener('keypress', (e) => {
 // Gemini API Interaction
 async function fetchGeminiResponse() {
     // Usamos gemini-2.5-flash que validamos que funciona con tu llave
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
 
     // Send the entire conversation history
     const payload = {
