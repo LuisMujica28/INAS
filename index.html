@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/inas_shield.png">
     <title>Instituto Nueva América (INAS)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -162,7 +163,7 @@
 
             <!-- Card 3: Campeonatos -->
             <!-- Item Especial: Deportes (Diseño Transparente) -->
-            <div class="quick-access-item special-sports">
+            <div class="quick-access-item special-sports" onclick="window.location.href='deportes.html'">
                 <img src="assets/sports_character_group.png" alt="Deportes Team" class="qa-image">
                 <div class="qa-content">
                     <h3>Deportes</h3>
@@ -211,7 +212,7 @@
 
             <!-- Card 3: Campeonatos -->
             <!-- Item Especial: Deportes (Diseño Transparente) -->
-            <div class="quick-access-item special-sports">
+            <div class="quick-access-item special-sports" onclick="window.location.href='deportes.html'">
                 <img src="assets/sports_character_group.png" alt="Deportes Team" class="qa-image">
                 <div class="qa-content">
                     <h3>Deportes</h3>
@@ -548,6 +549,47 @@
         <div class="footer-bottom">
             <p>&copy; 2026 Instituto Nueva América de Suba. Todos los derechos reservados.</p>
             <div class="footer-line"></div>
+            <div id="visitor-counter" style="margin-top: 10px; font-size: 0.8rem; color: #64748b; opacity: 0.8;">
+                Visitas: <span id="visit-count">Cargando...</span>
+            </div>
+
+            <script>
+                // Simple Visitor Counter
+                // Uses a namespace to track visits and adds the requested offset
+                (function () {
+                    const START_OFFSET = 29310;
+                    const NAMESPACE = 'inas_homepage_v1';
+                    const KEY = 'visits';
+                    const counterElement = document.getElementById('visit-count');
+
+                    // Try local storage first to prevent double counting on reload (optional, but good for "visits")
+                    // But usually "hits" counts every reload. Let's count every reload as per simple counters.
+
+                    // Fallback using LocalStorage if API fails
+                    function updateDisplay(count) {
+                        if (counterElement) {
+                            counterElement.innerText = (parseInt(count) + START_OFFSET).toLocaleString();
+                        }
+                    }
+
+                    // Using countapi.xyz (free, no key needed)
+                    // If it fails, we fallback to localStorage simulation
+                    fetch(`https://api.countapi.xyz/hit/${NAMESPACE}/${KEY}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            updateDisplay(data.value);
+                            localStorage.setItem('inas_visits_backup', data.value);
+                        })
+                        .catch(err => {
+                            console.log('Counter API unavailable, using local fallback');
+                            // Fallback: Use local storage to simulate a counter for the demo
+                            let localCount = localStorage.getItem('inas_local_visits') || 0;
+                            localCount++;
+                            localStorage.setItem('inas_local_visits', localCount);
+                            updateDisplay(localCount);
+                        });
+                })();
+            </script>
         </div>
     </footer>
 

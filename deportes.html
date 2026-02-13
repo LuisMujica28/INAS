@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>TorneoINAS Microfootball Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link rel="icon" type="image/png" href="assets/inas_shield.png">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#4ade80",
+                        "primary-soft": "#bbf7d0",
+                        "secondary": "#38bdf8",
+                        "secondary-soft": "#bae6fd",
+                        "accent": "#f472b6",
+                        "background-light": "#f0f9ff", "background-dark": "#0f172a",
+                        "glass-border": "rgba(255, 255, 255, 0.6)",
+                        "glass-surface": "rgba(255, 255, 255, 0.45)",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "3xl": "1.5rem", "4xl": "2.5rem", "full": "9999px" },
+                    boxShadow: {
+                        'soft-3d': '20px 20px 60px #cce0eb, -20px -20px 60px #ffffff',
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.1)',
+                        'inner-glow': 'inset 0 0 20px rgba(255, 255, 255, 0.8)',
+                    },
+                    backgroundImage: {
+                        'mesh': 'radial-gradient(at 0% 0%, hsla(192,100%,93%,1) 0, transparent 50%), radial-gradient(at 50% 0%, hsla(142,100%,93%,1) 0, transparent 50%), radial-gradient(at 100% 0%, hsla(262,100%,96%,1) 0, transparent 50%)',
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f0f9ff;
+            background-image:
+                radial-gradient(at 10% 10%, hsla(180, 70%, 90%, 1) 0px, transparent 50%),
+                radial-gradient(at 90% 10%, hsla(200, 70%, 90%, 1) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, hsla(150, 60%, 95%, 1) 0px, transparent 50%),
+                radial-gradient(at 80% 90%, hsla(220, 60%, 95%, 1) 0px, transparent 50%);
+            background-attachment: fixed;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow:
+                0 4px 6px -1px rgba(0, 0, 0, 0.02),
+                0 2px 4px -1px rgba(0, 0, 0, 0.02),
+                inset 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .canva-placeholder {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .canva-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.4),
+                    transparent);
+            animation: shimmer 2.5s infinite;
+        }
+
+        @keyframes shimmer {
+            100% {
+                left: 200%;
+            }
+        }
+
+        @keyframes float-y {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes float-x {
+
+            0%,
+            100% {
+                transform: translateX(0) rotate(5deg);
+            }
+
+            50% {
+                transform: translateX(15px) rotate(10deg);
+            }
+        }
+
+        .float-slow {
+            animation: float-y 6s ease-in-out infinite;
+        }
+
+        .float-medium {
+            animation: float-y 5s ease-in-out infinite;
+        }
+
+        .float-fast {
+            animation: float-y 4s ease-in-out infinite;
+        }
+
+        .float-diagonal {
+            animation: float-x 7s ease-in-out infinite;
+        }
+
+        .glass-button {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid white;
+            transition: all 0.3s ease;
+        }
+
+        .glass-button:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+
+<body class="text-slate-700 font-display min-h-screen overflow-x-hidden selection:bg-primary selection:text-white">
+    <nav class="fixed w-full z-50 top-0 px-4 py-4">
+        <div class="max-w-7xl mx-auto glass-panel rounded-2xl px-6 py-3 flex justify-between items-center shadow-sm">
+            <div class="flex items-center space-x-3">
+                <div
+                    class="w-10 h-10 bg-gradient-to-br from-primary to-emerald-500 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg transform rotate-3">
+                    T
+                </div>
+                <span class="font-bold text-xl tracking-tight text-slate-800">Torneo<span
+                        class="text-emerald-500">INAS</span></span>
+            </div>
+            <div class="hidden md:flex space-x-1">
+                <a class="px-4 py-2 rounded-xl text-slate-600 font-medium hover:bg-white/50 hover:text-primary transition-all"
+                    href="index.html">Inicio</a>
+                <a class="px-4 py-2 rounded-xl text-slate-600 font-medium hover:bg-white/50 hover:text-primary transition-all"
+                    href="horarios.html">Horarios</a>
+                <a class="px-4 py-2 rounded-xl text-slate-600 font-medium hover:bg-white/50 hover:text-primary transition-all"
+                    href="plataforma.html">Plataforma</a>
+
+            </div>
+        </div>
+    </nav>
+    <main class="pt-28 pb-12 px-4 sm:px-6 max-w-[1600px] mx-auto relative min-h-screen flex flex-col justify-center">
+        <div class="absolute top-32 left-10 w-32 h-32 opacity-80 pointer-events-none z-0 float-slow hidden lg:block">
+            <div class="relative w-full h-full">
+                <span class="material-icons text-9xl text-emerald-300 drop-shadow-2xl"
+                    style="filter: drop-shadow(0 10px 10px rgba(16, 185, 129, 0.2));">sports_soccer</span>
+            </div>
+        </div>
+        <div
+            class="absolute bottom-20 right-10 w-24 h-24 opacity-80 pointer-events-none z-0 float-medium hidden lg:block">
+            <span class="material-icons text-8xl text-sky-300 drop-shadow-2xl"
+                style="filter: drop-shadow(0 10px 10px rgba(14, 165, 233, 0.2));">emoji_events</span>
+        </div>
+        <div
+            class="absolute top-40 right-1/4 w-16 h-16 opacity-60 pointer-events-none z-0 float-diagonal hidden lg:block">
+            <span class="material-icons text-7xl text-pink-300 drop-shadow-xl"
+                style="filter: drop-shadow(0 10px 10px rgba(236, 72, 153, 0.2));">sports</span>
+        </div>
+        <header class="text-center mb-12 relative z-10">
+            <div class="inline-flex items-center px-4 py-1.5 rounded-full glass-panel mb-4 border border-white">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-2"></span>
+                <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Temporada 2026</span>
+            </div>
+            <h1 class="text-4xl md:text-6xl font-black text-slate-800 mb-2 tracking-tight">
+                Torneo de <span
+                    class="bg-clip-text text-transparent bg-gradient-to-r from-emerald-500 to-sky-500">Microfútbol</span>
+            </h1>
+            <p class="text-slate-500 text-lg max-w-2xl mx-auto">
+                Accede a toda la información deportiva actualizada en tiempo real a través de nuestras presentaciones
+                interactivas.
+            </p>
+        </header>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 relative z-10">
+            <div class="lg:col-span-8 flex flex-col">
+                <div
+                    class="glass-panel rounded-3xl p-1.5 h-full transform transition-transform hover:scale-[1.01] duration-500">
+                    <div class="bg-white/40 rounded-2xl h-full p-6 border border-white/50 flex flex-col">
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="p-2 bg-pink-100 text-pink-500 rounded-lg">
+                                <span class="material-icons">leaderboard</span>
+                            </div>
+                            <h2 class="text-2xl font-bold text-slate-800">Tabla de Posiciones</h2>
+                        </div>
+                        <div style="position: relative; width: 100%; height: 0; padding-top: 83.8298%;
+ padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
+ border-radius: 8px; will-change: transform;">
+                            <iframe loading="lazy"
+                                style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
+                                src="https://www.canva.com/design/DAHBJrbUe10/ioWfRhsumHzpEloho9pCCA/view?embed"
+                                allowfullscreen="allowfullscreen" allow="fullscreen">
+                            </iframe>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="lg:col-span-4 flex flex-col gap-8">
+                <div
+                    class="glass-panel rounded-3xl p-1.5 flex-1 transform transition-transform hover:translate-y-[-5px] duration-300">
+                    <div class="bg-white/40 rounded-2xl h-full p-5 border border-white/50 flex flex-col">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="p-2 bg-sky-100 text-sky-600 rounded-lg">
+                                <span class="material-icons">calendar_month</span>
+                            </div>
+                            <h2 class="text-xl font-bold text-slate-800">Últimos Resultados</h2>
+                        </div>
+                        <div style="position: relative; width: 100%; height: 0; padding-top: 100.0000%;
+ padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
+ border-radius: 8px; will-change: transform;">
+                            <iframe loading="lazy"
+                                style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
+                                src="https://www.canva.com/design/DAHBJo3aZPU/LbvnzEs9RiflWQ9uhsIKzQ/view?embed"
+                                allowfullscreen="allowfullscreen" allow="fullscreen">
+                            </iframe>
+                        </div>
+
+                    </div>
+                </div>
+                <div
+                    class="glass-panel rounded-3xl p-1.5 flex-1 transform transition-transform hover:translate-y-[-5px] duration-300">
+                    <div class="bg-white/40 rounded-2xl h-full p-5 border border-white/50 flex flex-col">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="p-2 bg-emerald-100 text-emerald-600 rounded-lg">
+                                    <span class="material-icons">sports_soccer</span>
+                                </div>
+                                <h2 class="text-xl font-bold text-slate-800">Próximos Partidos</h2>
+                            </div>
+                        </div>
+                        <div style="position: relative; width: 100%; height: 0; padding-top: 83.8298%;
+ padding-bottom: 0; box-shadow: 0 2px 8px 0 rgba(63,69,81,0.16); margin-top: 1.6em; margin-bottom: 0.9em; overflow: hidden;
+ border-radius: 8px; will-change: transform;">
+                            <iframe loading="lazy"
+                                style="position: absolute; width: 100%; height: 100%; top: 0; left: 0; border: none; padding: 0;margin: 0;"
+                                src="https://www.canva.com/design/DAHBJ6lfvFQ/lvANEKUncovzJ3yNv5MaeQ/view?embed"
+                                allowfullscreen="allowfullscreen" allow="fullscreen">
+                            </iframe>
+                        </div>
+
+                        <div class="mt-4 flex justify-between items-center text-sm text-slate-500">
+                            <span>Actualizado: 5m</span>
+                            <button class="flex items-center hover:text-emerald-600 transition-colors font-medium">
+                                <span class="material-icons text-base">open_in_new</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-12 grid grid-cols-2 gap-4 max-w-lg mx-auto relative z-10">
+            <button class="glass-button rounded-2xl p-4 flex flex-col items-center justify-center gap-2 text-slate-600">
+                <span class="material-icons text-emerald-500">sports_volleyball</span>
+                <span class="font-semibold text-sm">Voleibol</span>
+            </button>
+            <button class="glass-button rounded-2xl p-4 flex flex-col items-center justify-center gap-2 text-slate-600">
+                <span class="material-icons text-orange-500">sports_basketball</span>
+                <span class="font-semibold text-sm">Baloncesto</span>
+            </button>
+        </div>
+    </main>
+    <footer class="text-center py-8 text-slate-400 text-sm relative z-10">
+        <p>© 2023 TorneoINAS. Powered by Canva Embeds.</p>
+    </footer>
+</body>
+
+</html>
