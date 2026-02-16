@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Escuelas Deportivas - Inscripciones Abiertas</title>
+    <!-- Tailwind CSS (via CDN as requested in code) -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&amp;family=Nunito:wght@400;600;700;800&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
+    <!-- Navigation Script for Modal (Preserved from previous implementation) -->
+    <script src="navigation.js" defer></script>
+    <!-- Custom Styles from User Code -->
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        .text-shadow-sm {
+            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-delayed {
+            animation: float 6s ease-in-out infinite;
+            animation-delay: 3s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* 
+           Preserving the user's specific gradient definitions even if Tailwind handles some.
+           Using Tailwind config below for colors but keeping these as backup/specific classes.
+        */
+        .bg-clay-gradient {
+            background: linear-gradient(135deg, #FF8C42 0%, #FFD166 100%);
+        }
+
+        .bg-purple-gradient {
+            background: linear-gradient(135deg, #9F7AEA 0%, #7C3AED 100%);
+        }
+
+        /* 
+           IMPORTANT: We must import the main styles.css to ensure the modal styles work.
+           However, since this page uses Tailwind, we need to be careful about conflicts.
+           The modal styles are specific enough (.modal-overlay, etc.) that they should be fine.
+           But we need to ensure main styles don't override Tailwind utilities unexpectedly.
+           For now, I will NOT link styles.css directly to avoid breaking this specific page's unique look,
+           BUT I will make sure the navigation.js and modal CSS are handled. 
+           
+           Actually, the modal styles ARE in styles.css.
+           If we don't link styles.css, the modal won't have styles.
+           I will link styles.css but place it BEFORE Tailwind so Tailwind wins on specificity for the page content,
+           or I will extract the modal styles. 
+           
+           Better approach: I'll include styles.css but expect some overrides. 
+           Wait, this page has a very distinct "Fun/Cartoonish" look (Fredoka font) compared to the main site.
+           Linking styles.css might impose 'Poppins' globally (body { font-family: Poppins }).
+           Tailwind's 'font-sans' or explicit classes should override it, but let's be safe.
+           
+           DECISION: I will duplicate the MODAL CSS into this file's <style> block or check if I can link styles.css safely.
+           Let's try linking styles.css. If it breaks the look, we fix it.
+           Actually, the user provided a full HTML document. I should respect that structure.
+           I will add the link to styles.css but maybe scope it or just add the specific modal CSS here?
+           
+           To be safest and least intrusive to the specific design provided:
+           I will add the <link rel="stylesheet" href="styles.css"> but I'll add a style block 
+           to reset some things if needed, OR just trust Tailwind's specific classes to win.
+           
+           However, `navigation.js` depends on `.modal-overlay` etc which are in `styles.css`.
+           I will add the link to `styles.css` at the top.
+        */
+    </style>
+    <link rel="stylesheet" href="styles.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#FF8C42", // Orange from flyer
+                        secondary: "#7C3AED", // Purple from flyer
+                        tertiary: "#FFD166", // Yellowish tone
+                        "background-light": "#FFF5F0",
+                        "background-dark": "#1a1025",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#2d203b",
+                    },
+                    fontFamily: {
+                        display: ["Fredoka", "sans-serif"],
+                        body: ["Nunito", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "1.5rem",
+                        'xl': '2rem',
+                        '2xl': '3rem',
+                    },
+                    boxShadow: {
+                        '3d': '0 10px 0px 0px rgba(0,0,0,0.1), 0 10px 20px rgba(0,0,0,0.15)',
+                        '3d-hover': '0 6px 0px 0px rgba(0,0,0,0.1), 0 6px 15px rgba(0,0,0,0.15)',
+                        '3d-active': '0 2px 0px 0px rgba(0,0,0,0.1), 0 2px 5px rgba(0,0,0,0.15)',
+                        'card': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                        'glow': '0 0 20px rgba(124, 58, 237, 0.3)',
+                    }
+                },
+            },
+        };
+    </script>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-100 min-h-screen flex flex-col transition-colors duration-300">
+    <!-- Navbar Modified to Home Link functionality -->
+    <nav class="w-full py-6 px-4 md:px-12 flex justify-between items-center max-w-7xl mx-auto z-50">
+        <a href="index.html" class="flex items-center space-x-2 cursor-pointer hover:opacity-80 transition-opacity">
+            <!-- Added href to index.html -->
+            <!-- Added href to index.html -->
+            <div
+                class="w-10 h-10 bg-primary rounded-full flex items-center justify-center shadow-3d text-white font-bold text-xl">
+                <span class="material-icons-round">sports_basketball</span>
+            </div>
+            <span class="text-2xl font-display font-bold text-secondary dark:text-primary tracking-wide">Club
+                Deportivo</span>
+        </a>
+        <div class="hidden md:flex items-center gap-4">
+            <a href="index.html" class="font-bold text-gray-600 hover:text-primary transition-colors">Volver al
+                Inicio</a>
+            <button
+                class="bg-secondary text-white px-6 py-3 rounded-full font-bold shadow-3d hover:shadow-3d-hover hover:translate-y-1 transition-all active:shadow-3d-active active:translate-y-2">
+                Contactar
+            </button>
+        </div>
+    </nav>
+
+    <header class="relative overflow-hidden pt-12 pb-24 px-4 md:px-12 flex flex-col items-center text-center z-10">
+        <div
+            class="absolute top-0 left-0 w-64 h-64 bg-primary/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 dark:bg-primary/10">
+        </div>
+        <div
+            class="absolute bottom-0 right-0 w-96 h-96 bg-secondary/20 rounded-full blur-3xl translate-x-1/3 translate-y-1/3 dark:bg-secondary/10">
+        </div>
+        <div
+            class="inline-block mb-4 px-4 py-2 bg-white dark:bg-surface-dark rounded-full shadow-sm border-2 border-primary/20">
+            <span class="text-primary font-bold text-sm tracking-wider uppercase">¡Inscripciones Abiertas!</span>
+        </div>
+        <h1
+            class="text-5xl md:text-7xl font-display font-black mb-6 text-transparent bg-clip-text bg-gradient-to-r from-secondary to-primary drop-shadow-sm leading-tight max-w-4xl mx-auto">
+            Escuelas Deportivas <br class="hidden md:block" />
+            <span class="text-gray-800 dark:text-white">Para el Futuro</span>
+        </h1>
+        <p
+            class="text-xl md:text-2xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-10 leading-relaxed font-semibold">
+            Formando campeones en baloncesto y voleibol. Únete a nuestro equipo y desarrolla tu talento.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 items-center justify-center w-full relative z-20">
+            <a class="w-full sm:w-auto px-8 py-4 bg-primary text-white text-lg font-bold rounded-full shadow-3d hover:shadow-3d-hover hover:translate-y-1 transition-all active:shadow-3d-active active:translate-y-2 flex items-center justify-center gap-2"
+                href="#contacto">
+                <span class="material-icons-round">app_registration</span>
+                ¡Inscríbete Ahora!
+            </a>
+            <a class="w-full sm:w-auto px-8 py-4 bg-white dark:bg-surface-dark text-secondary dark:text-white text-lg font-bold rounded-full shadow-3d hover:shadow-3d-hover hover:translate-y-1 transition-all active:shadow-3d-active active:translate-y-2 border-2 border-secondary/20 flex items-center justify-center gap-2"
+                href="#horarios">
+                <span class="material-icons-round">calendar_today</span>
+                Ver Horarios
+            </a>
+        </div>
+        <div class="hidden lg:block absolute top-20 left-10 xl:left-32 floating">
+            <div
+                class="w-32 h-32 rounded-full shadow-2xl overflow-hidden flex items-center justify-center bg-white border-4 border-orange-500">
+                <img src="assets/club_leones_logo.png" alt="Club Leones" class="w-full h-full object-cover">
+            </div>
+        </div>
+        <div class="hidden lg:block absolute top-32 right-10 xl:right-32 floating-delayed">
+            <div
+                class="w-24 h-24 bg-gradient-to-br from-blue-400 to-indigo-500 rounded-full shadow-2xl flex items-center justify-center text-white border-b-8 border-indigo-600/30">
+                <span class="material-icons-round text-5xl drop-shadow-md">sports_volleyball</span>
+            </div>
+        </div>
+    </header>
+    <main class="max-w-7xl mx-auto px-4 md:px-12 pb-20 w-full">
+        <div class="grid md:grid-cols-2 gap-8 mb-20">
+            <div
+                class="group relative bg-surface-light dark:bg-surface-dark rounded-3xl p-8 shadow-card hover:shadow-glow transition-all duration-300 border-b-8 border-primary overflow-hidden">
+                <div
+                    class="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110">
+                </div>
+                <div class="relative z-10 flex flex-col h-full">
+                    <div class="w-16 h-16 bg-primary/20 text-primary rounded-2xl flex items-center justify-center mb-6">
+                        <span class="material-icons-round text-4xl">sports_basketball</span>
+                    </div>
+                    <h3 class="text-3xl font-display font-bold mb-4 text-gray-800 dark:text-white">Baloncesto</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6 flex-grow">Aprende técnica, trabajo en equipo y
+                        estrategia en nuestra cancha profesional.</p>
+                    <div class="mt-auto">
+                        <span
+                            class="inline-block bg-primary/10 text-primary px-4 py-2 rounded-full font-bold text-sm">Cancha
+                            Múltiple</span>
+                    </div>
+                    <div
+                        class="mt-6 h-48 rounded-2xl bg-gradient-to-b from-orange-100 to-orange-50 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center overflow-hidden relative">
+                        <img alt="Cancha de baloncesto"
+                            class="absolute inset-0 w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-500 mix-blend-overlay"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHLNITNavVet3A7zmTYrIV9OuQ4NhoSIAsNCcl0hNnRRzR_7bYipSzJyUM6kXb1OsfTyYjVSZvKF8NZ8JauPJKvVVh8YZ-cke1I20-d5CkMdZ0VTWREsG1dd7ewj8_zV58kZvOU8AKhROP-iXaRg-TXfETcppt1C_fBX_8zkJFcPA7_ztVxVc2GQsLmD__fhv2CgJplxiowkDNcyuE9nZ6YAtIE75DsN3R113zFHa-NlHl5dbAa1N7P7kPSa6REZPLdPFjwHkYJjyW" />
+                        <div class="absolute inset-0 bg-primary/20"></div>
+                    </div>
+                </div>
+            </div>
+            <div
+                class="group relative bg-surface-light dark:bg-surface-dark rounded-3xl p-8 shadow-card hover:shadow-glow transition-all duration-300 border-b-8 border-secondary overflow-hidden">
+                <div
+                    class="absolute top-0 right-0 w-32 h-32 bg-secondary/10 rounded-bl-full -mr-8 -mt-8 transition-transform group-hover:scale-110">
+                </div>
+                <div class="relative z-10 flex flex-col h-full">
+                    <div
+                        class="w-16 h-16 bg-secondary/20 text-secondary rounded-2xl flex items-center justify-center mb-6">
+                        <span class="material-icons-round text-4xl">sports_volleyball</span>
+                    </div>
+                    <h3 class="text-3xl font-display font-bold mb-4 text-gray-800 dark:text-white">Voleibol</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6 flex-grow">Desarrolla agilidad, potencia y
+                        coordinación con nuestros entrenadores expertos.</p>
+                    <div class="mt-auto">
+                        <span
+                            class="inline-block bg-secondary/10 text-secondary px-4 py-2 rounded-full font-bold text-sm">Cancha
+                            Múltiple</span>
+                    </div>
+                    <div
+                        class="mt-6 h-48 rounded-2xl bg-gradient-to-b from-purple-100 to-purple-50 dark:from-gray-700 dark:to-gray-800 flex items-center justify-center overflow-hidden relative">
+                        <img alt="Cancha de voleibol"
+                            class="absolute inset-0 w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-500 mix-blend-overlay"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPrpRgqcPQ74VuZjSlJiFNNtRmEF4IqOxnQs_mXiso8wvAnu6PjKh8j_sjEwb8-M1ytgl5gnPjSto_SgwkZjBNMsu5CAr_Tj25W_Hchhv_Ysw-NPUof4YAxZqARUqZp8OXMyh1RmiDK0MxZhzk5aLcO9z5uJGG_gSrC7fp_fpLqTbtZA8AHnKszuHAwUl7KY2yCiHKLxxZMSatu28cHfhsu3eZNJTs1_uw0-AWqXLvReQb2ZLf-KyZmJGZ7LeVMHTpiQPc2PIuYSjv" />
+                        <div class="absolute inset-0 bg-secondary/20"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-white dark:bg-surface-dark rounded-3xl p-8 md:p-12 shadow-card relative overflow-hidden"
+            id="horarios">
+            <div class="absolute top-0 left-0 w-full h-4 bg-gradient-to-r from-primary via-tertiary to-secondary">
+            </div>
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <div>
+                        <h2 class="text-4xl font-display font-black text-gray-800 dark:text-white mb-2">¡Iniciamos el 3
+                            de Marzo!</h2>
+                        <p class="text-lg text-gray-500 dark:text-gray-400 font-medium">No pierdas tu cupo, regístrate
+                            hoy mismo.</p>
+                    </div>
+                    <div
+                        class="flex items-start space-x-4 p-4 rounded-2xl bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800">
+                        <div class="bg-green-100 dark:bg-green-800 p-2 rounded-full text-green-600 dark:text-green-300">
+                            <span class="material-icons-round">local_offer</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-green-800 dark:text-green-300 text-lg">Promoción Especial</h4>
+                            <p class="text-green-700 dark:text-green-400">50% de descuento los 3 primeros meses para
+                                estudiantes del INAS.</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <h3 class="text-2xl font-bold font-display text-gray-800 dark:text-white">Horarios de
+                            Entrenamiento</h3>
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <div
+                                class="flex-1 bg-background-light dark:bg-background-dark p-4 rounded-xl border-l-4 border-secondary">
+                                <div class="flex items-center gap-2 mb-2 text-secondary font-bold">
+                                    <span class="material-icons-round text-sm">schedule</span>
+                                    <span>Martes y Jueves</span>
+                                </div>
+                                <p class="text-gray-700 dark:text-gray-300 font-bold text-xl">2:30 pm - 4:00 pm</p>
+                            </div>
+                            <div
+                                class="flex-1 bg-background-light dark:bg-background-dark p-4 rounded-xl border-l-4 border-primary">
+                                <div class="flex items-center gap-2 mb-2 text-primary font-bold">
+                                    <span class="material-icons-round text-sm">schedule</span>
+                                    <span>Sábados</span>
+                                </div>
+                                <p class="text-gray-700 dark:text-gray-300 font-bold text-xl">9:00 am - 11:00 am</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="bg-background-light dark:bg-background-dark rounded-2xl p-8 flex flex-col items-center text-center space-y-6 relative border border-gray-100 dark:border-gray-700">
+                    <div
+                        class="absolute -top-6 bg-tertiary text-gray-900 px-6 py-2 rounded-full font-bold shadow-lg transform -rotate-2">
+                        Mensualidad
+                    </div>
+                    <div class="pt-4">
+                        <span
+                            class="text-6xl font-black text-gray-800 dark:text-white block tracking-tighter">$100.000</span>
+                        <span class="text-gray-500 dark:text-gray-400 font-medium">por mes</span>
+                    </div>
+                    <div class="w-full h-px bg-gray-200 dark:bg-gray-700"></div>
+                    <div class="space-y-3 w-full">
+                        <div class="flex items-center justify-between text-gray-600 dark:text-gray-300">
+                            <span>Edades</span>
+                            <span class="font-bold text-gray-800 dark:text-white">5 a 17 años</span>
+                        </div>
+                        <div class="flex items-center justify-between text-gray-600 dark:text-gray-300">
+                            <span>Género</span>
+                            <span class="font-bold text-gray-800 dark:text-white">Niños y Niñas</span>
+                        </div>
+                        <div class="flex items-center justify-between text-gray-600 dark:text-gray-300">
+                            <span>Inscripción</span>
+                            <span class="font-bold text-secondary">Abierta</span>
+                        </div>
+                    </div>
+                    <button
+                        class="w-full py-4 bg-secondary text-white font-bold rounded-xl shadow-3d hover:shadow-3d-hover hover:translate-y-1 transition-all active:shadow-3d-active active:translate-y-2 mt-4">
+                        Reservar Cupo
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="mt-20 text-center" id="contacto">
+            <h2 class="text-4xl font-display font-black text-gray-800 dark:text-white mb-10">Contáctanos</h2>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white dark:bg-surface-dark p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+                    <div
+                        class="w-12 h-12 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="material-icons-round">phone</span>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2 text-gray-800 dark:text-gray-200">Llámanos</h3>
+                    <p class="text-gray-600 dark:text-gray-400 font-medium">300 390 2133</p>
+                    <p class="text-gray-600 dark:text-gray-400 font-medium">324 251 6220</p>
+                </div>
+                <div class="bg-white dark:bg-surface-dark p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+                    <div
+                        class="w-12 h-12 bg-red-100 dark:bg-red-900 text-red-600 dark:text-red-300 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="material-icons-round">location_on</span>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2 text-gray-800 dark:text-gray-200">Ubicación</h3>
+                    <p class="text-gray-600 dark:text-gray-400 font-medium">Calle 136 N 95B 85</p>
+                    <p class="text-gray-600 dark:text-gray-400 font-medium">Bogotá - Suba</p>
+                </div>
+                <div class="bg-white dark:bg-surface-dark p-6 rounded-2xl shadow-sm hover:shadow-md transition-shadow">
+                    <div
+                        class="w-12 h-12 bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-300 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="material-icons-round">email</span>
+                    </div>
+                    <h3 class="font-bold text-lg mb-2 text-gray-800 dark:text-gray-200">Escríbenos</h3>
+                    <p class="text-gray-600 dark:text-gray-400 font-medium">info@clubdeportivo.com</p>
+                    <p class="text-sm text-gray-400 mt-1">Respondemos en 24h</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+</body>
+
+</html>
