@@ -384,12 +384,13 @@
         <!-- Video Container -->
         <div class="relative w-full h-full bg-black">
             <iframe id="streamFrame" class="absolute top-0 left-0 w-full h-full" src="" frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowfullscreen></iframe>
         </div>
     </div>
 
     <script>
-        const TWITCH_CHANNEL = "pachon2801";
+        const YOUTUBE_CHANNEL_ID = "UC_-dRd6JQsYww7-T1nKlVnQ";
         let isFloating = true;
 
         function openLiveModal() {
@@ -452,8 +453,7 @@
         }
 
         function startStream() {
-            const domain = window.location.hostname;
-            const embedUrl = `https://player.twitch.tv/?channel=${TWITCH_CHANNEL}&parent=${domain}&parent=inas.edu.co&autoplay=true&muted=false`;
+            const embedUrl = `https://www.youtube.com/embed/live_stream?channel=${YOUTUBE_CHANNEL_ID}&autoplay=1`;
 
             const player = document.getElementById('playerOverlay');
             document.getElementById('streamFrame').src = embedUrl;

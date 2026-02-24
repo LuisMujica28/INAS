@@ -57,7 +57,10 @@
     <nav class="navbar">
         <div class="logo">
             <img src="assets/inas_shield.png" alt="Escudo INAS" class="logo-img">
-            <span class="logo-text">Instituto Nueva América <br> de Suba</span>
+            <span class="logo-text">
+                <span class="logo-main">Instituto Nueva América</span>
+                <span class="logo-sub">de Suba</span>
+            </span>
         </div>
         <div class="nav-links">
             <a href="index.html" class="nav-item">Inicio</a>
@@ -86,15 +89,61 @@
             </a>
             <!-- Mobile Menu Toggle -->
             <button class="menu-toggle" aria-label="Abrir menú">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                    <line class="line-top" x1="3" y1="12" x2="21" y2="12"></line>
+                    <line class="line-mid" x1="3" y1="6" x2="21" y2="6"></line>
+                    <line class="line-bot" x1="3" y1="18" x2="21" y2="18"></line>
                 </svg>
             </button>
         </div>
     </nav>
+
+    <!-- Scrolling News Ticker -->
+    <div class="news-ticker-container">
+        <div class="news-ticker-content">
+            <!-- News Item 1 -->
+            <span class="ticker-item">⚠️ <strong>23 al 27 de feb:</strong> Semana de pruebas. Todos los estudiantes
+                salen en horario habitual.</span>
+            <span class="ticker-separator">|</span>
+            <!-- News Item 2 -->
+            <span class="ticker-item">📚 <strong>Martes 24 de feb:</strong> Inicia curso Preicfes (Martes, miércoles y
+                jueves de 2:30 a 4:00 pm).</span>
+            <span class="ticker-separator">|</span>
+            <!-- News Item 3 -->
+            <span class="ticker-item">🏀 <strong>Martes 24 de feb:</strong> Inician las Escuelas Deportivas de
+                Baloncesto y Voleibol (Inscripciones abiertas en sección Deportes).</span>
+            <span class="ticker-separator">|</span>
+
+            <!-- DUPLICATED FOR SEAMLESS INFINITE SCROLL -->
+            <!-- News Item 1 -->
+            <span class="ticker-item">⚠️ <strong>23 al 27 de feb:</strong> Semana de pruebas. Todos los estudiantes
+                salen en horario habitual.</span>
+            <span class="ticker-separator">|</span>
+            <!-- News Item 2 -->
+            <span class="ticker-item">📚 <strong>Martes 24 de feb:</strong> Inicia curso Preicfes (Martes, miércoles y
+                jueves de 2:30 a 4:00 pm).</span>
+            <span class="ticker-separator">|</span>
+            <!-- News Item 3 -->
+            <span class="ticker-item">🏀 <strong>Martes 24 de feb:</strong> Inician las Escuelas Deportivas de
+                Baloncesto y Voleibol (Inscripciones abiertas en sección Deportes).</span>
+            <span class="ticker-separator">|</span>
+
+            <!-- TRIPLICATED FOR EXTRA SAFETY ON ULTRA WIDE SCREENS -->
+            <!-- News Item 1 -->
+            <span class="ticker-item">⚠️ <strong>23 al 27 de feb:</strong> Semana de pruebas. Todos los estudiantes
+                salen en horario habitual.</span>
+            <span class="ticker-separator">|</span>
+            <!-- News Item 2 -->
+            <span class="ticker-item">📚 <strong>Martes 24 de feb:</strong> Inicia curso Preicfes (Martes, miércoles y
+                jueves de 2:30 a 4:00 pm).</span>
+            <span class="ticker-separator">|</span>
+            <!-- News Item 3 -->
+            <span class="ticker-item">🏀 <strong>Martes 24 de feb:</strong> Inician las Escuelas Deportivas de
+                Baloncesto y Voleibol (Inscripciones abiertas en sección Deportes).</span>
+            <span class="ticker-separator">|</span>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <!-- Hero Section - Spectacular 3D Cinema -->
@@ -165,6 +214,7 @@
             <!-- Card 3: Campeonatos -->
             <!-- Item Especial: Deportes (Diseño Transparente) -->
             <div class="quick-access-item special-sports" onclick="openSportsModal(event)">
+                <div class="live-badge">EN VIVO</div>
                 <img src="assets/sports_character_group.png" alt="Deportes Team" class="qa-image">
                 <div class="qa-content">
                     <h3>Deportes</h3>
@@ -188,6 +238,15 @@
                 <div class="qa-content">
                     <h3>Instalaciones</h3>
                     <p>Conoce el colegio</p>
+                </div>
+            </div>
+
+            <!-- Card 6: Manual de Convivencia -->
+            <div class="quick-access-item special-manual" onclick="window.location.href='manual_convivencia.html'">
+                <img src="assets/manual_convivencia_icon_3d.png" alt="Manual" class="qa-image">
+                <div class="qa-content">
+                    <h3>Manual</h3>
+                    <p>Convivencia 2026</p>
                 </div>
             </div>
 
@@ -214,6 +273,7 @@
             <!-- Card 3: Campeonatos -->
             <!-- Item Especial: Deportes (Diseño Transparente) -->
             <div class="quick-access-item special-sports" onclick="openSportsModal(event)">
+                <div class="live-badge">EN VIVO</div>
                 <img src="assets/sports_character_group.png" alt="Deportes Team" class="qa-image">
                 <div class="qa-content">
                     <h3>Deportes</h3>
@@ -237,6 +297,15 @@
                 <div class="qa-content">
                     <h3>Instalaciones</h3>
                     <p>Conoce el colegio</p>
+                </div>
+            </div>
+
+            <!-- Card 6: Manual de Convivencia -->
+            <div class="quick-access-item special-manual" onclick="window.location.href='manual_convivencia.html'">
+                <img src="assets/manual_convivencia_icon_3d.png" alt="Manual" class="qa-image">
+                <div class="qa-content">
+                    <h3>Manual</h3>
+                    <p>Convivencia 2026</p>
                 </div>
             </div>
 
@@ -357,15 +426,7 @@
 
     <!-- Uniforms Section (Photo Studio) -->
     <section class="uniforms-section" id="uniformes">
-        <!-- Wave Divider Top -->
-        <div class="custom-shape-divider-top-1">
-            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"
-                preserveAspectRatio="none">
-                <path fill="#ffffff" fill-opacity="1"
-                    d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z">
-                </path>
-            </svg>
-        </div>
+
 
         <h2 class="section-title" style="margin-bottom: 3rem;">Nuestros Uniformes</h2>
 
@@ -408,15 +469,7 @@
             </div>
         </div>
 
-        <!-- Wave Divider Bottom (Melting into Community) -->
-        <div class="custom-shape-divider-bottom-2">
-            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"
-                preserveAspectRatio="none">
-                <path fill="#ffffff" fill-opacity="1"
-                    d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z">
-                </path>
-            </svg>
-        </div>
+
     </section>
 
     <!-- Community Section (New Frame Style) -->
@@ -797,6 +850,17 @@
             window.addEventListener('mouseup', endDrag);
             window.addEventListener('touchend', endDrag);
         }
+
+        // Auto-select "deportivo" uniform on mobile to prevent empty description space
+        window.addEventListener('DOMContentLoaded', () => {
+            if (window.innerWidth <= 768) {
+                if (typeof window.selectUniform === 'function') {
+                    setTimeout(() => {
+                        window.selectUniform('deportivo');
+                    }, 500); // slight delay to ensure DOM and CSS are ready
+                }
+            }
+        });
     </script>
 
     <script src="intro-animation.js"></script>

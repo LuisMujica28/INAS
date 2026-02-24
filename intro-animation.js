@@ -7,11 +7,27 @@ const titleElement = document.querySelector('.intro-animated-text');
 function splitText(element) {
     const text = element.textContent;
     element.innerHTML = '';
-    text.split('').forEach(char => {
-        const span = document.createElement('span');
-        span.textContent = char === ' ' ? '\u00A0' : char;
-        span.className = 'slot-char';
-        element.appendChild(span);
+    text.split(' ').forEach((word, index, array) => {
+        const wordSpan = document.createElement('span');
+        wordSpan.className = 'slot-word';
+        wordSpan.style.display = 'inline-block';
+        wordSpan.style.whiteSpace = 'nowrap';
+
+        word.split('').forEach(char => {
+            const span = document.createElement('span');
+            span.textContent = char;
+            span.className = 'slot-char';
+            wordSpan.appendChild(span);
+        });
+
+        element.appendChild(wordSpan);
+
+        if (index < array.length - 1) {
+            const spaceSpan = document.createElement('span');
+            spaceSpan.innerHTML = '&nbsp;';
+            spaceSpan.style.display = 'inline-block';
+            element.appendChild(spaceSpan);
+        }
     });
 }
 
@@ -29,11 +45,27 @@ async function animateText(newText) {
 
     // 2. Prepare NEW text
     titleElement.innerHTML = '';
-    newText.split('').forEach(char => {
-        const span = document.createElement('span');
-        span.textContent = char === ' ' ? '\u00A0' : char;
-        span.className = 'slot-char prepare-in';
-        titleElement.appendChild(span);
+    newText.split(' ').forEach((word, index, array) => {
+        const wordSpan = document.createElement('span');
+        wordSpan.className = 'slot-word';
+        wordSpan.style.display = 'inline-block';
+        wordSpan.style.whiteSpace = 'nowrap';
+
+        word.split('').forEach(char => {
+            const span = document.createElement('span');
+            span.textContent = char;
+            span.className = 'slot-char prepare-in';
+            wordSpan.appendChild(span);
+        });
+
+        titleElement.appendChild(wordSpan);
+
+        if (index < array.length - 1) {
+            const spaceSpan = document.createElement('span');
+            spaceSpan.innerHTML = '&nbsp;';
+            spaceSpan.style.display = 'inline-block';
+            titleElement.appendChild(spaceSpan);
+        }
     });
 
     await new Promise(r => requestAnimationFrame(r));

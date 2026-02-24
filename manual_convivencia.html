@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/inas_shield.png">
+    <title>Manual de Convivencia - INAS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Flipbook Container Styles */
+        .flipbook-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto 4rem auto;
+            padding: 0 1rem;
+            min-height: 80vh;
+            /* Ensure enough space */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .fp-iframe {
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            /* Override inline height for better responsiveness if possible, 
+               but respecting user's inline style as base */
+            min-height: 800px;
+            /* Make it taller for better reading */
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .fp-iframe {
+                min-height: 500px;
+            }
+
+            .manual-header {
+                padding: 6rem 5% 3rem 5%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar (Same as Index) -->
+    <nav class="navbar scanned-nav">
+        <div class="logo">
+            <img src="assets/inas_shield.png" alt="Escudo INAS" class="logo-img">
+            <span class="logo-text">Instituto Nueva América <br> de Suba</span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-item">Inicio</a>
+            <a href="instalaciones.html" class="nav-item">Instalaciones</a>
+            <a href="horizonte.html" class="nav-item">Horizonte</a>
+            <a href="horarios.html" class="nav-item">Horarios</a>
+            <a href="pagos.html" class="nav-item">Pagos</a>
+            <a href="plataforma.html" class="nav-item">Plataforma</a>
+            <a href="utiles.html" class="nav-item">Lista de Útiles</a>
+            <a href="contacto.html" class="nav-item">Contáctenos</a>
+        </div>
+        <div class="social-nav">
+            <!-- Reuse Social Icons -->
+        </div>
+        <button class="menu-toggle" aria-label="Abrir menú">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+        </button>
+    </nav>
+
+    <!-- Header -->
+    <header class="manual-header">
+        <div class="manual-header-content">
+            <h1>Manual de Convivencia</h1>
+            <p>Principios, Derechos y Deberes para una sana convivencia escolar.</p>
+            <div class="manual-meta">
+                <span>Año Lectivo 2025</span>
+                <span>•</span>
+                <span>Resolución No. 25</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Flipbook Content -->
+    <main class="flipbook-container">
+        <!-- User Provided Iframe -->
+        <iframe allowfullscreen="allowfullscreen" allow="clipboard-write" scrolling="no" class="fp-iframe"
+            src="https://heyzine.com/flip-book/8700f9a498.html"
+            style="border: 1px solid lightgray; width: 100%; height: 800px;">
+        </iframe>
+
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-overlay"></div>
+        <div class="footer-content">
+            <div class="footer-col brand-col">
+                <div class="footer-logo">
+                    <img src="assets/inas_shield.png" alt="Escudo INAS">
+                    <span>INAS</span>
+                </div>
+                <p class="footer-tagline">"Ciencia, Cultura y Vida"</p>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Instituto Nueva América de Suba.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="mobile-menu.js"></script>
+</body>
+
+</html>

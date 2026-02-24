@@ -24,7 +24,9 @@ function injectSportsModal() {
                     <p>Campeonatos, tablas y resultados.</p>
                 </div>
                 <div class="modal-option-card" onclick="window.location.href='escuelas_deportivas.html'">
-                    <div class="option-icon">⚽</div>
+                    <div class="option-icon">
+                        <img src="assets/club_leones_logo.png" alt="Club Leones Logo" style="width: 48px; height: auto; display: block; margin: 0 auto; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));">
+                    </div>
                     <h3>Escuelas Deportivas</h3>
                     <p>Formación y entrenamiento extracurricular.</p>
                 </div>
