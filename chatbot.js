@@ -161,8 +161,8 @@ inputEl.addEventListener('keypress', (e) => {
 
 // Gemini API Interaction
 async function fetchGeminiResponse() {
-    // Usamos gemini-2.5-flash que validamos que funciona con tu llave
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
+    // Usamos gemini-2.5-flash ya que está optimizado para baja latencia (recomendación directa de Google)
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`;
 
     // Send the entire conversation history
     const payload = {

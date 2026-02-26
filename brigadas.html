@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/inas_shield.png">
+    <title>Comité Escolar de Gestión de Riesgo - INAS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Specific Styles for Brigades Org Chart */
+        .org-section {
+            padding: 4rem 1rem;
+            background: #f8fafc;
+        }
+
+        .org-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .org-header-card {
+            background: linear-content;
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
+            color: white;
+            text-align: center;
+            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(30, 64, 175, 0.2);
+            margin-bottom: 3rem;
+        }
+
+        .org-header-card h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 800;
+        }
+
+        .org-header-card p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .brigade-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            margin-bottom: 3rem;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .brigade-header {
+            padding: 1.5rem 2rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .brigade-header h3 {
+            font-size: 1.5rem;
+            margin: 0;
+            font-weight: 700;
+        }
+
+        .brigade-icon {
+            font-size: 2rem;
+            background: rgba(255, 255, 255, 0.2);
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+        }
+
+        /* Colors based on user images */
+        .header-evacuacion {
+            background: linear-gradient(135deg, #4d7c0f, #65a30d);
+        }
+
+        .header-incendios {
+            background: linear-gradient(135deg, #b91c1c, #ef4444);
+        }
+
+        .header-auxilios {
+            background: linear-gradient(135deg, #1e3a8a, #1d4ed8);
+        }
+
+        .brigade-body {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .brigade-body {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .role-box {
+            background: #f1f5f9;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #cbd5e1;
+        }
+
+        .role-box.coordinator {
+            border-left-color: #475569;
+        }
+
+        .role-box.collaborators {
+            border-left-color: #94a3b8;
+        }
+
+        .role-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+            color: #475569;
+            margin-bottom: 0.8rem;
+        }
+
+        .role-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin: 0;
+        }
+
+        .collaborator-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .collaborator-list li {
+            padding: 0.4rem 0;
+            border-bottom: 1px solid #e2e8f0;
+            color: #334155;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .collaborator-list li:last-child {
+            border-bottom: none;
+        }
+
+        .collaborator-list li::before {
+            content: "•";
+            color: #94a3b8;
+            font-size: 1.2rem;
+        }
+
+        .functions-box {
+            grid-column: 1 / -1;
+            background: #ffffff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            margin-top: 1rem;
+        }
+
+        .functions-box h4 {
+            color: #0f172a;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .functions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .function-phase {
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .function-phase h5 {
+            color: #3b82f6;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .function-phase ul {
+            padding-left: 1.2rem;
+            margin: 0;
+            color: #475569;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="assets/inas_shield.png" alt="Escudo INAS" class="logo-img">
+            <span class="logo-text">
+                <span class="logo-main">Instituto Nueva América</span>
+                <span class="logo-sub">de Suba</span>
+            </span>
+        </div>
+        <div class="nav-links">
+            <a href="docentes.html" class="nav-item">← Volver a Docentes</a>
+            <a href="index.html" class="nav-item">Inicio</a>
+            <a href="horarios.html" class="nav-item">Horarios</a>
+        </div>
+        <div class="social-nav">
+            <button class="menu-toggle" aria-label="Abrir menú">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line class="line-top" x1="3" y1="12" x2="21" y2="12"></line>
+                    <line class="line-mid" x1="3" y1="6" x2="21" y2="6"></line>
+                    <line class="line-bot" x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <header class="page-hero">
+        <div class="page-hero-content">
+            <h1 class="page-title">Brigadas de Emergencia</h1>
+            <p class="page-subtitle">Comité Escolar de Gestión de Riesgo (CEGR)</p>
+        </div>
+        <div class="pattern-overlay"></div>
+    </header>
+
+    <!-- Org Chart Section -->
+    <section class="org-section">
+        <div class="org-container">
+
+            <!-- Main Header -->
+            <div class="org-header-card">
+                <h2>COMITÉ ESCOLAR DE GESTIÓN DE RIESGO</h2>
+                <div style="width: 50px; height: 3px; background: rgba(255,255,255,0.5); margin: 1rem auto;"></div>
+                <p class="role-title" style="color: #bfdbfe;">Coordinador del Proyecto</p>
+                <h3 style="font-size: 1.8rem; margin: 0;">Luis Mujica</h3>
+                <p style="margin-top: 0.5rem; opacity: 0.8;">Docente</p>
+            </div>
+
+            <!-- Evacuation Brigade -->
+            <div class="brigade-card">
+                <div class="brigade-header header-evacuacion">
+                    <div class="brigade-icon">🏃</div>
+                    <h3>Brigada de Evacuación y Rescate</h3>
+                </div>
+                <div class="brigade-body">
+                    <div class="role-box coordinator" style="border-left-color: #65a30d;">
+                        <h4 class="role-title">Coordinador</h4>
+                        <p class="role-name">Yuli González</p>
+                    </div>
+                    <div class="role-box collaborators" style="border-left-color: #bef264;">
+                        <h4 class="role-title">Colaboradores</h4>
+                        <ul class="collaborator-list">
+                            <li>Giancarlo Ramírez</li>
+                            <li>Sonia Agudelo</li>
+                            <li>Catalina Mahecha</li>
+                            <li>Merly Tapia</li>
+                            <li>Jhon Ibarguen</li>
+                            <li>Luis Carvajal</li>
+                            <li>José Jiménez</li>
+                        </ul>
+                    </div>
+
+                    <div class="functions-box">
+                        <h4>Funciones de la Brigada</h4>
+                        <div class="functions-grid">
+                            <div class="function-phase">
+                                <h5 style="color: #65a30d;">Antes</h5>
+                                <ul>
+                                    <li>Revisar y mantener despejadas las rutas de evacuación.</li>
+                                    <li>Conocer los puntos de encuentro y alarmas.</li>
+                                    <li>Participar en simulacros periódicos.</li>
+                                </ul>
+                            </div>
+                            <div class="function-phase">
+                                <h5 style="color: #65a30d;">Durante</h5>
+                                <ul>
+                                    <li>Guiar a estudiantes y personal hacia salidas seguras.</li>
+                                    <li>Evitar el pánico y mantener el orden.</li>
+                                    <li>Asegurarse de que nadie se quede rezagado.</li>
+                                </ul>
+                            </div>
+                            <div class="function-phase">
+                                <h5 style="color: #65a30d;">Después</h5>
+                                <ul>
+                                    <li>Verificar lista de asistencia en el punto de encuentro.</li>
+                                    <li>Reportar personal ausente a los coordinadores.</li>
+                                    <li>Esperar orden de retorno seguro.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Firefighting Brigade -->
+            <div class="brigade-card">
+                <div class="brigade-header header-incendios">
+                    <div class="brigade-icon">🧯</div>
+                    <h3>Brigada de Contraincendios</h3>
+                </div>
+                <div class="brigade-body">
+                    <div class="role-box coordinator" style="border-left-color: #dc2626;">
+                        <h4 class="role-title">Coordinador</h4>
+                        <p class="role-name">Luis Mujica</p>
+                    </div>
+                    <div class="role-box collaborators" style="border-left-color: #fca5a5;">
+                        <h4 class="role-title">Colaboradores</h4>
+                        <ul class="collaborator-list">
+                            <li>Ibón Pulido</li>
+                            <li>Carolina Acosta</li>
+                            <li>Carlos Gómez</li>
+                            <li>Teresa Téllez</li>
+                            <li>Maritza Triana</li>
+                            <li>Esteban Morales</li>
+                        </ul>
+                    </div>
+
+                    <div class="functions-box">
+                        <h4>Funciones de la Brigada</h4>
+                        <div class="functions-grid">
+                            <div class="function-phase">
+                                <h5 style="color: #dc2626;">Antes</h5>
+                                <ul>
+                                    <li>Inspeccionar periódicamente estado y ubicación de extintores.</li>
+                                    <li>Detectar riesgos de incendio (eléctricos, químicos).</li>
+                                    <li>Capacitarse en el manejo de equipos.</li>
+                                </ul>
+                            </div>
+                            <div class="function-phase">
+                                <h5 style="color: #dc2626;">Durante</h5>
+                                <ul>
+                                    <li>Actuar rápido para sofocar conatos de incendio.</li>
+                                    <li>Cortar suministros de energía y gas si es seguro.</li>
+                                    <li>Dar la alarma y apoyar la evacuación de la zona afectada.</li>
+                                </ul>
+                            </div>
+                            <div class="function-phase">
+                                <h5 style="color: #dc2626;">Después</h5>
+                                <ul>
+                                    <li>Remover escombros o restos que puedan reiniciar el fuego.</li>
+                                    <li>Reportar los equipos (extintores) utilizados para recarga.</li>
+                                    <li>Evaluar los daños en las instalaciones.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- First Aid Brigade -->
+            <div class="brigade-card">
+                <div class="brigade-header header-auxilios">
+                    <div class="brigade-icon">⚕️</div>
+                    <h3>Brigada de Primeros Auxilios</h3>
+                </div>
+                <div class="brigade-body">
+                    <div class="role-box coordinator" style="border-left-color: #2563eb;">
+                        <h4 class="role-title">Coordinador</h4>
+                        <p class="role-name">Fredy Pacheco</p>
+                    </div>
+                    <div class="role-box collaborators" style="border-left-color: #93c5fd;">
+                        <h4 class="role-title">Colaboradores</h4>
+                        <ul class="collaborator-list">
+                            <li>Carolina Contreras</li>
+                            <li>Ángela Calvo</li>
+                            <li>Alexandra Díaz</li>
+                            <li>Katherine Suarez</li>
+                            <li>Laura Bernal</li>
+                        </ul>
+                    </div>
+
+                    <div class="functions-box">
+                        <h4>Funciones de la Brigada</h4>
+                        <div class="functions-grid">
+                            <div class="function-phase">
+                                <h5 style="color: #2563eb;">Antes</h5>
+                                <ul>
+                                    <li>Mantener el botiquín dotado y controlar fechas de vencimiento.</li>
+                                    <li>Conocer el directorio de estudiantes con condiciones médicas especiales.</li>
+                                    <li>Tener a mano números de emergencias (ambulancias).</li>
+                                </ul>
+                            </div>
+                            <div class="function-phase">
+                                <h5 style="color: #2563eb;">Durante</h5>
+                                <ul>
+                                    <li>Valorar el estado de los lesionados.</li>
+                                    <li>Brindar atención básica de primeros auxilios.</li>
+                                    <li>Priorizar la atención según la gravedad (Triage básico).</li>
+                                </ul>
+                            </div>
+                            <div class="function-phase">
+                                <h5 style="color: #2563eb;">Después</h5>
+                                <ul>
+                                    <li>Acompañar y entregar pacientes a los servicios médicos profesionales.</li>
+                                    <li>Registrar el nombre y tipo de atención de los lesionados.</li>
+                                    <li>Reponer el material utilizado del botiquín.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-overlay"></div>
+        <div class="footer-content">
+            <div class="footer-col brand-col">
+                <div class="footer-logo">
+                    <img src="assets/inas_shield.png" alt="Escudo INAS">
+                    <span>INAS</span>
+                </div>
+                <p class="footer-tagline">"Ciencia, Cultura y Vida"</p>
+                <p class="footer-desc">Formando líderes integrales para el futuro.</p>
+            </div>
+            <div class="footer-col links-col">
+                <h3 class="footer-heading">Navegación</h3>
+                <ul class="footer-links">
+                    <li><a href="docentes.html">Zona de Docentes</a></li>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="contacto.html">Contáctenos</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Instituto Nueva América de Suba. Todos los derechos reservados.</p>
+            <div class="footer-line"></div>
+        </div>
+    </footer>
+    <script src="mobile-menu.js"></script>
+    <script type="module" src="chatbot.js"></script>
+</body>
+
+</html>

@@ -1223,95 +1223,25 @@
             });
         }
 
-        // DYNAMIC ATTENTION HOURS LOGIC
-        function calculateAttentionHours() {
-            // 1. Initialize Busy Map
-            // Map: TeacherName -> { dayIndex (1-5) -> Set(blockIndex 0-3) }
-            const busyMap = {};
-            ALL_TEACHERS.forEach(t => {
-                busyMap[t] = { 1: new Set(), 2: new Set(), 3: new Set(), 4: new Set(), 5: new Set() };
-            });
-
-            // 2. Scan ALL Schedules to mark busy times
-            Object.keys(SCHEDULE_DB).forEach(gradeKey => {
-                const gradeData = SCHEDULE_DB[gradeKey];
-                gradeData.blocks.forEach((blockRow, blockIdx) => { // blockIdx 0-3
-                    blockRow.forEach((subject, dayIdx0) => { // dayIdx0 0-4
-                        const day = dayIdx0 + 1;
-                        if (!subject || subject === "---") return;
-
-                        const teacherName = getTeacher(subject, gradeKey, dayIdx0 + 1, blockIdx);
-                        if (teacherName && teacherName !== "---" && teacherName !== "Desconocido") {
-                            // Handle splits "Name1 / Name2"
-                            teacherName.split("/").forEach(rawT => {
-                                const t = rawT.trim();
-                                if (busyMap[t]) {
-                                    busyMap[t][day].add(blockIdx);
-                                }
-                            });
-                        }
-                    });
-                });
-            });
-
-            // 3. Find Free Slots & Format
-            // We define "Attention Hour" as a specific block where they are FREE.
-            // Rule: Just show the FIRST 2 free slots found to avoid clutter, or all? 
-            // Let's try to group continuous free time or just list blocks.
-            // User example: "Wednesday 6:15 - 8:00" (Block 1)
-
-            const teacherAttention = {};
-
-            // Map Block Index to Label/Time
-            // B1=0 (06:15-08:00), B2=1 (08:30-10:20), B3=2 (10:20-12:00), B4=3 (varies)
-            const blockTimes = [
-                { start: "06:15", end: "08:00", label: "Bloque 1" },
-                { start: "08:30", end: "10:20", label: "Bloque 2" },
-                { start: "10:20", end: "12:00", label: "Bloque 3" },
-                { start: "12:00", end: "12:30", label: "Descanso" } // Not a block, but maybe useful? No, stick to blocks.
-            ];
-
-            ALL_TEACHERS.forEach(t => {
-                const freeSlots = [];
-                for (let d = 1; d <= 5; d++) {
-                    // Check Blocks 0, 1, 2 (Standard Morning Blocks)
-                    // We focus on B1, B2, B3 for "Attention" as B4 is usually late/exit for some.
-                    [0, 1, 2].forEach(bIdx => {
-                        if (!busyMap[t][d].has(bIdx)) {
-                            // He is free!
-                            freeSlots.push({ day: diasSemana[d], ...blockTimes[bIdx] });
-                        }
-                    });
-                }
-
-                // Select specific slots to display (avoid showing too many)
-                // Heuristics: Prefer gaps or specific days. 
-                // For now, let's take the first 1 or 2 distinct days.
-                if (freeSlots.length > 0) {
-                    // Group by day
-                    const perDay = {};
-                    freeSlots.forEach(slot => {
-                        if (!perDay[slot.day]) perDay[slot.day] = [];
-                        perDay[slot.day].push(slot);
-                    });
-
-                    // Format String
-                    // Ex: "Miércoles 06:15 - 08:00"
-                    // Join up to 2 slots
-                    const parts = [];
-                    Object.keys(perDay).slice(0, 2).forEach(day => {
-                        const s = perDay[day][0]; // Take first free slot of that day
-                        parts.push(`${day} ${s.start} - ${s.end}`);
-                    });
-
-                    teacherAttention[t] = parts.join(" y <br>");
-                } else {
-                    teacherAttention[t] = "Por asignar";
-                }
-            });
-
-            return teacherAttention;
-        }
+        // TEACHER ATTENTION HOURS (Manually defined)
+        const TEACHER_ATTENTION = {
+            "Maritza Triana": "Miércoles 8:30 - 10:20 a.m.<br>Jueves 6:15 - 8:00 a.m.",
+            "Merly Tapias": "Lunes 8:30 - 10:20 a.m.<br>Viernes 8:30 - 10:20 a.m.",
+            "Alexandra Díaz": "Martes 12:30 - 2:15 p.m.<br>Jueves 12:30 - 2:15 p.m.",
+            "Yuli Gonzalez": "Martes 8:30 - 10:20 a.m.<br>Viernes 6:30 - 8:00 a.m.",
+            "Esteban Morales": "Martes 8:30 - 10:20 a.m.<br>Viernes 8:30 - 10:20 a.m.",
+            "José Jiménez": "Lunes 10:20 a.m. - 12:00 p.m.<br>Viernes 10:20 a.m. - 12:00 p.m.",
+            "Carolina Acosta": "Lunes a Viernes 6:30 - 8:30 a.m.",
+            "Freddy Pacheco": "Lunes a Viernes 12:30 - 1:45 p.m.",
+            "Sonia Agudelo": "Jueves 8:30 - 10:20 a.m.<br>Viernes 12:30 - 1:45 p.m.",
+            "Flor Angela Calvo": "Miércoles 12:30 - 2:00 p.m.<br>Jueves 10:20 a.m. - 12:00 p.m.",
+            "Ibón Angélica Pulido": "Miércoles 8:30 - 10:20 a.m.<br>Jueves 8:30 - 10:20 a.m.",
+            "Luis Carlos Carvajal": "Lunes 6:30 - 8:00 a.m.<br>Martes 6:30 - 8:00 a.m.",
+            "Carlos Gómez": "Lunes 12:30 - 2:00 p.m.<br>Miércoles 10:20 a.m. - 12:00 p.m.",
+            "Luis Mujica": "Miércoles 6:15 - 8:00 a.m.<br>Jueves 10:20 a.m. - 12:00 p.m.",
+            "Katherine Suarez": "Lunes 10:20 a.m. - 12:00 p.m.<br>Martes 10:20 a.m. - 12:00 p.m.",
+            "Laura Carolina Bernal": "Lunes 8:30 - 10:20 a.m.<br>Martes 10:20 a.m. - 12:00 p.m."
+        };
 
         // --- RENDER SIDEBAR ---
         function renderAttentionSidebar() {
@@ -1320,7 +1250,7 @@
 
             list.innerHTML = ''; // Clear previous
 
-            const schedule = calculateAttentionHours();
+            const schedule = TEACHER_ATTENTION;
 
             Object.keys(schedule).sort().forEach(name => {
                 const time = schedule[name];

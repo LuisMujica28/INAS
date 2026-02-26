@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/inas_shield.png">
+    <title>Zona de Docentes - INAS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="assets/inas_shield.png" alt="Escudo INAS" class="logo-img">
+            <span class="logo-text">
+                <span class="logo-main">Instituto Nueva América</span>
+                <span class="logo-sub">de Suba</span>
+            </span>
+        </div>
+        <div class="nav-links">
+            <a href="index.html" class="nav-item">Inicio</a>
+            <a href="instalaciones.html" class="nav-item">Instalaciones</a>
+            <a href="horizonte.html" class="nav-item">Horizonte</a>
+            <a href="horarios.html" class="nav-item">Horarios</a>
+            <a href="pagos.html" class="nav-item">Pagos</a>
+            <a href="plataforma.html" class="nav-item">Plataforma</a>
+            <a href="utiles.html" class="nav-item">Lista de Útiles</a>
+            <a href="contacto.html" class="nav-item">Contáctenos</a>
+        </div>
+        <div class="social-nav">
+            <a href="https://www.instagram.com/inas_bta/" target="_blank" class="social-icon-link instagram"
+                aria-label="Instagram">
+                <!-- SVG Icon Redacted for brevity -->
+            </a>
+            <a href="https://www.youtube.com/watch?v=ZdhfR9t8S4s" target="_blank" class="social-icon-link youtube"
+                aria-label="YouTube">
+                <!-- SVG Icon Redacted for brevity -->
+            </a>
+            <button class="menu-toggle" aria-label="Abrir menú">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line class="line-top" x1="3" y1="12" x2="21" y2="12"></line>
+                    <line class="line-mid" x1="3" y1="6" x2="21" y2="6"></line>
+                    <line class="line-bot" x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Hero -->
+    <header class="page-hero">
+        <div class="page-hero-content">
+            <h1 class="page-title">Zona de Docentes</h1>
+            <p class="page-subtitle">Plataforma de herramientas y protocolos internos.</p>
+        </div>
+        <div class="pattern-overlay"></div>
+    </header>
+
+    <!-- Main Content: Teacher Modules -->
+    <section class="section-full bg-soft with-spheres-gray" style="padding: 4rem 1rem; min-height: 60vh;">
+        <div class="container-wide" style="max-width: 1200px;">
+            <div class="docentes-grid"
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem;">
+
+                <!-- Card 1: Planeaciones -->
+                <a href="#" target="_blank" class="docente-card glass-panel group"
+                    style="text-decoration: none; padding: 2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border-radius: 20px; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                    <div class="icon-wrapper"
+                        style="width: 80px; height: 80px; background: rgba(59, 130, 246, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; transition: background 0.3s ease;">
+                        <span style="font-size: 2.5rem;">📚</span>
+                    </div>
+                    <h3 style="color: #1e293b; font-size: 1.5rem; margin-bottom: 0.5rem; transition: color 0.3s ease;">
+                        Planeaciones</h3>
+                    <p style="color: #64748b; font-size: 0.95rem;">Accede a tu asistente de inteligencia artificial para
+                        organizar tus clases (Enlace Gemini).</p>
+                </a>
+
+                <!-- Card 2: Manual de Convivencia -->
+                <a href="#" target="_blank" class="docente-card glass-panel group"
+                    style="text-decoration: none; padding: 2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border-radius: 20px; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                    <div class="icon-wrapper"
+                        style="width: 80px; height: 80px; background: rgba(16, 185, 129, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; transition: background 0.3s ease;">
+                        <span style="font-size: 2.5rem;">📖</span>
+                    </div>
+                    <h3 style="color: #1e293b; font-size: 1.5rem; margin-bottom: 0.5rem; transition: color 0.3s ease;">
+                        Ayuda Manual</h3>
+                    <p style="color: #64748b; font-size: 0.95rem;">Asistente inteligente sobre el Manual de Convivencia
+                        (Notebook LM).</p>
+                </a>
+
+                <!-- Card 3: Brigadas -->
+                <a href="brigadas.html" class="docente-card glass-panel group"
+                    style="text-decoration: none; padding: 2rem; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border-radius: 20px; transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                    <div class="icon-wrapper"
+                        style="width: 80px; height: 80px; background: rgba(239, 68, 68, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; transition: background 0.3s ease;">
+                        <span style="font-size: 2.5rem;">🚨</span>
+                    </div>
+                    <h3 style="color: #1e293b; font-size: 1.5rem; margin-bottom: 0.5rem; transition: color 0.3s ease;">
+                        Brigadas</h3>
+                    <p style="color: #64748b; font-size: 0.95rem;">Organigrama, integrantes y funciones del Comité de
+                        Gestión de Riesgo.</p>
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Inline styles for the hover effects since we are reusing structural glass-panel -->
+    <style>
+        .docente-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1) !important;
+            border-color: rgba(59, 130, 246, 0.3) !important;
+        }
+
+        .docente-card:hover .icon-wrapper {
+            background: rgba(59, 130, 246, 0.2) !important;
+        }
+
+        .docente-card:hover h3 {
+            color: #2563eb !important;
+        }
+    </style>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-overlay"></div>
+        <div class="footer-content">
+            <div class="footer-col brand-col">
+                <div class="footer-logo">
+                    <img src="assets/inas_shield.png" alt="Escudo INAS">
+                    <span>INAS</span>
+                </div>
+                <p class="footer-tagline">"Ciencia, Cultura y Vida"</p>
+                <p class="footer-desc">Formando líderes integrales para el futuro, con excelencia académica y valores
+                    humanos.</p>
+            </div>
+            <div class="footer-col links-col">
+                <h3 class="footer-heading">Navegación</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="instalaciones.html">Instalaciones</a></li>
+                    <li><a href="horizonte.html">Horizonte</a></li>
+                    <li><a href="horarios.html">Horarios</a></li>
+                    <li><a href="pagos.html">Información para pagos</a></li>
+                    <li><a href="contacto.html">Contáctenos</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Instituto Nueva América de Suba. Todos los derechos reservados.</p>
+            <div class="footer-line"></div>
+        </div>
+    </footer>
+    <script src="mobile-menu.js"></script>
+    <script type="module" src="chatbot.js"></script>
+</body>
+
+</html>
