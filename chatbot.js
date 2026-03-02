@@ -3,7 +3,7 @@
 // Configuration
 // IMPORTANT: Replace this with your Google AI Studio API Key
 // You can restrict this key to your domain in Google Cloud Console for security.
-const API_KEY = "AIzaSyAF5CKo3jV6kfZ9A0CouFtDYJccDpHmQJs";
+const API_KEY = "AIzaSyAY3UyUgUyavIDVH7efxhiPG0GnPwnx6l4";
 
 const SYSTEM_INSTRUCTION = `
 Rol: Eres el Asistente Virtual del "Instituto Nueva América de Suba" (INAS).
