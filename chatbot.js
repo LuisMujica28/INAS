@@ -1,9 +1,8 @@
 // chatbot.js
 
 // Configuration
-// IMPORTANT: Replace this with your Google AI Studio API Key
-// You can restrict this key to your domain in Google Cloud Console for security.
-const API_KEY = "AIzaSyAY3UyUgUyavIDVH7efxhiPG0GnPwnx6l4";
+// IMPORTANT: Get this from the `.env` file!
+const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
 const SYSTEM_INSTRUCTION = `
 Rol: Eres el Asistente Virtual del "Instituto Nueva América de Suba" (INAS).
