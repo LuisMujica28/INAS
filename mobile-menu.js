@@ -24,11 +24,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Close menu when clicking a link
     navLinks.querySelectorAll('.nav-item').forEach(link => {
-        link.addEventListener('click', () => {
+        link.addEventListener('click', (e) => {
+            // Do not close nav globally if clicking on a dropdown header on mobile
+            if (window.innerWidth <= 768 && e.target.classList.contains('cursor-pointer')) {
+                return;
+            }
+            
             navLinks.classList.remove('active');
             menuToggle.classList.remove('open');
             document.body.style.overflow = '';
             menuToggle.setAttribute('aria-label', 'Abrir menú');
+        });
+    });
+
+    // Handle mobile dropdown toggles
+    const dropdownToggles = document.querySelectorAll('.nav-dropdown .cursor-pointer');
+    dropdownToggles.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            if (window.innerWidth <= 768) {
+                e.preventDefault(); 
+                btn.parentElement.classList.toggle('mobile-open');
+            }
         });
     });
 });

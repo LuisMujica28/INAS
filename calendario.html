@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/inas_shield.png">
+    <title>Calendario Estudiantil - INAS</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Dependencies -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Titan+One&family=Fredoka+One&family=Quicksand:wght@500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --cal-bg-color: #f7edd4;
+            --cal-primary-color: #d88185;
+            --cal-text-color: #5d6d7e;
+            --circle-pattern:
+                radial-gradient(circle at 10% 20%, rgba(229, 152, 155, 0.4) 0%, rgba(229, 152, 155, 0) 20%),
+                radial-gradient(circle at 90% 80%, rgba(229, 152, 155, 0.4) 0%, rgba(229, 152, 155, 0) 25%),
+                radial-gradient(circle at 50% 50%, rgba(230, 170, 172, 0.2) 0%, rgba(230, 170, 172, 0) 40%),
+                radial-gradient(circle at 20% 80%, rgba(229, 152, 155, 0.3) 0%, rgba(229, 152, 155, 0) 15%),
+                radial-gradient(circle at 80% 10%, rgba(230, 170, 172, 0.3) 0%, rgba(230, 170, 172, 0) 20%);
+        }
+
+        body {
+            background-color: var(--cal-bg-color);
+            background-image: var(--circle-pattern);
+            background-attachment: fixed;
+            font-family: 'Quicksand', sans-serif;
+            color: var(--cal-text-color);
+        }
+
+        .main-title {
+            color: #d4ac0d;
+            text-shadow: 3px 3px 0px #fff, 6px 6px 0px rgba(0, 0, 0, 0.05);
+            line-height: 1;
+            font-family: 'Fredoka One', cursive;
+        }
+
+        .navbar a {
+            text-decoration: none;
+        }
+
+        /* Spheres Overlay Style */
+        .spheres-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            /* Simplified SVG with solid colors for reliability */
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 800' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='150' cy='150' r='100' fill='%23d16d72' opacity='0.4'/%3E%3Ccircle cx='400' cy='600' r='60' fill='%23d16d72' opacity='0.3'/%3E%3Ccircle cx='800' cy='250' r='80' fill='%23d16d72' opacity='0.3'/%3E%3Ccircle cx='1050' cy='550' r='120' fill='%23d16d72' opacity='0.4'/%3E%3Ccircle cx='950' cy='100' r='40' fill='%23d16d72' opacity='0.5'/%3E%3C/svg%3E");
+            background-size: cover;
+            background-position: center;
+            animation: floatSpheres 15s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatSpheres {
+            0% {
+                background-position: 0% 0%;
+            }
+            100% {
+                background-position: 100% 100%;
+            }
+        }
+
+        /* Month Card Styling */
+        .month-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s;
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .month-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .month-title {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.8rem;
+            color: #d16d72;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            position: relative;
+        }
+        
+        .month-title::after {
+            content: '';
+            display: block;
+            width: 40px;
+            height: 4px;
+            background: #d4ac0d;
+            margin: 8px auto 0;
+            border-radius: 2px;
+        }
+
+        .event-item {
+            background: white;
+            border-radius: 12px;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            border-left: 4px solid #ccc;
+            transition: transform 0.2s;
+        }
+
+        .event-item:hover {
+            transform: translateX(5px);
+        }
+
+        .event-date {
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.4rem;
+            min-width: 45px;
+            text-align: center;
+            color: #555;
+            line-height: 1;
+        }
+
+        .event-date span {
+            font-size: 0.7rem;
+            display: block;
+            font-family: 'Quicksand', sans-serif;
+            color: #999;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-top: 2px;
+            letter-spacing: 0.5px;
+        }
+
+        .event-details {
+            flex: 1;
+        }
+
+        .event-title {
+            font-weight: 700;
+            color: #2c3e50;
+            font-size: 0.95rem;
+            line-height: 1.2;
+        }
+
+        .event-desc {
+            font-size: 0.75rem;
+            color: #7f8c8d;
+            font-weight: 600;
+            margin-top: 2px;
+        }
+
+        /* Category Colors */
+        .event-warning { border-color: #f39c12; }
+        .event-warning .event-date { color: #f39c12; }
+        
+        .event-success { border-color: #2ecc71; }
+        .event-success .event-date { color: #2ecc71; }
+        
+        .event-danger { border-color: #e74c3c; }
+        .event-danger .event-date { color: #e74c3c; }
+        
+        .event-purple { border-color: #9b59b6; }
+        .event-purple .event-date { color: #9b59b6; }
+        
+        .event-blue { border-color: #3498db; }
+        .event-blue .event-date { color: #3498db; }
+        
+        .event-gray { border-color: #95a5a6; }
+        .event-gray .event-date { color: #95a5a6; }
+
+        /* Modal specific styles */
+        .cal-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(4px);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .cal-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .cal-modal-content {
+            background: #fff;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 30px;
+            padding: 30px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.2);
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-height: 85vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .cal-modal.active .cal-modal-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #f1f2f6;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #555;
+            transition: background 0.2s, color 0.2s;
+        }
+
+        .close-modal:hover {
+            background: #e74c3c;
+            color: #fff;
+        }
+
+        /* Decorative Image placeholder */
+        .month-illustration {
+            width: 100%;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            opacity: 0.9;
+            background: linear-gradient(135deg, rgba(230,170,172,0.3) 0%, rgba(200,200,240,0.3) 100%);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Animated Spheres Overlay -->
+    <div class="spheres-overlay"></div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">
+            <img src="assets/inas_shield.png" alt="Escudo INAS" class="logo-img">
+            <span class="logo-text">
+                <span class="logo-main">Instituto Nueva América</span>
+                <span class="logo-sub">de Suba</span>
+            </span>
+        </div>
+                                <div class="nav-links">
+            <a href="index.html" class="nav-item">Inicio</a>
+            <div class="nav-dropdown">
+                <span class="nav-item cursor-pointer">Horizonte ▾</span>
+                <div class="dropdown-content">
+                    <a href="horizonte.html">Horizonte Institucional</a>
+                    <a href="instalaciones.html">Instalaciones</a>
+                </div>
+            </div>
+            <div class="nav-dropdown">
+                <span class="nav-item cursor-pointer" class="nav-item active">Académico ▾</span>
+                <div class="dropdown-content">
+                    <a href="horarios.html">Horarios</a>
+                    <a href="calendario.html" class="sub-active">Calendario</a>
+                    <a href="plataforma.html">Plataforma</a>
+                    <a href="utiles.html">Útiles</a>
+                </div>
+            </div>
+            <a href="pagos.html" class="nav-item">Pagos</a>
+            <a href="contacto.html" class="nav-item">Contáctenos</a>
+        </div>
+        <div class="social-nav">
+            <a href="https://www.instagram.com/inas_bta/" target="_blank" class="social-icon-link instagram" aria-label="Instagram">
+                <!-- SVG omitted for brevity -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="social-svg">
+                    <path
+                        d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M18,5A1.25,1.25 0 0,1 19.25,6.25A1.25,1.25 0 0,1 18,7.5A1.25,1.25 0 0,1 16.75,6.25A1.25,1.25 0 0,1 18,5Z" />
+                </svg>
+            </a>
+            <a href="https://www.youtube.com/watch?v=ZdhfR9t8S4s" target="_blank" class="social-icon-link youtube" aria-label="YouTube">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="social-svg">
+                    <path
+                        d="M10,15L15.19,12L10,9V15M21.56,7.17C21.69,7.64 21.78,8.27 21.84,9.07C21.91,9.87 21.94,10.56 21.94,11.16L22,12C22,14.19 21.84,15.8 21.56,16.83C21.31,17.73 20.73,18.31 19.83,18.56C19.36,18.69 18.5,18.78 17.18,18.84C15.88,18.91 14.69,18.94 13.59,18.94L12,19C7.81,19 5.2,18.84 4.17,18.56C3.27,18.31 2.69,17.73 2.44,16.83C2.31,16.36 2.22,15.73 2.16,14.93C2.09,14.13 2.06,13.44 2.06,12.84L2,12C2,9.81 2.16,8.2 2.44,7.17C2.69,6.27 3.27,5.69 4.17,5.44C4.64,5.31 5.5,5.22 6.82,5.16C8.12,5.09 9.31,5.06 10.41,5.06L12,5C16.19,5 18.8,5.16 19.83,5.44C20.73,5.69 21.31,6.27 21.56,7.17Z" />
+                </svg>
+            </a>
+            <button class="menu-toggle" aria-label="Abrir menú">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line class="line-top" x1="3" y1="12" x2="21" y2="12"></line>
+                    <line class="line-mid" x1="3" y1="6" x2="21" y2="6"></line>
+                    <line class="line-bot" x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="schedule-wrapper w-full max-w-7xl mx-auto relative z-10 pt-32 pb-32 px-4 md:px-8">
+        <header class="flex flex-col md:flex-row justify-between items-end mb-8 px-4">
+            <div class="text-left mb-2 md:mb-0 order-2 md:order-1">
+                <h2 class="text-2xl md:text-4xl text-gray-500 font-bold uppercase tracking-wider">Actividades Programadas</h2>
+            </div>
+            <div class="text-right order-1 md:order-2">
+                <h1 class="main-title text-4xl md:text-6xl lg:text-7xl mb-0">
+                    <span style="color: #d88185;">CALENDARIO</span>
+                    <span style="color: #555;">2026</span>
+                </h1>
+            </div>
+        </header>
+
+        <!-- Months Grid -->
+        <div id="calendar-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Rendered via JS -->
+        </div>
+    </div>
+
+    <!-- Modal details -->
+    <div id="month-modal" class="cal-modal">
+        <div class="cal-modal-content">
+            <button class="close-modal" onclick="closeModal()">&times;</button>
+            <h2 id="modal-title" class="month-title" style="font-size: 2.2rem; margin-top: 10px;">MES</h2>
+            <div id="modal-events" class="space-y-3 mt-6 pb-2">
+                <!-- Events go here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer mt-auto relative z-10">
+        <div class="footer-overlay"></div>
+        <div class="footer-content">
+            <div class="footer-col brand-col">
+                <div class="footer-logo">
+                    <img src="assets/inas_shield.png" alt="Escudo INAS">
+                    <span>INAS</span>
+                </div>
+                <p class="footer-tagline">"Ciencia, Cultura y Vida"</p>
+                <p class="footer-desc">Formando líderes integrales para el futuro, con excelencia académica y valores humanos.</p>
+            </div>
+            <div class="footer-col links-col">
+                <h3 class="footer-heading">Navegación</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="instalaciones.html">Instalaciones</a></li>
+                    <li><a href="horizonte.html">Horizonte</a></li>
+                    <li><a href="horarios.html">Horarios</a></li>
+                    <li><a href="calendario.html">Calendario</a></li>
+                    <li><a href="pagos.html">Pagos</a></li>
+                </ul>
+            </div>
+            <div class="footer-col contact-col">
+                <h3 class="footer-heading">Contáctanos</h3>
+                <ul class="contact-list">
+                    <li><span class="icon">📍</span><span>Calle 136 # 95 B - 85<br>Villa Elisa - Suba, Bogotá D.C.</span></li>
+                    <li><span class="icon">📞</span><span>TEL: 601 768-9104<br>CEL: 305 430-1113</span></li>
+                    <li><span class="icon">📧</span><span>secretaria@inas.edu.co<br>inamerica91@hotmail.com</span></li>
+                    <li><span class="icon">🕒</span><span>Lunes a viernes de 6:00 a.m. a 2:30 p.m.</span></li>
+                </ul>
+                <div class="social-icons">
+                    <a href="https://www.instagram.com/inas_bta/" target="_blank" class="social-btn instagram" aria-label="Instagram">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="social-svg-footer">
+                            <path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M18,5A1.25,1.25 0 0,1 19.25,6.25A1.25,1.25 0 0,1 18,7.5A1.25,1.25 0 0,1 16.75,6.25A1.25,1.25 0 0,1 18,5Z" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Instituto Nueva América de Suba. Todos los derechos reservados.</p>
+            <div class="footer-line"></div>
+        </div>
+    </footer>
+
+    <script src="mobile-menu.js"></script>
+    <script type="module" src="chatbot.js"></script>
+
+    <!-- Calendar Data and Logic -->
+    <script>
+        const calendarData = [
+            {
+                month: "ENERO",
+                events: []
+            },
+            {
+                month: "FEBRERO",
+                events: [
+                    { date: "23-27", title: "Pruebas", type: "warning" }
+                ]
+            },
+            {
+                month: "MARZO",
+                events: [
+                    { date: "23", title: "Festivo", type: "danger" },
+                    { date: "24-27", title: "Pruebas", type: "warning" },
+                    { date: "30-31", title: "Semana Santa", type: "purple" }
+                ]
+            },
+            {
+                month: "ABRIL",
+                events: [
+                    { date: "1-3", title: "Semana Santa", type: "purple" },
+                    { date: "10", title: "Entrega de Boletines Primer Periodo", type: "success" }
+                ]
+            },
+            {
+                month: "MAYO",
+                events: [
+                    { date: "1", title: "Festivo", type: "danger" },
+                    { date: "4-8", title: "Pruebas", desc: "50%", type: "warning" },
+                    { date: "18", title: "Festivo", type: "danger" }
+                ]
+            },
+            {
+                month: "JUNIO",
+                events: [
+                    { date: "8", title: "Festivo", type: "danger" },
+                    { date: "9-12", title: "Pruebas 100%", type: "warning" },
+                    { date: "15", title: "Festivo", type: "danger" },
+                    { date: "19", title: "Entrega de Boletines Segundo Periodo", type: "success" },
+                    { date: "22-26", title: "Receso", type: "purple" },
+                    { date: "29", title: "Festivo", type: "danger" },
+                    { date: "30", title: "Receso", type: "purple" }
+                ]
+            },
+            {
+                month: "JULIO",
+                events: [
+                    { date: "1-3", title: "Receso", type: "purple" },
+                    { date: "20", title: "Festivo", type: "danger" },
+                    { date: "27-31", title: "Pruebas", desc: "50%", type: "warning" }
+                ]
+            },
+            {
+                month: "AGOSTO",
+                events: [
+                    { date: "7", title: "Festivo", type: "danger" },
+                    { date: "17", title: "Festivo", type: "danger" }
+                ]
+            },
+            {
+                month: "SEPTIEMBRE",
+                events: [
+                    { date: "1-4", title: "Pruebas 100%", type: "warning" },
+                    { date: "11", title: "Entrega de Boletines Tercer Periodo", type: "success" }
+                ]
+            },
+            {
+                month: "OCTUBRE",
+                events: [
+                    { date: "5-9", title: "Receso", type: "purple" },
+                    { date: "12", title: "Festivo", type: "danger" },
+                    { date: "13-19", title: "Pruebas", desc: "50%", type: "warning" }
+                ]
+            },
+            {
+                month: "NOVIEMBRE",
+                events: [
+                    { date: "2", title: "Festivo", type: "danger" },
+                    { date: "16", title: "Festivo", type: "danger" },
+                    { date: "23", title: "Entrega de notas 100%", type: "gray" },
+                    { date: "24-27", title: "Pruebas escritas 100%", type: "warning" },
+                    { date: "30", title: "Clausura", type: "success" }
+                ]
+            },
+            {
+                month: "DICIEMBRE",
+                events: [
+                    { date: "3", title: "Grados", type: "success" }
+                ]
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const grid = document.getElementById('calendar-grid');
+            
+            calendarData.forEach((monthData, index) => {
+                const card = document.createElement('div');
+                card.className = 'month-card';
+                card.onclick = () => openModal(index);
+                
+                // Show up to 3 events as preview
+                const previewEvents = monthData.events.slice(0, 3);
+                const hasMore = monthData.events.length > 3;
+                
+                let eventsHTML = previewEvents.map(ev => `
+                    <div class="event-item event-${ev.type} text-sm">
+                        <div class="event-date" style="font-size: 1rem;">${ev.date}</div>
+                        <div class="event-details" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 0.8rem;">
+                            <span class="font-bold text-gray-700">${ev.title}</span>
+                            ${ev.desc ? `<span class="ml-1 text-gray-500">- ${ev.desc}</span>` : ''}
+                        </div>
+                    </div>
+                `).join('');
+
+                if (hasMore) {
+                    eventsHTML += `<div class="text-center text-xs font-bold text-gray-400 mt-2">+ ${monthData.events.length - 3} más...</div>`;
+                }
+
+                if (monthData.events.length === 0) {
+                    eventsHTML = `<div class="text-center text-sm font-medium text-gray-400 py-4">No hay eventos programados</div>`;
+                }
+
+                card.innerHTML = `
+                    <h3 class="month-title">${monthData.month}</h3>
+                    <div class="space-y-1">
+                        ${eventsHTML}
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        });
+
+        function openModal(monthIndex) {
+            const data = calendarData[monthIndex];
+            document.getElementById('modal-title').textContent = data.month;
+            
+            const eventsContainer = document.getElementById('modal-events');
+            
+            if (data.events.length === 0) {
+                eventsContainer.innerHTML = `
+                    <div class="text-center p-8 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
+                        <p class="text-gray-500 font-bold">No hay eventos especiales programados para este mes.</p>
+                    </div>
+                `;
+            } else {
+                eventsContainer.innerHTML = data.events.map(ev => `
+                    <div class="event-item event-${ev.type}">
+                        <div class="event-date">${ev.date}<span>DÍA(S)</span></div>
+                        <div class="event-details">
+                            <h4 class="event-title">${ev.title}</h4>
+                            ${ev.desc ? `<p class="event-desc">${ev.desc}</p>` : ''}
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            document.getElementById('month-modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('month-modal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close on background click
+        document.getElementById('month-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'month-modal') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
+

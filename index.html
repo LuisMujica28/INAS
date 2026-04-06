@@ -62,14 +62,25 @@
                 <span class="logo-sub">de Suba</span>
             </span>
         </div>
-        <div class="nav-links">
-            <a href="index.html" class="nav-item">Inicio</a>
-            <a href="instalaciones.html" class="nav-item">Instalaciones</a>
-            <a href="horizonte.html" class="nav-item">Horizonte</a>
-            <a href="horarios.html" class="nav-item">Horarios</a>
+                                <div class="nav-links">
+            <a href="index.html" class="nav-item" class="nav-item active">Inicio</a>
+            <div class="nav-dropdown">
+                <span class="nav-item cursor-pointer">Horizonte ▾</span>
+                <div class="dropdown-content">
+                    <a href="horizonte.html">Horizonte Institucional</a>
+                    <a href="instalaciones.html">Instalaciones</a>
+                </div>
+            </div>
+            <div class="nav-dropdown">
+                <span class="nav-item cursor-pointer">Académico ▾</span>
+                <div class="dropdown-content">
+                    <a href="horarios.html">Horarios</a>
+                    <a href="calendario.html">Calendario</a>
+                    <a href="plataforma.html">Plataforma</a>
+                    <a href="utiles.html">Útiles</a>
+                </div>
+            </div>
             <a href="pagos.html" class="nav-item">Pagos</a>
-            <a href="plataforma.html" class="nav-item">Plataforma</a>
-            <a href="utiles.html" class="nav-item">Lista de Útiles</a>
             <a href="contacto.html" class="nav-item">Contáctenos</a>
         </div>
         <div class="social-nav">
@@ -101,46 +112,30 @@
 
     <!-- Scrolling News Ticker -->
     <div class="news-ticker-container">
-        <div class="news-ticker-content">
+                <div class="news-ticker-content">
             <!-- News Item 1 -->
-            <span class="ticker-item">⚠️ <strong>23 al 27 de feb:</strong> Semana de pruebas. Todos los estudiantes
-                salen en horario habitual.</span>
+            <span class="ticker-item">🏀 Siguen abiertas las inscripciones a la <strong>Escuela Deportiva</strong>.</span>
             <span class="ticker-separator">|</span>
             <!-- News Item 2 -->
-            <span class="ticker-item">📚 <strong>Martes 03 de marzo:</strong> Inicia curso Preicfes (martes, miércoles y
-                jueves de 2:30 a 4:00 pm).</span>
-            <span class="ticker-separator">|</span>
-            <!-- News Item 3 -->
-            <span class="ticker-item">🏀 <strong>Martes 03 de marzo:</strong> Inician las Escuelas Deportivas de
-                Baloncesto y Voleibol (Inscripciones abiertas en sección Deportes).</span>
+            <span class="ticker-item">📝 <strong>El próximo viernes 10 de abril</strong> se realizará la entrega de boletines de primer periodo.</span>
             <span class="ticker-separator">|</span>
 
             <!-- DUPLICATED FOR SEAMLESS INFINITE SCROLL -->
-            <!-- News Item 1 -->
-            <span class="ticker-item">⚠️ <strong>23 al 27 de feb:</strong> Semana de pruebas. Todos los estudiantes
-                salen en horario habitual.</span>
+            <span class="ticker-item">🏀 Siguen abiertas las inscripciones a la <strong>Escuela Deportiva</strong>.</span>
             <span class="ticker-separator">|</span>
-            <!-- News Item 2 -->
-            <span class="ticker-item">📚 <strong>Martes 03 de marzo:</strong> Inicia curso Preicfes (martes, miércoles y
-                jueves de 2:30 a 4:00 pm).</span>
-            <span class="ticker-separator">|</span>
-            <!-- News Item 3 -->
-            <span class="ticker-item">🏀 <strong>Martes 03 de marzo:</strong> Inician las Escuelas Deportivas de
-                Baloncesto y Voleibol (Inscripciones abiertas en sección Deportes).</span>
+            <span class="ticker-item">📝 <strong>El próximo viernes 10 de abril</strong> se realizará la entrega de boletines de primer periodo.</span>
             <span class="ticker-separator">|</span>
 
             <!-- TRIPLICATED FOR EXTRA SAFETY ON ULTRA WIDE SCREENS -->
-            <!-- News Item 1 -->
-            <span class="ticker-item">⚠️ <strong>23 al 27 de feb:</strong> Semana de pruebas. Todos los estudiantes
-                salen en horario habitual.</span>
+            <span class="ticker-item">🏀 Siguen abiertas las inscripciones a la <strong>Escuela Deportiva</strong>.</span>
             <span class="ticker-separator">|</span>
-            <!-- News Item 2 -->
-            <span class="ticker-item">📚 <strong>Martes 03 de marzo:</strong> Inicia curso Preicfes (martes, miércoles y
-                jueves de 2:30 a 4:00 pm).</span>
+            <span class="ticker-item">📝 <strong>El próximo viernes 10 de abril</strong> se realizará la entrega de boletines de primer periodo.</span>
             <span class="ticker-separator">|</span>
-            <!-- News Item 3 -->
-            <span class="ticker-item">🏀 <strong>Martes 03 de marzo:</strong> Inician las Escuelas Deportivas de
-                Baloncesto y Voleibol (Inscripciones abiertas en sección Deportes).</span>
+
+            <!-- QUADRUPLICATED FOR EXTRA SAFETY ON ULTRA WIDE SCREENS -->
+            <span class="ticker-item">🏀 Siguen abiertas las inscripciones a la <strong>Escuela Deportiva</strong>.</span>
+            <span class="ticker-separator">|</span>
+            <span class="ticker-item">📝 <strong>El próximo viernes 10 de abril</strong> se realizará la entrega de boletines de primer periodo.</span>
             <span class="ticker-separator">|</span>
         </div>
     </div>
@@ -214,7 +209,6 @@
             <!-- Card 3: Campeonatos -->
             <!-- Item Especial: Deportes (Diseño Transparente) -->
             <div class="quick-access-item special-sports" onclick="openSportsModal(event)">
-                <div class="live-badge">EN VIVO</div>
                 <img src="assets/sports_character_group.png" alt="Deportes Team" class="qa-image">
                 <div class="qa-content">
                     <h3>Deportes</h3>
@@ -291,7 +285,6 @@
             <!-- Card 3: Campeonatos -->
             <!-- Item Especial: Deportes (Diseño Transparente) -->
             <div class="quick-access-item special-sports" onclick="openSportsModal(event)">
-                <div class="live-badge">EN VIVO</div>
                 <img src="assets/sports_character_group.png" alt="Deportes Team" class="qa-image">
                 <div class="qa-content">
                     <h3>Deportes</h3>
