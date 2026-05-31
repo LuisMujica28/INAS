@@ -257,7 +257,7 @@ body {
     }
 
     100% {
-        transform: translate3d(-33.33%, 0, 0);
+        transform: translate3d(-50%, 0, 0);
     }
 }
 
@@ -5242,4 +5242,328 @@ body {
 .gallery-card:hover .gallery-overlay span {
     transform: translateY(0);
     /* Slide text up */
+}
+
+/* =========================================
+   Park Recovery Section (Parque El Aguinaldo)
+   ========================================= */
+.park-recovery-section {
+    padding: 6rem 5%;
+    background: radial-gradient(circle at bottom right, #ffffff 0%, #f0f7ff 60%, #e8eaf6 100%);
+    position: relative;
+    overflow: hidden;
+    z-index: 6;
+}
+
+.park-recovery-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 800' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%234caf50' stop-opacity='0.12'/%3E%3Cstop offset='100%25' stop-color='%2300b0ff' stop-opacity='0.08'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='150' cy='150' r='120' fill='url(%23a)'/%3E%3Ccircle cx='400' cy='600' r='60' fill='url(%23a)'/%3E%3Ccircle cx='800' cy='250' r='90' fill='url(%23a)'/%3E%3Ccircle cx='1050' cy='550' r='140' fill='url(%23a)'/%3E%3Ccircle cx='950' cy='100' r='40' fill='url(%23a)'/%3E%3C/svg%3E");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    animation: floatSpheres 10s ease-in-out infinite alternate;
+    z-index: 1;
+}
+
+.park-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.park-text-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+.glass-pill-green {
+    background: rgba(76, 175, 80, 0.15);
+    border: 1px solid rgba(76, 175, 80, 0.3);
+    color: #2e7d32;
+    padding: 0.6rem 1.5rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 10px rgba(76, 175, 80, 0.05);
+    display: inline-block;
+}
+
+.section-title-park {
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: #1a237e;
+}
+
+.highlight-text-park {
+    background: linear-gradient(135deg, #2e7d32 0%, #00b0ff 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.park-desc {
+    font-size: 1.1rem;
+    color: #455a64;
+    line-height: 1.7;
+    text-align: justify;
+}
+
+.park-stats-btn-row {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.park-video-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0.8rem 1.8rem;
+    background: linear-gradient(135deg, #833ab4 0%, #fd1d1d 50%, #fcb045 100%);
+    color: white !important;
+    text-decoration: none !important;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 15px rgba(253, 29, 29, 0.2);
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.park-video-btn:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 8px 25px rgba(253, 29, 29, 0.35);
+}
+
+.instagram-icon {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #1a237e;
+    line-height: 1;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: #78909c;
+    font-weight: 500;
+    margin-top: 0.2rem;
+}
+
+/* 3D Carousel Styles */
+.park-slider-side {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    width: 100%;
+}
+
+.carousel-3d-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    perspective: 1200px;
+    transform-style: preserve-3d;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.carousel-3d-track {
+    position: relative;
+    width: 320px;
+    height: 400px;
+    transform-style: preserve-3d;
+    transition: transform 0.5s ease;
+}
+
+.carousel-3d-slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    background: #e0e0e0;
+    cursor: pointer;
+    transform-origin: center center;
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.8s, z-index 0.8s;
+    user-select: none;
+}
+
+.carousel-3d-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    pointer-events: none;
+    transition: transform 0.5s ease;
+}
+
+.carousel-3d-slide:hover img {
+    transform: scale(1.05);
+}
+
+.slide-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.5rem 1rem 1rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 70%, transparent 100%);
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    pointer-events: none;
+}
+
+.carousel-3d-slide.active .slide-caption {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Controls */
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    color: #1a237e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 25;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.carousel-control:hover {
+    background: #1a237e;
+    color: white;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 8px 20px rgba(26, 35, 126, 0.3);
+}
+
+.carousel-control.prev {
+    left: -20px;
+}
+
+.carousel-control.next {
+    right: -20px;
+}
+
+.carousel-control svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* Dots indicators */
+.carousel-dots {
+    display: flex;
+    gap: 0.8rem;
+    margin-top: 2rem;
+    z-index: 20;
+}
+
+.carousel-dots .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(26, 35, 126, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.carousel-dots .dot.active {
+    width: 30px;
+    border-radius: 10px;
+    background: #1a237e;
+    box-shadow: 0 0 10px rgba(26, 35, 126, 0.3);
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 992px) {
+    .park-container {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+    
+    .park-text-side {
+        align-items: center;
+        text-align: center;
+    }
+    
+    .park-desc {
+        text-align: center;
+    }
+    
+    .park-stats-btn-row {
+        justify-content: center;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .carousel-control.prev {
+        left: 20px;
+    }
+
+    .carousel-control.next {
+        right: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .section-title-park {
+        font-size: 2.2rem;
+    }
+    
+    .carousel-3d-track {
+        width: 260px;
+        height: 350px;
+    }
+    
+    .park-slider-side {
+        height: 420px;
+    }
 }
