@@ -8,9 +8,11 @@
     <title>Instituto Nueva América (INAS)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="hero-3d-scroll.css">
     <script src="navigation.js" defer></script>
+    <script src="hero-3d-scroll.js" defer></script>
 </head>
 
 <body>
@@ -135,38 +137,143 @@
         </div>
     </div>
 
-    <!-- Hero Section -->
-    <header class="hero">
-        <!-- Animated Deep Space Background -->
-        <div class="hero-bg-animation">
-            <div class="glow-orb orb-1"></div>
-            <div class="glow-orb orb-2"></div>
-            <div class="glow-orb orb-3"></div>
-        </div>
+    <!-- ======================================================================
+         HERO INTERACTIVE VIDEO ENGINE — INAS 2027
+         Reproducción y scrubbing interactivo con movimiento horizontal del mouse
+         ====================================================================== -->
+    <div class="hero-presentation-track" id="hero-presentation-track">
+        <header class="hero-presentation-stage" id="hero-presentation-stage">
 
-        <!-- 3D Floating Scene (Behind Text) -->
-        <div class="hero-3d-scene">
-            <!-- Main Student Character (More prominent) -->
-            <img src="assets/inas_hero_students_final_v2.png" alt="Estudiantes INAS" class="hero-3d-el el-main">
-        </div>
+            <!-- Background Media Engine (Canvas interactivo 60fps ultrarrápido con fallback) -->
+            <div class="hero-media-engine" id="hero-media-engine">
+                <canvas id="hero-canvas" class="hero-media-canvas"></canvas>
+                <video class="hero-media-video" id="hero-video" src="assets/Hero1.mp4" muted playsinline preload="auto" style="display: none;"></video>
+                <div class="hero-cinematic-scrim"></div>
+            </div>
 
-        <!-- Glass Content (Centered) -->
-        <div class="hero-content-glass">
-            <span class="pill-badge glass-pill">
-                <span class="status-dot pulse-dot"></span> ¡Inscripciones Abiertas 2026!
-            </span>
+            <!-- ==============================================================
+                 PUBLICIDAD INTERACTIVA — MATRÍCULAS 2027 (INAS)
+                 ============================================================== -->
+            <div class="hero-ad-overlay" id="hero-ad-overlay">
+                <div class="hero-ad-content">
 
-            <h1 class="hero-title-main">
-                <span class="title-line">Ciencia</span>
-                <span class="title-line gradient-text">Cultura</span>
-                <span class="title-line">& Vida</span>
-            </h1>
+                    <!-- Fila Superior: Badge + Avión de papel con estela -->
+                    <div class="ad-top-row">
+                        <div class="ad-badge-wrapper">
+                            <div class="ad-sparkle-top">
+                                <span class="spark-ray ray-top-1"></span>
+                                <span class="spark-ray ray-top-2"></span>
+                                <span class="spark-ray ray-top-3"></span>
+                                <span class="spark-ray ray-top-4"></span>
+                                <span class="spark-ray ray-top-5"></span>
+                            </div>
+                            <div class="ad-badge-pill">
+                                <span>Ya están abiertas las</span>
+                            </div>
+                        </div>
 
-            <p class="hero-subtitle-glass">
-                Formando líderes con excelencia académica y valores humanos para un futuro brillante.
-            </p>
-        </div>
-    </header>
+                        <!-- Avión de papel Origami con trayectoria hacia la mano de la estudiante -->
+                        <div class="ad-plane-wrapper">
+                            <svg class="ad-plane-trail" viewBox="0 0 140 80" fill="none">
+                                <path d="M 8 72 C 35 72, 60 55, 120 18" stroke="#4f46e5" stroke-width="2.5" stroke-dasharray="6 6" stroke-linecap="round"/>
+                            </svg>
+                            <svg class="ad-plane-icon" viewBox="0 0 60 60" fill="none">
+                                <!-- Ala izquierda/cuerpo -->
+                                <polygon points="6,32 54,8 26,44" fill="#ffffff" stroke="#4338ca" stroke-width="2.6" stroke-linejoin="round"/>
+                                <!-- Ala derecha -->
+                                <polygon points="54,8 38,54 26,44" fill="#e0e7ff" stroke="#4338ca" stroke-width="2.6" stroke-linejoin="round"/>
+                                <!-- Pliegue central -->
+                                <line x1="54" y1="8" x2="26" y2="44" stroke="#4338ca" stroke-width="2.6" stroke-linecap="round"/>
+                                <!-- Pliegue interior de la quilla -->
+                                <polygon points="26,44 32,38 38,54" fill="#c7d2fe" stroke="#4338ca" stroke-width="2.2" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Título Principal 3D: Matrículas 2027 -->
+                    <div class="ad-headline-group">
+                        <div class="ad-title-matriculas">Matrículas</div>
+                        <div class="ad-year-row">
+                            <div class="ad-year-sparkles left">
+                                <span class="spark-ray ray-l1"></span>
+                                <span class="spark-ray ray-l2"></span>
+                            </div>
+                            <span class="ad-title-year">2027</span>
+                            <div class="ad-year-sparkles right">
+                                <span class="spark-ray ray-r1"></span>
+                                <span class="spark-ray ray-r2"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3 Tarjetas de Beneficios Clave -->
+                    <div class="ad-features-grid">
+                        <div class="ad-feature-card">
+                            <div class="ad-feature-icon-circle">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                                    <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                                </svg>
+                            </div>
+                            <span class="ad-feature-text">Formación<br>integral</span>
+                        </div>
+
+                        <div class="ad-feature-card">
+                            <div class="ad-feature-icon-circle">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="18" y1="20" x2="18" y2="4"/>
+                                    <line x1="6" y1="20" x2="6" y2="14"/>
+                                    <line x1="12" y1="20" x2="12" y2="9"/>
+                                </svg>
+                            </div>
+                            <span class="ad-feature-text">Ambientes<br>de aprendizaje<br>modernos</span>
+                        </div>
+
+                        <div class="ad-feature-card">
+                            <div class="ad-feature-icon-circle">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="9" cy="7" r="4"/>
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                                </svg>
+                            </div>
+                            <span class="ad-feature-text">Acompañamiento<br>personalizado</span>
+                        </div>
+                    </div>
+
+                    <!-- Botón CTA con destellos -->
+                    <div class="ad-cta-row">
+                        <div class="ad-cta-sparkles left">
+                            <span class="spark-ray ray-c1"></span>
+                            <span class="spark-ray ray-c2"></span>
+                        </div>
+                        <a href="https://wa.me/573054301113?text=Hola,%20quisiera%20solicitar%20información%20para%20Inscripciones%20y%20Matrículas%202027" 
+                           target="_blank" 
+                           class="ad-cta-button">
+                            <span class="ad-cta-icon-box">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                                    <polyline points="14 2 14 8 20 8"/>
+                                    <line x1="16" y1="13" x2="8" y2="13"/>
+                                    <line x1="16" y1="17" x2="8" y2="17"/>
+                                    <polyline points="10 9 9 9 8 9"/>
+                                </svg>
+                            </span>
+                            <span class="ad-cta-text">¡Inscríbete ahora!</span>
+                            <span class="ad-cta-arrow">›</span>
+                        </a>
+                        <div class="ad-cta-sparkles right">
+                            <span class="spark-ray ray-c3"></span>
+                            <span class="spark-ray ray-c4"></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </header>
+    </div>
 
     <section class="services-section">
         <div class="services-grid" id="quick-access-track">
@@ -735,30 +842,8 @@
         </div>
     </footer>
 
-    <!-- Intro Overlay -->
-    <div id="intro-overlay" class="intro-overlay">
-        <video autoplay muted loop playsinline class="intro-video">
-            <source src="assets/Video%20portada%20INAS.mp4" type="video/mp4">
-        </video>
-        <div class="intro-content">
-            <img src="assets/inas_shield.png" alt="Logo INAS" class="intro-logo">
-            <h2 class="intro-animated-text">EXCELENCIA ACADÉMICA</h2>
-            <button id="enter-btn" class="enter-btn">INGRESAR</button>
-        </div>
-        <div class="intro-overlay-bg"></div>
-    </div>
-
-    <!-- Entrance Script -->
+    <!-- Entrance & Parallax Scripts -->
     <script>
-        document.getElementById('enter-btn').addEventListener('click', () => {
-            const overlay = document.getElementById('intro-overlay');
-            overlay.style.opacity = '0';
-            overlay.style.pointerEvents = 'none'; // Prevent clicks while fading
-            setTimeout(() => {
-                overlay.remove(); // Remove from DOM fully after fade
-            }, 800);
-        });
-
         // Hero Parallax & Navbar Logic
         window.addEventListener('scroll', () => {
             const scrollY = window.scrollY;
@@ -771,12 +856,12 @@
                 navbar.classList.remove('scrolled');
             }
 
-            // Hero Parallax
+            // Hero Parallax (Legacy guard)
             const heroText = document.querySelector('.hero-content-glass');
             const heroImage = document.querySelector('.el-main');
-            const heroSection = document.querySelector('.hero');
+            const heroSection = document.querySelector('.hero') || document.querySelector('.hero-presentation-track');
 
-            if (scrollY < heroSection.offsetHeight) {
+            if (heroSection && scrollY < heroSection.offsetHeight) {
                 if (heroText) {
                     heroText.style.transform = `translateY(${scrollY * 0.4}px)`;
                     heroText.style.opacity = 1 - (scrollY / 500);
