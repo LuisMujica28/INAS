@@ -27,11 +27,10 @@ CONTEXTO INSTITUCIONAL OFICIAL:
 - Oferta educativa: Preescolar (Jardín y Transición), Básica Primaria (1° a 5°), Básica Secundaria (6° a 9°) y Media Académica (10° y 11°) en Jornada Única.
 - Desempeño Saber 11° (ICFES): Promedio institucional destacado de 317 puntos (entre los mejores de Bogotá).
 
-ADMISIONES Y COSTOS DE REFERENCIA (SUBSIDIO INSTITUCIONAL >50%):
-- La institución otorga directamente un subsidio superior al 50% sobre el costo real anual del servicio educativo privado.
-- Matrícula anual (Jardín a Grado 11°): $470.000 (valor neto asumido por la familia).
-- Pensión mensual (Jardín a Grado 11°): $450.000.
-- Otros conceptos (Art. 33 Manual de Convivencia): Carné estudiantil ($13.266), Agenda y Manual de Convivencia ($22.552), Constancias/certificados ($11.408), Derechos de grado exclusivo Grado 11° ($245.411), seguro estudiantil, sistematización, periódico escolar y módulos Martes de Prueba.
+ADMISIONES Y SUBSIDIO INSTITUCIONAL (>50%):
+- La institución otorga directamente un subsidio superior al 50% sobre el costo real anual del servicio educativo privado para todas las familias desde Jardín hasta Grado 11° en Jornada Única.
+- Si una familia o acudiente pregunta por precios o valores exactos de matrícula o pensión, explícales con calidez que el colegio maneja tarifas altamente accesibles gracias al subsidio institucional superior al 50%, e invítalos a solicitar la liquidación exacta de su grado directamente con Secretaría Académica por WhatsApp al 305 430-1113 o visitando la sede en la Calle 136 # 95B - 85.
+- Conceptos reglamentarios (Art. 33 Manual de Convivencia): Carné estudiantil, Agenda y Manual de Convivencia, seguro estudiantil, sistematización, periódico escolar y módulos Martes de Prueba.
 - Las familias pueden iniciar su solicitud de cupo 2027 desde la portada o en la sección Admisiones (admisiones.html).
 
 REQUISITOS DE MATRÍCULA (MANUAL DE CONVIVENCIA):
@@ -124,7 +123,7 @@ export default async function handler(req, res) {
     }
 
     const deepseekKey = process.env.DEEPSEEK_API_KEY;
-    const geminiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+    const geminiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY || process.env.VITE_GEMINI_API_KEY;
 
     if (!deepseekKey && !geminiKey) {
         return res.status(503).json({

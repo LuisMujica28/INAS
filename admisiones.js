@@ -246,47 +246,48 @@
         return `
             <div class="adm-subsidy-callout">
                 <strong>Subsidio institucional directo superior al 50%</strong>
-                <p>El INAS asume directamente más de la mitad del costo real anual del servicio educativo privado desde Jardín hasta Grado 11°.</p>
+                <p>El INAS asume directamente más de la mitad del costo real anual de la educación privada en todos los grados desde Jardín hasta Grado 11° en Jornada Única.</p>
             </div>
 
-            <table class="adm-fee-table" aria-label="Tabla oficial de derechos económicos de referencia">
+            <table class="adm-fee-table" aria-label="Estructura institucional de costos y subsidio">
                 <tbody>
                     <tr>
                         <td>
                             <span class="adm-fee-concept">Matrícula anual</span>
-                            <span class="adm-fee-sub">Jardín a Grado 11° · Valor neto con subsidio aplicado</span>
+                            <span class="adm-fee-sub">Jardín a Grado 11° · Tarifa institucional autorizada</span>
                         </td>
-                        <td class="adm-fee-value">$470.000</td>
+                        <td class="adm-fee-value" style="font-size: 0.95rem; font-family: 'Poppins', sans-serif; font-weight: 700; color: #047857;">Subsidio &gt;50%</td>
                     </tr>
                     <tr>
                         <td>
                             <span class="adm-fee-concept">Pensión mensual</span>
-                            <span class="adm-fee-sub">Jornada única · Preescolar, Primaria y Bachillerato</span>
+                            <span class="adm-fee-sub">Jornada única continua · 10 mensualidades académicas</span>
                         </td>
-                        <td class="adm-fee-value">$450.000</td>
+                        <td class="adm-fee-value" style="font-size: 0.95rem; font-family: 'Poppins', sans-serif; font-weight: 700; color: #047857;">Tarifa subsidiada</td>
                     </tr>
                     <tr>
                         <td>
-                            <span class="adm-fee-concept">Carné + Agenda y Manual</span>
-                            <span class="adm-fee-sub">Carné estudiantil ($13.266) y Agenda institucional ($22.552)</span>
+                            <span class="adm-fee-concept">Conceptos complementarios</span>
+                            <span class="adm-fee-sub">Carné estudiantil, agenda institucional y Manual de Convivencia</span>
                         </td>
-                        <td class="adm-fee-value">$35.818</td>
+                        <td class="adm-fee-value" style="font-size: 0.88rem; font-family: 'Poppins', sans-serif; font-weight: 600; color: #0F1D4E;">Reglamentario</td>
                     </tr>
                     <tr>
                         <td>
-                            <span class="adm-fee-concept">Derechos de grado (solo 11°)</span>
-                            <span class="adm-fee-sub">Exclusivo graduandos Media Académica · Certificados: $11.408</span>
+                            <span class="adm-fee-concept">Derechos de grado</span>
+                            <span class="adm-fee-sub">Exclusivo graduandos Media Académica (Grado 11°)</span>
                         </td>
-                        <td class="adm-fee-value">$245.411</td>
+                        <td class="adm-fee-value" style="font-size: 0.88rem; font-family: 'Poppins', sans-serif; font-weight: 600; color: #0F1D4E;">Grado 11°</td>
                     </tr>
                 </tbody>
             </table>
 
             <div class="adm-bank-ledger">
-                <strong>Otros cobros periódicos (Art. 33):</strong> Seguro estudiantil, sistematización de notas, periódico escolar y módulos pedagógicos <em>Martes de Prueba</em>.
+                <strong>Información de costos y liquidación:</strong> Para conocer el valor neto y las facilidades de pago para el grado de tu interés, solicítalo directamente a Secretaría Académica por WhatsApp o presencialmente.
                 <br><br>
                 <strong>Recaudo bancario oficial:</strong> Davivienda Ahorros <strong>1089 0060 1783</strong> (Llave <strong>@DAVIINSTAMERSUBA</strong> · NIT 900.030.860) y Banco Caja Social Corriente <strong>2403 0000 0015</strong>.
-                <a href="pagos.html">Consultar guía de pagos</a>
+                <br><br>
+                <a href="https://wa.me/573054301113?text=Hola%20Secretar%C3%ADa%20INAS%2C%20deseo%20conocer%20el%20tarifario%20oficial%202027" target="_blank" rel="noopener" style="color: #1B4DFF; font-weight: 700; text-decoration: underline;">Solicitar tarifario detallado 2027 por WhatsApp →</a>
             </div>
         `;
     }

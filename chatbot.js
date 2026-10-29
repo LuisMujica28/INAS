@@ -12,7 +12,7 @@ chatWidget.innerHTML = `
         </div>
         <div id="chat-history" class="chat-history">
             <div class="message bot">
-                Hola, soy el asistente virtual del INAS. ¿En qué puedo ayudarte con Admisiones 2027, horarios, pagos o uniformes?
+                Hola, soy el asistente virtual del INAS. ¿En qué puedo ayudarte con el proceso de Admisiones 2027, requisitos, horarios o programas del colegio?
             </div>
         </div>
         <div class="chat-input-area">
@@ -20,9 +20,14 @@ chatWidget.innerHTML = `
             <button id="send-btn" type="button" aria-label="Enviar pregunta">➤</button>
         </div>
     </div>
-    <button id="chat-toggle-btn" class="chat-toggle-btn" type="button" aria-label="Abrir asistente virtual INAS">
-        <img src="assets/robot.png" alt="Chat INAS" />
-    </button>
+    <div class="chat-fab-container">
+        <div id="chat-speech-bubble" class="chat-speech-bubble" role="button" tabindex="0" aria-label="Abrir asistente virtual">
+            <span>¿Dudas sobre 2027? <strong>Chatea con el Asistente INAS 🤖</strong></span>
+        </div>
+        <button id="chat-toggle-btn" class="chat-toggle-btn" type="button" aria-label="Abrir asistente virtual INAS">
+            <img src="assets/robot.png" alt="Chat INAS" />
+        </button>
+    </div>
 `;
 document.body.appendChild(chatWidget);
 
@@ -37,21 +42,47 @@ let isSending = false;
 // Elements
 const windowEl = document.getElementById('chat-window');
 const toggleBtn = document.getElementById('chat-toggle-btn');
+const speechBubble = document.getElementById('chat-speech-bubble');
 const closeBtn = document.getElementById('close-chat');
 const sendBtn = document.getElementById('send-btn');
 const inputEl = document.getElementById('chat-input');
 const historyEl = document.getElementById('chat-history');
 
-// Toggle Chat
-toggleBtn.addEventListener('click', () => {
+function openChat() {
     windowEl.classList.remove('hidden');
     toggleBtn.classList.add('hidden');
+    if (speechBubble) speechBubble.style.display = 'none';
     inputEl.focus();
-});
+}
 
-closeBtn.addEventListener('click', () => {
+function closeChat() {
     windowEl.classList.add('hidden');
     toggleBtn.classList.remove('hidden');
+    if (speechBubble) speechBubble.style.display = '';
+}
+
+window.openChatBot = openChat;
+
+// Toggle Chat
+toggleBtn.addEventListener('click', openChat);
+if (speechBubble) {
+    speechBubble.addEventListener('click', openChat);
+    speechBubble.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openChat();
+        }
+    });
+}
+closeBtn.addEventListener('click', closeChat);
+
+// Botones en el Hero y navegación que abren el bot
+document.addEventListener('click', (e) => {
+    const trigger = e.target.closest('#hero-open-chat-btn, [data-open-chat]');
+    if (trigger) {
+        e.preventDefault();
+        openChat();
+    }
 });
 
 // Send Message Flow

@@ -5567,3 +5567,55 @@ body {
         height: 420px;
     }
 }
+
+
+/* Chatbot Floating Bubble & Launcher Enhancements */
+.chat-fab-container {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.chat-fab-container > * {
+    pointer-events: auto;
+}
+
+.chat-speech-bubble {
+    background: #0F1D4E;
+    color: #FFFFFF;
+    border-left: 4px solid #F2B705;
+    padding: 0.65rem 0.95rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.82rem;
+    line-height: 1.35;
+    box-shadow: 0 6px 20px rgba(15, 29, 78, 0.22);
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    max-width: 220px;
+    animation: bubbleFloat 3s ease-in-out infinite alternate;
+}
+
+.chat-speech-bubble:hover {
+    background: #1B4DFF;
+    transform: translateY(-2px);
+}
+
+.chat-speech-bubble strong {
+    color: #F2B705;
+}
+
+@keyframes bubbleFloat {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-4px); }
+}
+
+@media (max-width: 640px) {
+    .chat-speech-bubble {
+        display: none !important;
+    }
+}
