@@ -43,6 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', (e) => {
             if (window.innerWidth <= 768) {
                 e.preventDefault(); 
+                e.stopPropagation();
                 btn.parentElement.classList.toggle('mobile-open');
             }
         });

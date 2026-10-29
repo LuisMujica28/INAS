@@ -8,11 +8,15 @@
     <title>Instituto Nueva América (INAS)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="hero-3d-scroll.css">
-    <script src="navigation.js" defer></script>
-    <script src="hero-3d-scroll.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600..800;1,9..144,600&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="assets/hero_frames/frame_000.webp" fetchpriority="high">
+    <link rel="stylesheet" href="styles.css?v=202704">
+    <link rel="stylesheet" href="hero-3d-scroll.css?v=202704">
+    <link rel="stylesheet" href="admisiones.css?v=202704">
+    <link rel="stylesheet" href="responsive-mobile.css?v=202704">
+    <script src="navigation.js?v=202704" defer></script>
+    <script src="hero-3d-scroll.js?v=202704" defer></script>
+    <script src="admisiones.js?v=202704" defer></script>
 </head>
 
 <body>
@@ -65,7 +69,7 @@
             </span>
         </div>
                                 <div class="nav-links">
-            <a href="index.html" class="nav-item" class="nav-item active">Inicio</a>
+            <a href="index.html" class="nav-item active">Inicio</a>
             <div class="nav-dropdown">
                 <span class="nav-item cursor-pointer">Horizonte ▾</span>
                 <div class="dropdown-content">
@@ -82,8 +86,28 @@
                     <a href="utiles.html">Útiles</a>
                 </div>
             </div>
+            <a href="admisiones.html" class="nav-item nav-admisiones-highlight">Admisiones</a>
             <a href="pagos.html" class="nav-item">Pagos</a>
             <a href="contacto.html" class="nav-item">Contáctenos</a>
+            
+            <!-- Acciones y Redes en Menú Móvil -->
+            <div class="mobile-nav-footer">
+                <div class="mobile-nav-socials">
+                    <a href="https://www.instagram.com/inas_bta/" target="_blank" class="mobile-social-link instagram" aria-label="Instagram">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.8,2H16.2C19.4,2 22,4.6 22,7.8V16.2A5.8,5.8 0 0,1 16.2,22H7.8C4.6,22 2,19.4 2,16.2V7.8A5.8,5.8 0 0,1 7.8,2M7.6,4A3.6,3.6 0 0,0 4,7.6V16.4C4,18.39 5.61,20 7.6,20H16.4A3.6,3.6 0 0,0 20,16.4V7.6C20,5.61 18.39,4 16.4,4H7.6M12,7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12A5,5 0 0,1 12,7M12,9A3,3 0 0,0 9,12A3,3 0 0,0 12,15A3,3 0 0,0 15,12A3,3 0 0,0 12,9M18,5A1.25,1.25 0 0,1 19.25,6.25A1.25,1.25 0 0,1 18,7.5A1.25,1.25 0 0,1 16.75,6.25A1.25,1.25 0 0,1 18,5Z"/></svg>
+                    </a>
+                    <a href="https://www.youtube.com/watch?v=ZdhfR9t8S4s" target="_blank" class="mobile-social-link youtube" aria-label="YouTube">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10,15L15.19,12L10,9V15M21.56,7.17C21.69,7.64 21.78,8.27 21.84,9.07C21.91,9.87 21.94,10.56 21.94,11.16L22,12C22,14.19 21.84,15.8 21.56,16.83C21.31,17.73 20.73,18.31 19.83,18.56C19.36,18.69 18.5,18.78 17.18,18.84C15.88,18.91 14.69,18.94 13.59,18.94L12,19C7.81,19 5.2,18.84 4.17,18.56C3.27,18.31 2.69,17.73 2.44,16.83C2.31,16.36 2.22,15.73 2.16,14.93C2.09,14.13 2.06,13.44 2.06,12.84L2,12C2,9.81 2.16,8.2 2.44,7.17C2.69,6.27 3.27,5.69 4.17,5.44C4.64,5.31 5.5,5.22 6.82,5.16C8.12,5.09 9.31,5.06 10.41,5.06L12,5C16.19,5 18.8,5.16 19.83,5.44C20.73,5.69 21.31,6.27 21.56,7.17Z"/></svg>
+                    </a>
+                    <a href="https://wa.me/573054301113" target="_blank" class="mobile-social-link whatsapp" aria-label="WhatsApp">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 15 3.8 13.47 3.8 11.91C3.81 7.37 7.5 3.67 12.05 3.67M9.53 6.62C9.32 6.62 8.97 6.7 8.67 7.03C8.38 7.35 7.55 8.13 7.55 9.71C7.55 11.29 8.7 12.82 8.86 13.03C9.02 13.24 11.08 16.41 14.23 17.77C14.98 18.09 15.57 18.29 16.02 18.43C16.77 18.67 17.46 18.64 18 18.56C18.61 18.47 19.86 17.8 20.12 17.06C20.38 16.32 20.38 15.69 20.3 15.56C20.22 15.43 20.01 15.35 19.7 15.19C19.38 15.03 17.84 14.27 17.55 14.17C17.27 14.07 17.06 14.02 16.85 14.33C16.64 14.65 16.03 15.35 15.85 15.56C15.67 15.77 15.49 15.8 15.18 15.64C14.87 15.49 13.87 15.16 12.68 14.1C11.75 13.27 11.12 12.25 10.94 11.94C10.76 11.63 10.92 11.46 11.08 11.3C11.22 11.16 11.39 10.94 11.55 10.75C11.71 10.56 11.76 10.43 11.87 10.22C11.97 10.01 11.92 9.83 11.84 9.67C11.76 9.5 11.14 7.99 10.89 7.37C10.64 6.77 10.38 6.85 10.2 6.85C10.02 6.85 9.81 6.82 9.6 6.82L9.53 6.62Z"/></svg>
+                    </a>
+                </div>
+                <div class="mobile-nav-contact">
+                    <a href="tel:+573054301113" class="mobile-contact-chip">📱 305 430-1113</a>
+                    <a href="tel:+576017689104" class="mobile-contact-chip">☎️ 601 768-9104</a>
+                </div>
+            </div>
         </div>
         <div class="social-nav">
             <a href="https://www.instagram.com/inas_bta/" target="_blank" class="social-icon-link instagram"
@@ -152,122 +176,73 @@
             </div>
 
             <!-- ==============================================================
-                 PUBLICIDAD INTERACTIVA — MATRÍCULAS 2027 (INAS)
+                 COMPOSICIÓN EDITORIAL & REGLA DE 13 GRADOS — MATRÍCULAS 2027
                  ============================================================== -->
             <div class="hero-ad-overlay" id="hero-ad-overlay">
                 <div class="hero-ad-content">
 
-                    <!-- Fila Superior: Badge + Avión de papel con estela -->
-                    <div class="ad-top-row">
-                        <div class="ad-badge-wrapper">
-                            <div class="ad-sparkle-top">
-                                <span class="spark-ray ray-top-1"></span>
-                                <span class="spark-ray ray-top-2"></span>
-                                <span class="spark-ray ray-top-3"></span>
-                                <span class="spark-ray ray-top-4"></span>
-                                <span class="spark-ray ray-top-5"></span>
-                            </div>
-                            <div class="ad-badge-pill">
-                                <span>Ya están abiertas las</span>
-                            </div>
-                        </div>
+                    <div class="hero-editorial-head">
+                        <span class="hero-gold-rule" aria-hidden="true"></span>
+                        <h1 class="hero-display-serif">Matrículas<br>abiertas 2027</h1>
+                        <p class="hero-editorial-lead">
+                            Educación privada en Jornada Única para Villa Elisa, Suba. Formación científica, humana y preparación Saber 11° desde la primera infancia.
+                        </p>
+                    </div>
 
-                        <!-- Avión de papel Origami con trayectoria hacia la mano de la estudiante -->
-                        <div class="ad-plane-wrapper">
-                            <svg class="ad-plane-trail" viewBox="0 0 140 80" fill="none">
-                                <path d="M 8 72 C 35 72, 60 55, 120 18" stroke="#4f46e5" stroke-width="2.5" stroke-dasharray="6 6" stroke-linecap="round"/>
+                    <div class="hero-open-ledger" aria-label="Cifras institucionales de admisión">
+                        <div class="hero-open-figure">
+                            <span class="hero-figure-num">Jardín – 11°</span>
+                            <span class="hero-figure-caption">Jornada única continua</span>
+                        </div>
+                        <div class="hero-open-figure">
+                            <span class="hero-figure-num">$470.000</span>
+                            <span class="hero-figure-caption">Matrícula (subsidio &gt;50%)</span>
+                        </div>
+                        <div class="hero-open-figure">
+                            <span class="hero-figure-num">317 pts</span>
+                            <span class="hero-figure-caption">Promedio Saber 11°</span>
+                        </div>
+                    </div>
+
+                    <div class="hero-ruler-block">
+                        <div class="hero-ruler-header">
+                            <span class="hero-ruler-prompt">Selecciona el grado para 2027:</span>
+                            <span class="hero-ruler-cycle" data-hero-cycle>Preescolar</span>
+                        </div>
+                        <div class="hero-ruler-track" id="hero-grade-ruler" role="radiogroup" aria-label="Seleccionar grado para 2027">
+                            <button type="button" class="hero-grade-stop" role="radio" aria-checked="true" tabindex="0" data-grade-index="0">Jardín</button>
+                            <button type="button" class="hero-grade-stop" role="radio" aria-checked="false" tabindex="-1" data-grade-index="1">Trans.</button>
+                            <button type="button" class="hero-grade-stop" role="radio" aria-checked="false" tabindex="-1" data-grade-index="2">1°</button>
+                            <button type="button" class="hero-grade-stop" role="radio" aria-checked="false" tabindex="-1" data-grade-index="3">2°</button>
+                            <button type="button" class="hero-grade-stop" role="radio" aria-checked="false" tabindex="-1" data-grade-index="4">3°</button>
+                            <button type="button" class="hero-grade-stop" role="radio" aria-checked="false" tabindex="-1" data-grade-index="5">4°</button>
+                            <button type="button" class="hero-grade-stop" role="radio" aria-checked="false" tabindex="-1" data-grade-index="6">5°</button>
+                            <button type="button" class="hero-grade-stop" role="radio" aria-checked="false" tabindex="-1" data-grade-index="7">6°</button>
+                            <button type="button" class="hero-grade-stop" role="radio" aria-checked="false" tabindex="-1" data-grade-index="8">7°</button>
+                            <button type="button" class="hero-grade-stop" role="radio" aria-checked="false" tabindex="-1" data-grade-index="9">8°</button>
+                            <button type="button" class="hero-grade-stop" role="radio" aria-checked="false" tabindex="-1" data-grade-index="10">9°</button>
+                            <button type="button" class="hero-grade-stop" role="radio" aria-checked="false" tabindex="-1" data-grade-index="11">10°</button>
+                            <button type="button" class="hero-grade-stop" role="radio" aria-checked="false" tabindex="-1" data-grade-index="12">11°</button>
+                        </div>
+                        <p class="hero-grade-readout" data-hero-readout aria-live="polite">
+                            <strong>Jardín:</strong> Desarrollo motriz, socialización y hábitos escolares · Requiere registro civil y carné de vacunas al día.
+                        </p>
+                    </div>
+
+                    <div class="hero-editorial-actions">
+                        <button type="button" class="hero-ink-cta" id="hero-primary-enroll-btn">
+                            <span data-hero-cta-label>Solicitar cupo para Jardín</span>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
                             </svg>
-                            <svg class="ad-plane-icon" viewBox="0 0 60 60" fill="none">
-                                <!-- Ala izquierda/cuerpo -->
-                                <polygon points="6,32 54,8 26,44" fill="#ffffff" stroke="#4338ca" stroke-width="2.6" stroke-linejoin="round"/>
-                                <!-- Ala derecha -->
-                                <polygon points="54,8 38,54 26,44" fill="#e0e7ff" stroke="#4338ca" stroke-width="2.6" stroke-linejoin="round"/>
-                                <!-- Pliegue central -->
-                                <line x1="54" y1="8" x2="26" y2="44" stroke="#4338ca" stroke-width="2.6" stroke-linecap="round"/>
-                                <!-- Pliegue interior de la quilla -->
-                                <polygon points="26,44 32,38 38,54" fill="#c7d2fe" stroke="#4338ca" stroke-width="2.2" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
+                        </button>
+                        <a href="admisiones.html" class="hero-ink-link">Requisitos y tarifas</a>
                     </div>
 
-                    <!-- Título Principal 3D: Matrículas 2027 -->
-                    <div class="ad-headline-group">
-                        <div class="ad-title-matriculas">Matrículas</div>
-                        <div class="ad-year-row">
-                            <div class="ad-year-sparkles left">
-                                <span class="spark-ray ray-l1"></span>
-                                <span class="spark-ray ray-l2"></span>
-                            </div>
-                            <span class="ad-title-year">2027</span>
-                            <div class="ad-year-sparkles right">
-                                <span class="spark-ray ray-r1"></span>
-                                <span class="spark-ray ray-r2"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 3 Tarjetas de Beneficios Clave -->
-                    <div class="ad-features-grid">
-                        <div class="ad-feature-card">
-                            <div class="ad-feature-icon-circle">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
-                                    <path d="M6 12v5c3 3 9 3 12 0v-5"/>
-                                </svg>
-                            </div>
-                            <span class="ad-feature-text">Formación<br>integral</span>
-                        </div>
-
-                        <div class="ad-feature-card">
-                            <div class="ad-feature-icon-circle">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                    <line x1="18" y1="20" x2="18" y2="4"/>
-                                    <line x1="6" y1="20" x2="6" y2="14"/>
-                                    <line x1="12" y1="20" x2="12" y2="9"/>
-                                </svg>
-                            </div>
-                            <span class="ad-feature-text">Ambientes<br>de aprendizaje<br>modernos</span>
-                        </div>
-
-                        <div class="ad-feature-card">
-                            <div class="ad-feature-icon-circle">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                                    <circle cx="9" cy="7" r="4"/>
-                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-                                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                                </svg>
-                            </div>
-                            <span class="ad-feature-text">Acompañamiento<br>personalizado</span>
-                        </div>
-                    </div>
-
-                    <!-- Botón CTA con destellos -->
-                    <div class="ad-cta-row">
-                        <div class="ad-cta-sparkles left">
-                            <span class="spark-ray ray-c1"></span>
-                            <span class="spark-ray ray-c2"></span>
-                        </div>
-                        <a href="https://wa.me/573054301113?text=Hola,%20quisiera%20solicitar%20información%20para%20Inscripciones%20y%20Matrículas%202027" 
-                           target="_blank" 
-                           class="ad-cta-button">
-                            <span class="ad-cta-icon-box">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                                    <polyline points="14 2 14 8 20 8"/>
-                                    <line x1="16" y1="13" x2="8" y2="13"/>
-                                    <line x1="16" y1="17" x2="8" y2="17"/>
-                                    <polyline points="10 9 9 9 8 9"/>
-                                </svg>
-                            </span>
-                            <span class="ad-cta-text">¡Inscríbete ahora!</span>
-                            <span class="ad-cta-arrow">›</span>
-                        </a>
-                        <div class="ad-cta-sparkles right">
-                            <span class="spark-ray ray-c3"></span>
-                            <span class="spark-ray ray-c4"></span>
-                        </div>
-                    </div>
+                    <p class="hero-editorial-footnote">
+                        Calle 136 # 95B - 85, Suba · Secretaría L–V 6:00 a.m. a 2:30 p.m. · <a href="#documentos" data-open-admisiones="requisitos" style="color: #0F1D4E; text-decoration: underline; text-underline-offset: 2px;">Ver documentos</a>
+                    </p>
 
                 </div>
             </div>
@@ -435,6 +410,7 @@
     <!-- Excellence / Results Section -->
     <section class="results-section">
         <h2 class="section-title">Resultados ICFES</h2>
+        <p class="results-mobile-hint">Desliza para ver más años ↔</p>
 
         <div class="results-container">
             <!-- 2021 -->
@@ -745,11 +721,12 @@
             <div class="footer-col links-col">
                 <h3 class="footer-heading">Navegación</h3>
                 <ul class="footer-links">
-                    <li><a href="#">Inicio</a></li>
-                    <li><a href="#">Instalaciones</a></li>
-                    <li><a href="#">Resultados ICFES</a></li>
-                    <li><a href="#">Admisiones</a></li>
-                    <li><a href="#">Información para pagos</a></li>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="instalaciones.html">Instalaciones</a></li>
+                    <li><a href="horizonte.html">Horizonte Institucional</a></li>
+                    <li><a href="admisiones.html">Admisiones y Matrículas 2027</a></li>
+                    <li><a href="pagos.html">Información para pagos</a></li>
+                    <li><a href="contacto.html">Contáctenos</a></li>
                 </ul>
             </div>
 
@@ -763,11 +740,11 @@
                     </li>
                     <li>
                         <span class="icon">📞</span>
-                        <span>TEL: 601 768-9104<br>CEL: 305 430-1113</span>
+                        <span>TEL: <a href="tel:+576017689104">601 768-9104</a><br>CEL: <a href="tel:+573054301113">305 430-1113</a></span>
                     </li>
                     <li>
                         <span class="icon">📧</span>
-                        <span>secretaria@inas.edu.co<br>inamerica91@hotmail.com</span>
+                        <span><a href="mailto:secretaria@inas.edu.co">secretaria@inas.edu.co</a><br><a href="mailto:inamerica91@hotmail.com">inamerica91@hotmail.com</a></span>
                     </li>
                     <li>
                         <span class="icon">🕒</span>
@@ -1175,8 +1152,8 @@
         });
     </script>
 
-    <script src="intro-animation.js"></script>
-    <script src="mobile-menu.js"></script>
+    <script src="intro-animation.js?v=202704"></script>
+    <script src="mobile-menu.js?v=202704"></script>
     <script type="module" src="chatbot.js"></script>
 </body>
 

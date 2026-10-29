@@ -1,0 +1,1075 @@
+/* ==========================================================================
+   SISTEMA EDITORIAL DE ADMISIONES Y MATRÍCULAS 2027 — INAS
+   - CERO colores degradados (100% tintas planas institucionales)
+   - CERO cajitas redondeadas tipo plantilla IA: retícula editorial abierta,
+     filetes estructurales de tinta y campos de registro sobre línea base
+   - Tipografía: Fraunces (serif académica) + Poppins (interfaz institucional)
+   ========================================================================== */
+
+:root {
+    --ink-navy: #0F1D4E;
+    --ink-cobalt: #1B4DFF;
+    --ink-gold: #F2B705;
+    --ink-emerald: #047857;
+    --ink-body: #2D3748;
+    --ink-muted: #5A6578;
+    --rule-strong: #0F1D4E;
+    --rule-hairline: #CBD5E1;
+    --rule-soft: #E2E8F0;
+    --paper-white: #FFFFFF;
+    --paper-stone: #F3F4F8;
+}
+
+/* Destaque sobrio en Navbar para Admisiones (sin pastilla chillona) */
+.nav-links a.nav-admisiones-highlight {
+    color: #F2B705;
+    font-weight: 700;
+}
+
+.nav-links a.nav-admisiones-highlight:hover,
+.nav-links a.nav-admisiones-highlight.active {
+    background: #F2B705 !important;
+    color: #0F1D4E !important;
+}
+
+/* --------------------------------------------------------------------------
+   1. PLIEGO LATERAL NATIVO <dialog> (SIDE-DRAWER EDITORIAL DERECHO)
+   -------------------------------------------------------------------------- */
+dialog#admisiones-modal:modal {
+    overscroll-behavior: contain;
+}
+
+dialog#admisiones-modal::backdrop {
+    overflow: hidden;
+    overscroll-behavior: contain;
+    background: rgba(15, 29, 78, 0.58);
+}
+
+dialog#admisiones-modal {
+    border: none;
+    border-left: 5px solid var(--ink-gold);
+    border-radius: 0;
+    padding: 0;
+    width: min(100vw, 540px);
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0 0 0 auto;
+    background: var(--paper-white);
+    color: var(--ink-navy);
+    box-shadow: -24px 0 60px rgba(15, 29, 78, 0.25);
+    font-family: 'Poppins', sans-serif;
+}
+
+dialog#admisiones-modal[open] {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: admDrawerSlideIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes admDrawerSlideIn {
+    from {
+        transform: translateX(36px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    dialog#admisiones-modal[open] {
+        animation: none;
+    }
+}
+
+/* Cabecera en tinta azul Prusia plana */
+.adm-modal-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.5rem 1.75rem 1.35rem;
+    background: var(--ink-navy);
+    color: var(--paper-white);
+    flex-shrink: 0;
+}
+
+.adm-modal-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+}
+
+.adm-modal-shield {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.adm-modal-kicker {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--ink-gold);
+    margin-bottom: 0.15rem;
+}
+
+.adm-modal-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--paper-white);
+    line-height: 1.15;
+    margin: 0;
+}
+
+.adm-modal-close-form {
+    margin: 0;
+}
+
+.adm-modal-close {
+    width: 38px;
+    height: 38px;
+    border-radius: 0;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    background: transparent;
+    color: var(--paper-white);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.15rem;
+    line-height: 1;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.adm-modal-close:hover {
+    background: var(--ink-gold);
+    border-color: var(--ink-gold);
+    color: var(--ink-navy);
+}
+
+.adm-modal-close:focus-visible {
+    outline: 2px solid var(--ink-gold);
+    outline-offset: 2px;
+}
+
+/* Pestañas editoriales con línea base (sin cajas grises) */
+.adm-tabs-bar {
+    display: flex;
+    gap: 1.5rem;
+    padding: 0 1.75rem;
+    background: var(--paper-stone);
+    border-bottom: 1.5px solid var(--rule-hairline);
+    flex-shrink: 0;
+}
+
+.adm-tab-btn {
+    appearance: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    background: transparent;
+    color: var(--ink-muted);
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 600;
+    padding: 0.9rem 0 0.78rem;
+    margin-bottom: -1.5px;
+    cursor: pointer;
+    transition: color 0.16s ease, border-color 0.16s ease;
+}
+
+.adm-tab-btn:hover {
+    color: var(--ink-navy);
+}
+
+.adm-tab-btn[aria-selected="true"] {
+    color: var(--ink-navy);
+    font-weight: 700;
+    border-bottom-color: var(--ink-navy);
+}
+
+.adm-tab-btn:focus-visible {
+    outline: 2px solid var(--ink-cobalt);
+    outline-offset: 2px;
+}
+
+.adm-modal-body {
+    padding: 1.6rem 1.75rem;
+    overflow-y: auto;
+    flex: 1 1 auto;
+}
+
+.adm-tab-panel[hidden] {
+    display: none !important;
+}
+
+.adm-modal-footer {
+    padding: 0.95rem 1.75rem;
+    background: var(--paper-stone);
+    border-top: 1px solid var(--rule-hairline);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    font-size: 0.78rem;
+    color: var(--ink-muted);
+    flex-shrink: 0;
+}
+
+.adm-footer-page-link {
+    color: var(--ink-navy);
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--ink-navy);
+}
+
+.adm-footer-page-link:hover {
+    color: var(--ink-cobalt);
+    border-color: var(--ink-cobalt);
+}
+
+/* --------------------------------------------------------------------------
+   2. FORMULARIO ESTILO LIBRO DE REGISTRO (LÍNEAS BASE, CERO CAJITAS)
+   -------------------------------------------------------------------------- */
+.adm-form-intro {
+    font-size: 0.88rem;
+    color: var(--ink-body);
+    line-height: 1.6;
+    margin: 0 0 1.35rem;
+}
+
+/* Selector Nuevo / Antiguo por subrayado limpio */
+.adm-type-toggle {
+    display: flex;
+    gap: 1.5rem;
+    padding-bottom: 1rem;
+    margin-bottom: 1.25rem;
+    border-bottom: 1px solid var(--rule-soft);
+}
+
+.adm-radio-line {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--ink-muted);
+}
+
+.adm-radio-line:has(input:checked) {
+    color: var(--ink-navy);
+    font-weight: 700;
+}
+
+.adm-radio-line input[type="radio"] {
+    accent-color: var(--ink-navy);
+    width: 16px;
+    height: 16px;
+    margin: 0;
+}
+
+.adm-form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem 1.4rem;
+}
+
+.adm-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.adm-field.full-span {
+    grid-column: 1 / -1;
+}
+
+.adm-field label {
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--ink-navy);
+}
+
+.adm-field input,
+.adm-field select {
+    appearance: none;
+    -webkit-appearance: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--ink-navy);
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #94A3B8;
+    border-radius: 0;
+    padding: 0.55rem 0;
+    min-height: 40px;
+    transition: border-color 0.16s ease;
+}
+
+.adm-field select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%230F1D4E' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 2px center;
+    padding-right: 1.4rem;
+    cursor: pointer;
+}
+
+.adm-field input::placeholder {
+    color: #94A3B8;
+    font-weight: 400;
+}
+
+.adm-field input:focus,
+.adm-field select:focus {
+    outline: none;
+    border-bottom-color: var(--ink-cobalt);
+}
+
+.adm-field input:user-invalid,
+.adm-field select:user-invalid {
+    border-bottom-color: #DC2626;
+}
+
+.adm-form-feedback {
+    margin-top: 0.85rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #DC2626;
+    min-height: 1.2em;
+}
+
+.adm-form-feedback.is-success {
+    color: var(--ink-emerald);
+}
+
+.adm-form-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.adm-btn-whatsapp {
+    appearance: none;
+    border: none;
+    border-left: 5px solid var(--ink-gold);
+    border-radius: 0;
+    background: var(--ink-navy);
+    color: var(--paper-white);
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    padding: 0.88rem 1.45rem;
+    min-height: 50px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    cursor: pointer;
+    transition: background-color 0.16s ease;
+}
+
+.adm-btn-whatsapp:hover {
+    background: var(--ink-cobalt);
+}
+
+.adm-btn-whatsapp svg {
+    width: 19px;
+    height: 19px;
+    flex-shrink: 0;
+}
+
+.adm-btn-email {
+    appearance: none;
+    border: none;
+    border-bottom: 2px solid var(--ink-navy);
+    background: transparent;
+    color: var(--ink-navy);
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.86rem;
+    font-weight: 700;
+    padding: 0.35rem 0;
+    cursor: pointer;
+    transition: color 0.16s ease, border-color 0.16s ease;
+}
+
+.adm-btn-email:hover {
+    color: var(--ink-cobalt);
+    border-color: var(--ink-cobalt);
+}
+
+/* --------------------------------------------------------------------------
+   3. LISTA DE DOCUMENTOS POR LÍNEAS DE REGISTRO (SIN CAJITAS)
+   -------------------------------------------------------------------------- */
+.adm-req-toolbar {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    border-bottom: 2px solid var(--ink-navy);
+    padding-bottom: 0.6rem;
+    margin-bottom: 0.25rem;
+}
+
+.adm-segmented {
+    display: flex;
+    gap: 1.25rem;
+}
+
+.adm-seg-btn {
+    border: none;
+    background: transparent;
+    color: var(--ink-muted);
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 600;
+    padding: 0;
+    cursor: pointer;
+    transition: color 0.15s ease;
+}
+
+.adm-seg-btn.active {
+    color: var(--ink-navy);
+    font-weight: 800;
+    text-decoration: underline;
+    text-decoration-thickness: 2.5px;
+    text-underline-offset: 8px;
+}
+
+.adm-req-counter {
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--ink-cobalt);
+}
+
+.adm-checklist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.adm-checklist li {
+    border-bottom: 1px solid var(--rule-soft);
+}
+
+.adm-check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.72rem 0;
+    cursor: pointer;
+}
+
+.adm-check-item input[type="checkbox"] {
+    accent-color: var(--ink-navy);
+    width: 17px;
+    height: 17px;
+    margin-top: 0.16rem;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+.adm-check-text {
+    font-size: 0.86rem;
+    color: var(--ink-navy);
+    line-height: 1.45;
+    font-weight: 500;
+}
+
+.adm-check-item:has(input:checked) .adm-check-text {
+    color: var(--ink-emerald);
+    text-decoration: line-through;
+}
+
+.adm-check-badge {
+    margin-left: auto;
+    font-size: 0.73rem;
+    font-weight: 700;
+    color: var(--ink-cobalt);
+    white-space: nowrap;
+}
+
+.adm-req-note {
+    margin-top: 1.15rem;
+    padding-left: 0.9rem;
+    border-left: 3px solid var(--ink-gold);
+    font-size: 0.81rem;
+    color: var(--ink-body);
+    line-height: 1.55;
+}
+
+/* --------------------------------------------------------------------------
+   4. TABLA EDITORIAL DE DERECHOS ECONÓMICOS Y SUBSIDIO (SIN CAJITAS)
+   -------------------------------------------------------------------------- */
+.adm-subsidy-callout {
+    padding: 0.2rem 0 0.2rem 1rem;
+    border-left: 4px solid var(--ink-gold);
+    margin-bottom: 1.5rem;
+}
+
+.adm-subsidy-callout strong {
+    display: block;
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.15rem;
+    color: var(--ink-navy);
+    margin-bottom: 0.2rem;
+}
+
+.adm-subsidy-callout p {
+    font-size: 0.84rem;
+    color: var(--ink-body);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.adm-fee-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-top: 2.5px solid var(--ink-navy);
+    margin-bottom: 1.35rem;
+}
+
+.adm-fee-table tr {
+    border-bottom: 1px solid var(--rule-hairline);
+}
+
+.adm-fee-table td {
+    padding: 0.9rem 0;
+    vertical-align: baseline;
+}
+
+.adm-fee-concept {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--ink-navy);
+}
+
+.adm-fee-sub {
+    display: block;
+    font-size: 0.76rem;
+    font-weight: 400;
+    color: var(--ink-muted);
+    margin-top: 0.15rem;
+}
+
+.adm-fee-value {
+    text-align: right;
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--ink-navy);
+    white-space: nowrap;
+}
+
+.adm-bank-ledger {
+    font-size: 0.82rem;
+    color: var(--ink-body);
+    line-height: 1.6;
+    padding-top: 0.5rem;
+}
+
+.adm-bank-ledger strong {
+    color: var(--ink-navy);
+}
+
+.adm-bank-ledger a {
+    color: var(--ink-cobalt);
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--ink-cobalt);
+}
+
+/* --------------------------------------------------------------------------
+   5. PÁGINA DEDICADA: admisiones.html (PROSPECTO ACADÉMICO EDITORIAL)
+   -------------------------------------------------------------------------- */
+
+/* Cabecera en tinta azul Prusia 100% sólida (CERO degradados, CERO tarjeta blanca flotante) */
+.adm-page-hero {
+    padding: 8.8rem 6% 4.5rem;
+    background: var(--ink-navy);
+    color: var(--paper-white);
+    border-bottom: 5px solid var(--ink-gold);
+}
+
+.adm-page-hero-inner {
+    max-width: 1220px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 4rem;
+    align-items: end;
+}
+
+.adm-hero-rule {
+    width: 56px;
+    height: 4px;
+    background: var(--ink-gold);
+    margin-bottom: 1.25rem;
+}
+
+.adm-page-title {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(2.5rem, 4.8vw, 4.1rem);
+    font-weight: 700;
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+    margin: 0 0 1.15rem;
+    color: var(--paper-white);
+}
+
+.adm-page-lead {
+    font-size: 1.02rem;
+    line-height: 1.65;
+    color: #CBD5E1;
+    max-width: 56ch;
+    margin: 0 0 2rem;
+}
+
+.adm-hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+    flex-wrap: wrap;
+}
+
+.adm-hero-btn-solid {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.92rem 1.7rem;
+    background: var(--ink-gold);
+    color: var(--ink-navy);
+    font-weight: 800;
+    font-size: 0.94rem;
+    text-decoration: none;
+    border-radius: 0;
+    transition: background-color 0.16s ease;
+}
+
+.adm-hero-btn-solid:hover {
+    background: var(--paper-white);
+}
+
+.adm-hero-link-plain {
+    color: var(--paper-white);
+    font-weight: 700;
+    font-size: 0.92rem;
+    text-decoration: none;
+    padding-bottom: 3px;
+    border-bottom: 2px solid var(--ink-gold);
+}
+
+.adm-hero-link-plain:hover {
+    color: var(--ink-gold);
+}
+
+/* Ficha técnica abierta sobre el fondo azul Prusia (sin caja blanca) */
+.adm-spec-table {
+    border-top: 2px solid var(--ink-gold);
+}
+
+.adm-spec-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.adm-spec-list li {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.72rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    font-size: 0.85rem;
+}
+
+.adm-spec-list span {
+    color: #94A3B8;
+}
+
+.adm-spec-list strong {
+    color: var(--paper-white);
+    text-align: right;
+    font-weight: 600;
+}
+
+/* Estructura de secciones editoriales */
+.adm-section {
+    padding: 5rem 6%;
+    background: var(--paper-white);
+}
+
+.adm-section-stone {
+    background: var(--paper-stone);
+}
+
+.adm-container {
+    max-width: 1220px;
+    margin: 0 auto;
+}
+
+.adm-section-header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    align-items: end;
+    padding-bottom: 2rem;
+    margin-bottom: 2.75rem;
+    border-bottom: 2px solid var(--ink-navy);
+}
+
+.adm-section-header h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(1.9rem, 3.2vw, 2.75rem);
+    font-weight: 700;
+    color: var(--ink-navy);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+.adm-section-header p {
+    font-size: 0.95rem;
+    color: var(--ink-body);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* 1. Ruta de 4 pasos en columnas abiertas con filetes verticales (CERO cajitas) */
+.adm-open-steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.adm-open-step {
+    padding: 0.5rem 1.75rem 0.5rem 1.5rem;
+    border-left: 1px solid var(--rule-hairline);
+}
+
+.adm-open-step:first-child {
+    border-left: none;
+    padding-left: 0;
+}
+
+.adm-open-step-num {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: var(--ink-navy);
+    line-height: 1;
+    display: block;
+    margin-bottom: 0.85rem;
+}
+
+.adm-open-step h3 {
+    font-size: 1.04rem;
+    font-weight: 800;
+    color: var(--ink-navy);
+    margin: 0 0 0.55rem;
+}
+
+.adm-open-step p {
+    font-size: 0.87rem;
+    color: var(--ink-body);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* 2. Ciclos Educativos como índice horizontal editorial (CERO tarjetas cuadradas) */
+.adm-syllabus-index {
+    border-top: 1.5px solid var(--ink-navy);
+}
+
+.adm-syllabus-row {
+    display: grid;
+    grid-template-columns: 180px 1.1fr 1.6fr auto;
+    gap: 1.5rem;
+    align-items: baseline;
+    padding: 1.55rem 0.75rem;
+    border-bottom: 1px solid var(--rule-hairline);
+    transition: background-color 0.16s ease;
+}
+
+.adm-syllabus-row:hover {
+    background: var(--paper-white);
+}
+
+.adm-syllabus-cycle {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--ink-cobalt);
+}
+
+.adm-syllabus-grades {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--ink-navy);
+    margin: 0;
+}
+
+.adm-syllabus-desc {
+    font-size: 0.88rem;
+    color: var(--ink-body);
+    line-height: 1.55;
+    margin: 0;
+}
+
+.adm-syllabus-action {
+    appearance: none;
+    border: none;
+    border-bottom: 2px solid var(--ink-navy);
+    background: transparent;
+    color: var(--ink-navy);
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.84rem;
+    font-weight: 700;
+    padding: 0 0 2px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color 0.16s ease, border-color 0.16s ease;
+}
+
+.adm-syllabus-action:hover {
+    color: var(--ink-cobalt);
+    border-color: var(--ink-cobalt);
+}
+
+/* 3. Pliego de 2 columnas abiertas (Documentos + Derechos Económicos) */
+.adm-editorial-spread {
+    display: grid;
+    grid-template-columns: 1.12fr 0.88fr;
+    gap: 4rem;
+    align-items: start;
+}
+
+.adm-spread-col h3 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: var(--ink-navy);
+    margin: 0 0 0.5rem;
+}
+
+/* 4. Mesa de Pre-inscripción + Secretaría (bloque arquitectónico sin bordes redondeados) */
+.adm-desk-split {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    border-top: 3px solid var(--ink-navy);
+    background: var(--paper-white);
+}
+
+.adm-desk-form-pane {
+    padding: 2.5rem 2.75rem;
+}
+
+.adm-desk-form-pane h3 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--ink-navy);
+    margin: 0 0 0.4rem;
+}
+
+.adm-desk-secretariat {
+    background: var(--ink-navy);
+    color: var(--paper-white);
+    padding: 2.5rem 2.25rem;
+    border-left: 5px solid var(--ink-gold);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1.75rem;
+}
+
+.adm-desk-secretariat h3 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.45rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+    color: var(--paper-white);
+}
+
+.adm-desk-secretariat p {
+    font-size: 0.88rem;
+    color: #CBD5E1;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.adm-visit-details {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+.adm-visit-details li {
+    padding: 0.8rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+    font-size: 0.86rem;
+    line-height: 1.5;
+}
+
+.adm-visit-details strong {
+    display: block;
+    color: var(--ink-gold);
+    font-size: 0.76rem;
+    margin-bottom: 0.1rem;
+}
+
+.adm-visit-details a {
+    color: var(--paper-white);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* 5. Preguntas frecuentes por líneas divisorias abiertas (CERO cajitas) */
+.adm-faq-list {
+    max-width: 920px;
+    border-top: 1.5px solid var(--ink-navy);
+}
+
+.adm-faq-item {
+    border-bottom: 1px solid var(--rule-hairline);
+}
+
+.adm-faq-item summary {
+    padding: 1.25rem 0;
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--ink-navy);
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+}
+
+.adm-faq-item summary::-webkit-details-marker {
+    display: none;
+}
+
+.adm-faq-item summary::after {
+    content: '+';
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--ink-cobalt);
+    flex-shrink: 0;
+}
+
+.adm-faq-item[open] summary::after {
+    content: '−';
+}
+
+.adm-faq-answer {
+    padding: 0 0 1.4rem;
+    font-size: 0.92rem;
+    color: var(--ink-body);
+    line-height: 1.7;
+    max-width: 72ch;
+}
+
+.adm-faq-answer a {
+    color: var(--ink-cobalt);
+    font-weight: 700;
+}
+
+/* --------------------------------------------------------------------------
+   6. RESPONSIVIDAD EDITORIAL
+   -------------------------------------------------------------------------- */
+@media (max-width: 992px) {
+    .adm-page-hero-inner,
+    .adm-section-header,
+    .adm-editorial-spread,
+    .adm-desk-split {
+        grid-template-columns: 1fr;
+        gap: 2.25rem;
+    }
+
+    .adm-open-steps {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+
+    .adm-open-step {
+        border-left: none;
+        border-top: 1px solid var(--rule-hairline);
+        padding: 1.25rem 0 0;
+    }
+
+    .adm-syllabus-row {
+        grid-template-columns: 1fr;
+        gap: 0.45rem;
+        padding: 1.35rem 0;
+    }
+
+    .adm-syllabus-action {
+        justify-self: start;
+        margin-top: 0.35rem;
+    }
+
+    .adm-desk-form-pane {
+        padding: 1.85rem 1.4rem;
+    }
+}
+
+@media (max-width: 640px) {
+    dialog#admisiones-modal {
+        width: 100vw;
+        border-left: none;
+        border-top: 5px solid var(--ink-gold);
+    }
+
+    .adm-modal-header {
+        padding: 1.15rem 1.2rem;
+    }
+
+    .adm-tabs-bar {
+        padding: 0 1.2rem;
+        gap: 1rem;
+    }
+
+    .adm-modal-body {
+        padding: 1.25rem 1.2rem;
+    }
+
+    .adm-modal-footer {
+        padding: 0.85rem 1.2rem;
+    }
+
+    .adm-type-toggle {
+        flex-direction: column;
+        gap: 0.65rem;
+    }
+
+    .adm-form-grid,
+    .adm-open-steps {
+        grid-template-columns: 1fr;
+    }
+
+    .adm-page-hero {
+        padding: 6.8rem 1.25rem 3rem;
+    }
+
+    .adm-section {
+        padding: 3.5rem 1.25rem;
+    }
+
+    .adm-desk-secretariat {
+        padding: 1.75rem 1.35rem;
+    }
+}

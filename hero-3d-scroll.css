@@ -1,48 +1,38 @@
 /* ==========================================================================
-   HERO PRESENTATION & SCROLL CONTROLLER — INAS 2027
-   - ESTILO SOFT 3D PREMIUM & ESCOLAR (Armónico con el resto del sitio)
-   - Cero degradados en textos (Colores 100% sólidos: Azul Institucional y Dorado)
-   - Video de fondo 100% fluido a 60 FPS (Hardware Accelerated)
-   - Tarjetas suaves con blur frosted glass y acentos institucionales
+   HERO EDITORIAL & REGLA INTERACTIVA DE MATRÍCULAS 2027 — INAS
+   - CERO colores degradados (100% tintas planas institucionales: #0F1D4E, #F2B705, #FFFFFF)
+   - CERO cajitas flotantes / tarjetas SaaS: tipografía impresa directo sobre el muro del estudio 3D
+   - Regla interactiva de los 13 grados (Jardín a 11°) sincronizada con la estudiante 3D
    ========================================================================== */
 
-/* Evitar scroll horizontal y mantener la física limpia */
 html, body {
     overflow-x: clip !important;
 }
 
 /* --------------------------------------------------------------------------
-   1. PISTA EXTERIOR Y ESCENARIO STICKY
+   1. ESCENARIO DEL ESTUDIO 3D
    -------------------------------------------------------------------------- */
 .hero-presentation-track {
     position: relative;
     width: 100%;
-    height: 100vh;
-    height: 100svh;
-    background: #000;
-    z-index: 5;
+    height: clamp(640px, calc(100svh - 40px), 830px);
+    background: #ebedf6;
+    z-index: 4;
     overflow: hidden;
 }
 
 .hero-presentation-stage {
     position: relative;
-    top: 0;
-    left: 0;
     width: 100%;
     height: 100%;
     overflow: hidden;
     display: flex;
     align-items: center;
-    justify-content: center;
-    user-select: none;
-    font-family: 'Poppins', sans-serif;
-    background: #000;
-    cursor: ew-resize;
+    justify-content: flex-start;
+    background: #ebedf6;
+    cursor: default;
 }
 
-/* --------------------------------------------------------------------------
-   2. MOTOR DE VIDEO EN VIVO A 60 FPS (FLUIDO, NÍTIDO Y CINEMÁTICO)
-   -------------------------------------------------------------------------- */
 .hero-media-engine {
     position: absolute;
     inset: 0;
@@ -56,1140 +46,339 @@ html, body {
 .hero-media-canvas,
 .hero-media-video {
     position: absolute;
-    top: 0;
-    left: 0;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
     pointer-events: none;
     will-change: transform;
-    opacity: 1;
 }
 
-/* Scrim elegante y sutil: mantiene los colores 100% reales del video */
+/* Sin velos ni degradados sobre el estudio iluminado */
 .hero-cinematic-scrim {
-    position: absolute;
-    inset: 0;
-    z-index: 4;
-    background: linear-gradient(180deg, rgba(10, 16, 40, 0.45) 0%, rgba(10, 16, 40, 0.05) 18%, transparent 35%);
-    pointer-events: none;
+    display: none;
 }
 
 /* --------------------------------------------------------------------------
-   3. CONTENEDOR DE FASES NARRATIVAS (4 ACTOS)
+   2. COMPOSICIÓN TIPOGRAFÍA + REGLA DE GRADOS (SIN CAJAS FLOTANTES)
    -------------------------------------------------------------------------- */
-.hero-narrative-container {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
-    padding: 0 1.5rem;
-}
-
-.hero-phase {
-    position: absolute;
-    width: 100%;
-    max-width: 1050px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    opacity: 0;
-    transform: translateY(28px) scale(0.96);
-    will-change: opacity, transform;
-    pointer-events: none;
-}
-
-.hero-phase.interactive {
-    pointer-events: auto;
-}
-
-/* --------------------------------------------------------------------------
-   4. TOKENS SOFT 3D (FROSTED GLASS, SOMBRAS CLAY Y COLORES SÓLIDOS)
-   -------------------------------------------------------------------------- */
-
-/* Badges estilo píldora suave */
-.hero-soft-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.55rem 1.4rem;
-    background: rgba(255, 255, 255, 0.94);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-radius: 9999px;
-    font-size: 0.82rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: #1a237e; /* Azul institucional sólido */
-    border: 1px solid rgba(255, 255, 255, 0.95);
-    box-shadow: 
-        0 8px 24px rgba(0, 0, 0, 0.12),
-        inset 0 1px 0 #ffffff;
-    margin-bottom: 1.2rem;
-}
-
-.pulse-beacon {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #10b981;
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
-    animation: beaconPulse 2s infinite;
-}
-
-.pulse-beacon.gold {
-    background: #d97706;
-    box-shadow: 0 0 0 0 rgba(217, 119, 6, 0.7);
-}
-
-@keyframes beaconPulse {
-    0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-    70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-}
-
-/* Colores de texto sólidos (CERO DEGRADÉS) */
-.solid-navy {
-    color: #1a237e !important;
-}
-
-.solid-gold {
-    color: #d97706 !important;
-}
-
-.solid-blue {
-    color: #2563eb !important;
-}
-
-/* --------------------------------------------------------------------------
-   5. DISEÑO DE CADA FASE NARRATIVA
-   -------------------------------------------------------------------------- */
-
-/* FASE 1: BIENVENIDA & IDENTIDAD */
-.phase-1-card {
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    border: 2px solid rgba(255, 255, 255, 0.95);
-    border-radius: 32px;
-    padding: 3rem 3.5rem;
-    max-width: 880px;
-    box-shadow: 
-        0 24px 50px rgba(26, 35, 126, 0.16),
-        0 6px 16px rgba(0, 0, 0, 0.06),
-        inset 0 2px 0 #ffffff;
-}
-
-.phase-1-headline {
-    font-size: clamp(2.3rem, 4.8vw, 3.8rem);
-    font-weight: 800;
-    line-height: 1.18;
-    letter-spacing: -0.02em;
-    color: #1a237e;
-    margin: 0 0 1.2rem 0;
-}
-
-.phase-1-subtitle {
-    font-size: clamp(1rem, 1.8vw, 1.2rem);
-    line-height: 1.65;
-    color: #334155;
-    max-width: 680px;
-    margin: 0 auto 2rem auto;
-    font-weight: 500;
-}
-
-/* Indicador de scroll */
-.hero-scroll-indicator {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.6rem 1.4rem;
-    background: #ffffff;
-    border-radius: 9999px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-    cursor: pointer;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-    border: 1px solid #e2e8f0;
-}
-
-.hero-scroll-indicator:hover {
-    transform: translateY(3px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-}
-
-.indicator-wheel-icon {
-    font-size: 1.1rem;
-    animation: bounceDown 1.6s infinite ease-in-out;
-}
-
-@keyframes bounceDown {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(4px); }
-}
-
-.indicator-text {
-    font-size: 0.78rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    color: #1a237e;
-}
-
-/* FASE 2: INSTALACIONES & METODOLOGÍA STEAM (4 TARJETAS CON COLOR INSTITUCIONAL) */
-.phase-2-container {
-    width: 100%;
-    max-width: 1060px;
-}
-
-.phase-2-header-card {
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border: 1.5px solid #ffffff;
-    border-radius: 24px;
-    padding: 1.2rem 2.5rem;
-    margin-bottom: 1.6rem;
-    display: inline-block;
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-}
-
-.phase-2-headline {
-    font-size: clamp(1.8rem, 3.4vw, 2.6rem);
-    font-weight: 800;
-    color: #1a237e;
-    margin: 0;
-}
-
-.phase-2-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.3rem;
-    width: 100%;
-}
-
-.soft-3d-card {
-    background: rgba(255, 255, 255, 0.94);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 2px solid #ffffff;
-    border-radius: 26px;
-    padding: 1.6rem 1.2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    box-shadow: 
-        0 18px 36px rgba(26, 35, 126, 0.1),
-        0 4px 10px rgba(0, 0, 0, 0.04),
-        inset 0 1px 0 #ffffff;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s ease;
-    cursor: default;
-}
-
-.soft-3d-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 
-        0 26px 50px rgba(26, 35, 126, 0.18),
-        0 8px 16px rgba(0, 0, 0, 0.06);
-}
-
-/* Franja inferior sutil con el color temático de la materia */
-.soft-3d-card::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 5px;
-}
-
-.card-gold::after { background: #d97706; }
-.card-cyan::after { background: #0284c7; }
-.card-green::after { background: #059669; }
-.card-purple::after { background: #7c3aed; }
-
-.soft-icon-3d-img {
-    width: 58px;
-    height: 58px;
-    object-fit: contain;
-    margin-bottom: 0.9rem;
-    filter: drop-shadow(0 6px 12px rgba(26, 35, 126, 0.12));
-    transition: transform 0.3s ease;
-}
-
-.soft-3d-card:hover .soft-icon-3d-img {
-    transform: scale(1.12);
-}
-
-.milestone-title {
-    font-size: 1.05rem;
-    font-weight: 800;
-    color: #1a237e;
-    margin-bottom: 0.4rem;
-    line-height: 1.3;
-}
-
-.milestone-desc {
-    font-size: 0.8rem;
-    color: #475569;
-    line-height: 1.45;
-    margin: 0;
-    font-weight: 500;
-}
-
-/* FASE 3: PROPÓSITO Y COMUNIDAD HUMANA */
-.phase-3-card {
-    background: rgba(255, 255, 255, 0.93);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    border: 2px solid #ffffff;
-    border-radius: 32px;
-    padding: 3rem 3.5rem;
-    max-width: 880px;
-    box-shadow: 
-        0 24px 55px rgba(26, 35, 126, 0.14),
-        0 6px 16px rgba(0, 0, 0, 0.05),
-        inset 0 2px 0 #ffffff;
-}
-
-.phase-3-quote {
-    font-size: clamp(1.7rem, 3.2vw, 2.5rem);
-    font-weight: 800;
-    line-height: 1.25;
-    color: #1a237e;
-    margin: 0 0 1.2rem 0;
-    letter-spacing: -0.015em;
-}
-
-.phase-3-desc {
-    font-size: clamp(1rem, 1.6vw, 1.18rem);
-    line-height: 1.65;
-    color: #334155;
-    margin: 0 0 2rem 0;
-    font-weight: 500;
-}
-
-.phase-3-stats-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 3rem;
-    padding-top: 1.6rem;
-    border-top: 2px solid #e2e8f0;
-}
-
-.stat-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.stat-number {
-    font-size: 1.7rem;
-    font-weight: 800;
-    color: #d97706; /* Dorado sólido */
-    line-height: 1.1;
-}
-
-.stat-label {
-    font-size: 0.78rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: #64748b;
-    margin-top: 0.3rem;
-}
-
-/* FASE 4: EL CLÍMAX — INSCRIPCIONES ABIERTAS 2027 */
-.phase-4-hero-card {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 2px solid #ffffff;
-    border-radius: 36px;
-    padding: 3.2rem 3.6rem;
-    max-width: 900px;
-    box-shadow: 
-        0 28px 65px rgba(26, 35, 126, 0.16),
-        0 8px 20px rgba(0, 0, 0, 0.06),
-        inset 0 2px 0 #ffffff;
-    text-align: center;
-}
-
-.phase-4-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.55rem 1.6rem;
-    background: #fef3c7;
-    border: 1px solid #fde68a;
-    border-radius: 9999px;
-    font-size: 0.85rem;
-    font-weight: 800;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: #b45309;
-    margin-bottom: 1.2rem;
-    box-shadow: 0 4px 12px rgba(217, 119, 6, 0.12);
-}
-
-.phase-4-title {
-    font-size: clamp(2.4rem, 5vw, 4.2rem);
-    font-weight: 900;
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    color: #1a237e; /* Azul marino sólido */
-    margin: 0 0 1.1rem 0;
-}
-
-.phase-4-subtitle {
-    font-size: clamp(1rem, 1.7vw, 1.2rem);
-    color: #334155;
-    max-width: 680px;
-    margin: 0 auto 2.2rem auto;
-    line-height: 1.6;
-    font-weight: 500;
-}
-
-.phase-4-cta-group {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.2rem;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
-}
-
-.hero-cta-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.7rem;
-    padding: 1rem 2.2rem;
-    border-radius: 9999px;
-    font-size: 1rem;
-    font-weight: 700;
-    text-decoration: none;
-    transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
-    cursor: pointer;
-}
-
-.hero-cta-btn.primary {
-    background: #1a237e;
-    color: #ffffff;
-    border: 2px solid #1a237e;
-    box-shadow: 
-        0 12px 28px rgba(26, 35, 126, 0.3),
-        0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.hero-cta-btn.primary:hover {
-    transform: translateY(-3px);
-    background: #283593;
-    box-shadow: 0 16px 36px rgba(26, 35, 126, 0.4);
-}
-
-.hero-cta-btn.secondary {
-    background: #ffffff;
-    color: #1a237e;
-    border: 2px solid #cbd5e1;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
-}
-
-.hero-cta-btn.secondary:hover {
-    background: #f8fafc;
-    border-color: #1a237e;
-    transform: translateY(-3px);
-    box-shadow: 0 12px 28px rgba(26, 35, 126, 0.12);
-}
-
-.phase-4-contact-strip {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 2rem;
-    flex-wrap: wrap;
-    font-size: 0.9rem;
-    color: #475569;
-    padding-top: 1.4rem;
-    border-top: 1.5px solid #e2e8f0;
-}
-
-.contact-pill-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-weight: 600;
-}
-
-.contact-pill-item a {
-    color: #1a237e;
-    text-decoration: none;
-    font-weight: 700;
-}
-
-.contact-pill-item a:hover {
-    color: #d97706;
-    text-decoration: underline;
-}
-
-/* --------------------------------------------------------------------------
-   6. BARRA DE TIEMPO INFERIOR
-   -------------------------------------------------------------------------- */
-.hero-timeline-bar {
-    position: absolute;
-    bottom: 1.2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 3rem);
-    max-width: 860px;
-    z-index: 20;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid #ffffff;
-    border-radius: 9999px;
-    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    padding: 0.55rem 1.4rem;
-}
-
-.timeline-progress-line {
-    width: 100%;
-    height: 4px;
-    background: #e2e8f0;
-    border-radius: 2px;
-    overflow: hidden;
-    position: relative;
-    margin-bottom: 0.35rem;
-}
-
-.timeline-fill {
-    height: 100%;
-    width: 0%;
-    background: #1a237e;
-    border-radius: 2px;
-    transition: width 0.08s linear;
-}
-
-.timeline-steps {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-}
-
-.timeline-step {
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.8px;
-    text-transform: uppercase;
-    color: #94a3b8;
-    transition: color 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-}
-
-.timeline-step.active {
-    color: #1a237e;
-    font-weight: 800;
-}
-
-/* --------------------------------------------------------------------------
-   7. RESPONSIVIDAD
-   -------------------------------------------------------------------------- */
-@media (max-width: 1024px) {
-    .phase-2-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1.2rem;
-    }
-
-    .phase-1-card,
-    .phase-3-card,
-    .phase-4-hero-card {
-        padding: 2.2rem 2rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .hero-presentation-track {
-        height: 240vh;
-    }
-
-    .phase-1-headline {
-        font-size: 2.1rem;
-    }
-
-    .phase-2-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 0.8rem;
-    }
-
-    .soft-3d-card {
-        padding: 1.1rem 0.8rem;
-        border-radius: 20px;
-    }
-
-    .soft-icon-3d-img {
-        width: 44px;
-        height: 44px;
-        margin-bottom: 0.5rem;
-    }
-
-    .milestone-title {
-        font-size: 0.88rem;
-    }
-
-    .milestone-desc {
-        font-size: 0.72rem;
-    }
-
-    .phase-1-card,
-    .phase-3-card,
-    .phase-4-hero-card {
-        padding: 1.8rem 1.2rem;
-        border-radius: 24px;
-    }
-
-    .phase-4-title {
-        font-size: 2.2rem;
-    }
-
-    .phase-4-cta-group {
-        flex-direction: column;
-        width: 100%;
-        gap: 0.7rem;
-    }
-
-    .hero-cta-btn {
-        width: 100%;
-        justify-content: center;
-        padding: 0.85rem 1.4rem;
-    }
-
-    .timeline-steps {
-        display: none;
-    }
-}
-
-/* ==========================================================================
-   PUBLICIDAD INTERACTIVA — MATRÍCULAS 2027 (RECREACIÓN EXACTA 3D)
-   ========================================================================== */
 .hero-ad-overlay {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 52%;
-    max-width: 52%;
+    position: relative;
+    z-index: 10;
+    width: 46%;
+    max-width: 630px;
     height: 100%;
-    z-index: 15;
-    pointer-events: none;
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding-left: 4.5vw;
-    padding-right: 1rem;
+    padding: 1.25rem 1rem 5.8rem 4.2vw;
+    pointer-events: none;
 }
 
 .hero-ad-content {
-    position: relative;
-    max-width: 530px;
     width: 100%;
+    max-width: 515px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 1.35rem;
+    gap: 1.15rem;
     pointer-events: auto;
-    user-select: none;
-    z-index: 2;
-    transform: translateY(-40px);
 }
 
-/* 1. TOP ROW: BADGE + AVIÓN DE PAPEL */
-.ad-top-row {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 1.2rem;
-    margin-left: 2.2rem;
-}
-
-.ad-badge-wrapper {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    transform: rotate(-3deg) skewX(-1.5deg);
-    transform-origin: left center;
-}
-
-/* Destellos amarillos arriba del badge (5 rayos radiantes idénticos al afiche) */
-.ad-sparkle-top {
-    position: absolute;
-    top: -20px;
-    left: -14px;
-    right: -14px;
-    height: 22px;
-    pointer-events: none;
-}
-
-.spark-ray {
-    position: absolute;
-    background: #ffb703;
-    border-radius: 999px;
-    box-shadow: 0 2px 8px rgba(255, 183, 3, 0.5);
-}
-
-.ray-top-1 {
-    width: 15px;
-    height: 4.5px;
-    top: 10px;
-    left: 2px;
-    transform: rotate(-45deg);
-}
-
-.ray-top-2 {
-    width: 14px;
-    height: 4.5px;
-    top: 1px;
-    left: 22px;
-    transform: rotate(-20deg);
-}
-
-.ray-top-3 {
-    width: 4.5px;
-    height: 16px;
-    top: -7px;
-    left: 45%;
-    transform: rotate(0deg);
-}
-
-.ray-top-4 {
-    width: 14px;
-    height: 4.5px;
-    top: 1px;
-    right: 22px;
-    transform: rotate(20deg);
-}
-
-.ray-top-5 {
-    width: 15px;
-    height: 4.5px;
-    top: 10px;
-    right: 2px;
-    transform: rotate(45deg);
-}
-
-.ad-badge-pill {
-    position: relative;
-    background: linear-gradient(135deg, #2b6bf8 0%, #1d4fd8 100%);
-    color: #ffffff;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.25rem;
-    font-weight: 800;
-    letter-spacing: -0.2px;
-    padding: 0.55rem 1.7rem;
-    border-radius: 9999px;
-    box-shadow: 
-        0 6px 18px rgba(29, 79, 216, 0.4),
-        0 3.5px 0 #153bbb,
-        inset 0 1px 1.5px rgba(255, 255, 255, 0.5);
-    display: inline-flex;
-    align-items: center;
-    white-space: nowrap;
-}
-
-/* Cola de globo de diálogo del badge */
-.ad-badge-pill::after {
-    content: '';
-    position: absolute;
-    bottom: -7px;
-    right: 28px;
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-top: 9px solid #1d4fd8;
-    filter: drop-shadow(0 2px 2px rgba(21, 59, 187, 0.4));
-}
-
-/* Avión de papel y trayectoria */
-.ad-plane-wrapper {
-    position: relative;
-    width: 125px;
-    height: 65px;
-    margin-left: 0.6rem;
-}
-
-.ad-plane-trail {
-    position: absolute;
-    left: -12px;
-    bottom: -8px;
-    width: 105px;
-    height: 60px;
-    overflow: visible;
-    opacity: 0.85;
-}
-
-.ad-plane-icon {
-    position: absolute;
-    top: -2px;
-    right: 0px;
-    width: 50px;
-    height: 50px;
-    transform: rotate(-10deg);
-    filter: drop-shadow(0 6px 12px rgba(67, 56, 202, 0.35));
-    animation: adPlaneFloat 3s ease-in-out infinite alternate;
-}
-
-@keyframes adPlaneFloat {
-    0% {
-        transform: translateY(0px) rotate(-5deg);
-    }
-    100% {
-        transform: translateY(-6px) rotate(0deg);
-    }
-}
-
-/* 2. HEADLINE GROUP: MATRÍCULAS 2027 EN 3D */
-.ad-headline-group {
-    position: relative;
+/* Titular académico monumental en Fraunces — un solo color sólido de tinta */
+.hero-editorial-head {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.hero-gold-rule {
+    width: 52px;
+    height: 4px;
+    background: #F2B705;
+    display: block;
+}
+
+.hero-display-serif {
+    font-family: 'Fraunces', Georgia, serif;
+    font-optical-sizing: auto;
+    font-size: clamp(2.85rem, 4.4vw, 4.25rem);
+    font-weight: 700;
     line-height: 0.95;
-    margin-top: 0.15rem;
-    margin-bottom: 0.45rem;
+    letter-spacing: -0.03em;
+    color: #0F1D4E;
+    margin: 0;
 }
 
-.ad-title-matriculas {
+.hero-editorial-lead {
     font-family: 'Poppins', sans-serif;
-    font-size: clamp(3.8rem, 6.2vw, 5.4rem);
-    font-weight: 900;
-    letter-spacing: -2px;
-    color: #0b1f66;
-    transform: rotate(-3deg) skewX(-1.5deg);
-    transform-origin: left bottom;
-    text-shadow:
-        0 1px 0 #071746,
-        0 2px 0 #071746,
-        0 3px 0 #06133a,
-        0 4px 0 #05102f,
-        0 5px 0 #040c24,
-        0 7px 1px rgba(0, 0, 0, 0.12),
-        0 12px 18px rgba(7, 23, 70, 0.28);
-    position: relative;
-    z-index: 2;
-    padding-left: 0.2rem;
+    font-size: clamp(0.95rem, 1.15vw, 1.04rem);
+    line-height: 1.55;
+    color: #2D3748;
+    font-weight: 500;
+    max-width: 48ch;
+    margin: 0;
 }
 
-.ad-year-row {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.8rem;
-    margin-top: 0.15rem;
-    margin-left: 2.2rem;
-    z-index: 3;
-    transform: rotate(-3deg) skewX(-1.5deg);
-    transform-origin: left center;
-}
-
-.ad-title-year {
-    font-family: 'Poppins', sans-serif;
-    font-size: clamp(4.4rem, 7.2vw, 6.4rem);
-    font-weight: 900;
-    letter-spacing: -3px;
-    background: linear-gradient(180deg, #3884f8 0%, #2059ee 45%, #153fcf 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 6px 0 #0d2ca0) drop-shadow(0 14px 20px rgba(13, 44, 160, 0.35));
-    display: inline-block;
-}
-
-/* Destellos laterales del año 2027 */
-.ad-year-sparkles {
-    position: relative;
-    width: 24px;
-    height: 36px;
-}
-
-.ray-l1 {
-    width: 14px;
-    height: 5px;
-    top: 9px;
-    right: 2px;
-    transform: rotate(-18deg);
-}
-
-.ray-l2 {
-    width: 14px;
-    height: 5px;
-    bottom: 9px;
-    right: 2px;
-    transform: rotate(22deg);
-}
-
-.ray-r1 {
-    width: 14px;
-    height: 5px;
-    top: 9px;
-    left: 2px;
-    transform: rotate(18deg);
-}
-
-.ray-r2 {
-    width: 14px;
-    height: 5px;
-    bottom: 9px;
-    left: 2px;
-    transform: rotate(-22deg);
-}
-
-/* 3. GRID DE 3 BENEFICIOS CLAVE (FROSTED GLASS) */
-.ad-features-grid {
+/* Registro abierto entre filetes de tinta (CERO caja blanca, CERO sombra) */
+.hero-open-ledger {
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 0.95rem;
+    gap: 1.25rem;
+    padding: 0.85rem 0;
+    border-top: 1.5px solid #0F1D4E;
+    border-bottom: 1.5px solid rgba(15, 29, 78, 0.25);
+}
+
+.hero-open-figure {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.hero-figure-num {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: clamp(1.25rem, 1.75vw, 1.55rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: #0F1D4E;
+    letter-spacing: -0.02em;
+}
+
+.hero-figure-caption {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: #4A5568;
+    line-height: 1.3;
+}
+
+/* --------------------------------------------------------------------------
+   3. REGLA INTERACTIVA DE 13 GRADOS (Jardín -> 11°)
+   -------------------------------------------------------------------------- */
+.hero-ruler-block {
     width: 100%;
-    max-width: 495px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+}
+
+.hero-ruler-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    width: 100%;
+}
+
+.hero-ruler-prompt {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #0F1D4E;
+}
+
+.hero-ruler-cycle {
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #1B4DFF;
+}
+
+.hero-ruler-track {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    border-bottom: 2px solid #0F1D4E;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.hero-ruler-track::-webkit-scrollbar {
+    display: none;
+}
+
+.hero-grade-stop {
+    appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    border-top: 3px solid transparent;
+    background: transparent;
+    color: #0F1D4E;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.44rem 0.34rem 0.42rem;
+    cursor: pointer;
+    flex: 1 0 auto;
+    text-align: center;
+    white-space: nowrap;
+    position: relative;
+    transition: background-color 0.14s ease, color 0.14s ease;
+}
+
+/* Marca milimétrica de graduación en la base de la regla */
+.hero-grade-stop::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 1.5px;
+    height: 5px;
+    background: rgba(15, 29, 78, 0.35);
+    transform: translateX(-50%);
+}
+
+.hero-grade-stop:hover {
+    background: rgba(15, 29, 78, 0.08);
+}
+
+.hero-grade-stop[aria-checked="true"] {
+    background: #0F1D4E;
+    color: #FFFFFF;
+    border-top-color: #F2B705;
+}
+
+.hero-grade-stop[aria-checked="true"]::after {
+    display: none;
+}
+
+.hero-grade-stop:focus-visible {
+    outline: 2px solid #1B4DFF;
+    outline-offset: -2px;
+}
+
+.hero-grade-readout {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #2D3748;
+    line-height: 1.45;
+    min-height: 1.45em;
+    margin: 0;
+}
+
+.hero-grade-readout strong {
+    color: #0F1D4E;
+    font-weight: 700;
+}
+
+/* --------------------------------------------------------------------------
+   4. ACCIONES EDITORIALES EN TINTA PLANA (CERO DEGRADADOS, CERO DOBLE CAJA)
+   -------------------------------------------------------------------------- */
+.hero-editorial-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.4rem;
     margin-top: 0.15rem;
 }
 
-.ad-feature-card {
-    background: rgba(255, 255, 255, 0.94);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-radius: 22px;
-    padding: 1.15rem 0.65rem 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    border: 1.5px solid rgba(255, 255, 255, 0.95);
-    box-shadow: 
-        0 12px 28px -6px rgba(11, 31, 102, 0.12),
-        0 4px 8px rgba(0, 0, 0, 0.04),
-        inset 0 1px 1px #ffffff;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.ad-feature-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 
-        0 16px 32px -4px rgba(11, 31, 102, 0.18),
-        0 6px 12px rgba(0, 0, 0, 0.06);
-}
-
-.ad-feature-icon-circle {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #2b6bf8 0%, #1d4fd8 100%);
-    color: #ffffff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 0.75rem;
-    box-shadow: 
-        0 6px 14px rgba(29, 79, 216, 0.32),
-        inset 0 1px 1px rgba(255, 255, 255, 0.4);
-}
-
-.ad-feature-icon-circle svg {
-    width: 24px;
-    height: 24px;
-}
-
-.ad-feature-text {
+.hero-ink-cta {
+    appearance: none;
+    -webkit-appearance: none;
+    border: none;
+    border-left: 5px solid #F2B705;
+    border-radius: 0;
+    background: #0F1D4E;
+    color: #FFFFFF;
     font-family: 'Poppins', sans-serif;
-    font-size: 0.77rem;
+    font-size: 0.96rem;
     font-weight: 700;
-    line-height: 1.24;
-    color: #0b1f66;
-    letter-spacing: -0.2px;
-}
-
-/* 4. BOTÓN CTA ¡INSCRÍBETE AHORA! */
-.ad-cta-row {
-    position: relative;
+    padding: 0.92rem 1.65rem;
+    min-height: 52px;
     display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-top: 0.65rem;
-    margin-left: 1.5rem;
-}
-
-.ad-cta-sparkles {
-    position: relative;
-    width: 20px;
-    height: 28px;
-}
-
-.ray-c1 {
-    width: 10px;
-    height: 3.5px;
-    top: 7px;
-    right: 2px;
-    transform: rotate(-25deg);
-}
-
-.ray-c2 {
-    width: 10px;
-    height: 3.5px;
-    bottom: 7px;
-    right: 2px;
-    transform: rotate(25deg);
-}
-
-.ray-c3 {
-    width: 10px;
-    height: 3.5px;
-    top: 7px;
-    left: 2px;
-    transform: rotate(25deg);
-}
-
-.ray-c4 {
-    width: 10px;
-    height: 3.5px;
-    bottom: 7px;
-    left: 2px;
-    transform: rotate(-25deg);
-}
-
-.ad-cta-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.75rem;
-    background: linear-gradient(180deg, #2b6bf8 0%, #1d4fd8 100%);
-    color: #ffffff !important;
-    text-decoration: none;
-    padding: 0.8rem 1.85rem;
-    border-radius: 9999px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.16rem;
-    font-weight: 800;
-    letter-spacing: -0.3px;
-    box-shadow: 
-        0 6px 0 #1339af,
-        0 14px 26px rgba(29, 79, 216, 0.42),
-        inset 0 1px 1px rgba(255, 255, 255, 0.45);
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease;
-    cursor: pointer;
-}
-
-.ad-cta-button:hover {
-    transform: translateY(-2px);
-    background: linear-gradient(180deg, #3b7aff 0%, #2256e6 100%);
-    box-shadow: 
-        0 8px 0 #1339af,
-        0 18px 32px rgba(29, 79, 216, 0.5),
-        inset 0 1px 1px rgba(255, 255, 255, 0.5);
-}
-
-.ad-cta-button:active {
-    transform: translateY(3px);
-    box-shadow: 
-        0 3px 0 #1339af,
-        0 8px 16px rgba(29, 79, 216, 0.35);
-}
-
-.ad-cta-icon-box {
-    display: flex;
     align-items: center;
     justify-content: center;
+    gap: 0.7rem;
+    cursor: pointer;
+    transition: background-color 0.16s ease, transform 0.16s ease;
 }
 
-.ad-cta-icon-box svg {
-    width: 24px;
-    height: 24px;
-    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+.hero-ink-cta:hover {
+    background: #1B4DFF;
+    transform: translateX(2px);
 }
 
-.ad-cta-text {
-    white-space: nowrap;
+.hero-ink-cta:focus-visible {
+    outline: 2px solid #1B4DFF;
+    outline-offset: 3px;
 }
 
-.ad-cta-arrow {
-    font-size: 1.4rem;
-    line-height: 1;
-    font-weight: 800;
-    margin-left: 0.15rem;
-    transition: transform 0.2s ease;
+.hero-ink-cta svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
 }
 
-.ad-cta-button:hover .ad-cta-arrow {
-    transform: translateX(3px);
+.hero-ink-link {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #0F1D4E;
+    text-decoration: none;
+    padding-bottom: 3px;
+    border-bottom: 2px solid #0F1D4E;
+    transition: color 0.16s ease, border-color 0.16s ease;
 }
 
-/* RESPONSIVE DESIGN FOR AD OVERLAY */
-@media (max-width: 1200px) {
+.hero-ink-link:hover {
+    color: #1B4DFF;
+    border-color: #1B4DFF;
+}
+
+.hero-editorial-footnote {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #4A5568;
+    margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   5. TABLET Y MÓVIL: ESTUDIANTE 3D ARRIBA + PLIEGO EDITORIAL PLANO ABAJO
+   -------------------------------------------------------------------------- */
+@media (max-width: 1120px) {
     .hero-ad-overlay {
-        width: 50%;
-        max-width: 50%;
-        padding: 0 1rem;
-    }
-    .hero-ad-content {
-        max-width: 480px;
-        gap: 0.8rem;
-    }
-    .ad-title-matriculas {
-        font-size: 4.2rem;
-    }
-    .ad-title-year {
-        font-size: 5rem;
-    }
-    .ad-features-grid {
-        max-width: 430px;
-        gap: 0.65rem;
-    }
-    .ad-feature-card {
-        padding: 0.8rem 0.5rem;
-    }
-    .ad-feature-text {
-        font-size: 0.72rem;
+        width: 48%;
+        padding-left: 3vw;
     }
 }
 
 @media (max-width: 900px) {
+    .hero-presentation-track {
+        height: auto;
+        min-height: 690px;
+    }
+
+    .hero-presentation-stage {
+        min-height: 690px;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+
+    /* En móvil el canvas ocupa la franja superior limpia con la estudiante 3D */
+    .hero-media-engine {
+        position: relative;
+        height: 270px;
+        width: 100%;
+        flex-shrink: 0;
+    }
+
     .hero-ad-overlay {
         width: 100%;
         max-width: 100%;
-        padding: 0 1.5rem;
-        justify-content: center;
-        align-items: flex-start;
-        padding-top: 90px;
+        height: auto;
+        padding: 0;
+        background: #FFFFFF;
+        border-top: 4px solid #F2B705;
     }
+
     .hero-ad-content {
-        align-items: center;
-        text-align: center;
-        max-width: 440px;
-    }
-    .ad-top-row {
-        margin-left: 0;
-    }
-    .ad-headline-group {
-        align-items: center;
-    }
-    .ad-year-row {
-        margin-left: 0;
-    }
-    .ad-cta-row {
-        margin-left: 0;
-    }
-    .hero-cinematic-scrim {
-        background: linear-gradient(180deg, rgba(10, 16, 40, 0.7) 0%, rgba(10, 16, 40, 0.4) 50%, rgba(10, 16, 40, 0.75) 100%) !important;
+        max-width: 100%;
+        padding: 1.5rem 1.25rem 4rem;
+        gap: 1.05rem;
     }
 }
-
