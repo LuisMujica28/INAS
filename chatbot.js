@@ -1,6 +1,6 @@
 // chatbot.js
 // Cliente del Asistente Virtual INAS — se comunica con /api/chat en Vercel
-// para mantener GEMINI_API_KEY 100% privada en el servidor (cero llaves expuestas en el navegador).
+// (compatible con DEEPSEEK_API_KEY y GEMINI_API_KEY sin exponer llaves en el navegador).
 
 // DOM Elements
 const chatWidget = document.createElement('div');
@@ -29,7 +29,8 @@ document.body.appendChild(chatWidget);
 // Styles Injection (Dynamic to keep it self-contained or use styles.css)
 // We will rely on styles.css for cleaner code, but basic visibility logic is here.
 
-// State - ID de interacción con memoria en servidor (Interactions API)
+// State - Memoria de conversación multi-turno (para DeepSeek y/o Gemini)
+let chatTurns = [];
 let previousInteractionId = null;
 let isSending = false;
 
@@ -73,6 +74,12 @@ async function sendMessage() {
 
         if (data.interactionId) {
             previousInteractionId = data.interactionId;
+        }
+
+        chatTurns.push({ role: 'user', content: text });
+        chatTurns.push({ role: 'assistant', content: data.reply });
+        if (chatTurns.length > 10) {
+            chatTurns = chatTurns.slice(-10);
         }
 
         if (loadingMsg && loadingMsg.parentNode === historyEl) {
@@ -119,6 +126,7 @@ async function fetchAssistantResponse(message) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             message,
+            history: chatTurns,
             previousInteractionId
         })
     });

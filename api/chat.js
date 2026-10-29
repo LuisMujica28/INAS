@@ -1,12 +1,15 @@
 /**
  * Vercel Serverless Function — POST /api/chat
  * Asistente Virtual del Instituto Nueva América de Suba (INAS)
- * Protege GEMINI_API_KEY en el servidor usando el SDK oficial @google/genai (Interactions API).
+ * Soporta automáticamente DeepSeek (DEEPSEEK_API_KEY) y Google Gemini (GEMINI_API_KEY),
+ * manteniendo la clave 100% privada en el servidor de Vercel.
  */
 
 import { GoogleGenAI } from '@google/genai';
 
-const MODEL_ID = 'gemini-3.7-flash';
+const DEEPSEEK_URL = 'https://api.deepseek.com/chat/completions';
+const DEEPSEEK_MODEL = 'deepseek-chat';
+const GEMINI_MODEL = 'gemini-3.7-flash';
 
 const SYSTEM_INSTRUCTION = `
 Rol: Eres el Asistente Virtual del "Instituto Nueva América de Suba" (INAS).
@@ -47,26 +50,91 @@ UNIFORMES:
 - Educación física (unisex): Sudadera azul oscura institucional, camiseta blanca con escudo, tenis totalmente blancos.
 `.trim();
 
+function sanitizeHistory(rawHistory) {
+    if (!Array.isArray(rawHistory)) return [];
+    return rawHistory
+        .slice(-10)
+        .filter(
+            (turn) =>
+                turn &&
+                (turn.role === 'user' || turn.role === 'assistant') &&
+                typeof turn.content === 'string' &&
+                turn.content.trim().length > 0
+        )
+        .map((turn) => ({
+            role: turn.role,
+            content: turn.content.trim().slice(0, 1500)
+        }));
+}
+
+async function callDeepSeek(apiKey, message, history) {
+    const response = await fetch(DEEPSEEK_URL, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+            model: DEEPSEEK_MODEL,
+            messages: [
+                { role: 'system', content: SYSTEM_INSTRUCTION },
+                ...history,
+                { role: 'user', content: message }
+            ],
+            temperature: 0.4,
+            max_tokens: 600,
+            stream: false
+        })
+    });
+
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) {
+        throw new Error(data?.error?.message || `DeepSeek HTTP ${response.status}`);
+    }
+
+    return {
+        reply: data?.choices?.[0]?.message?.content?.trim() || '',
+        interactionId: null
+    };
+}
+
+async function callGemini(apiKey, message, previousInteractionId) {
+    const ai = new GoogleGenAI({ apiKey });
+    const requestParams = {
+        model: GEMINI_MODEL,
+        input: message,
+        system_instruction: SYSTEM_INSTRUCTION
+    };
+
+    if (previousInteractionId) {
+        requestParams.previous_interaction_id = previousInteractionId;
+    }
+
+    const interaction = await ai.interactions.create(requestParams);
+    return {
+        reply: interaction.output_text || '',
+        interactionId: interaction.id || null
+    };
+}
+
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
         res.setHeader('Allow', 'POST');
         return res.status(405).json({ error: 'Método no permitido. Usa POST.' });
     }
 
-    const apiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
-    if (!apiKey) {
+    const deepseekKey = process.env.DEEPSEEK_API_KEY;
+    const geminiKey = process.env.GEMINI_API_KEY || process.env.GOOGLE_API_KEY;
+
+    if (!deepseekKey && !geminiKey) {
         return res.status(503).json({
-            error: 'Falta configurar GEMINI_API_KEY en las variables de entorno de Vercel.'
+            error: 'Falta configurar DEEPSEEK_API_KEY (o GEMINI_API_KEY) en las variables de entorno de Vercel.'
         });
     }
 
     try {
         const body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {});
         const message = typeof body.message === 'string' ? body.message.trim() : '';
-        const previousInteractionId =
-            typeof body.previousInteractionId === 'string' && body.previousInteractionId.trim()
-                ? body.previousInteractionId.trim()
-                : undefined;
 
         if (!message) {
             return res.status(400).json({ error: 'El mensaje no puede estar vacío.' });
@@ -76,29 +144,28 @@ export default async function handler(req, res) {
             return res.status(400).json({ error: 'El mensaje supera la longitud máxima permitida (1500 caracteres).' });
         }
 
-        const ai = new GoogleGenAI({ apiKey });
-
-        const requestParams = {
-            model: MODEL_ID,
-            input: message,
-            system_instruction: SYSTEM_INSTRUCTION
-        };
-
-        if (previousInteractionId) {
-            requestParams.previous_interaction_id = previousInteractionId;
+        let result;
+        if (deepseekKey) {
+            const history = sanitizeHistory(body.history);
+            result = await callDeepSeek(deepseekKey, message, history);
+        } else {
+            const previousInteractionId =
+                typeof body.previousInteractionId === 'string' && body.previousInteractionId.trim()
+                    ? body.previousInteractionId.trim()
+                    : undefined;
+            result = await callGemini(geminiKey, message, previousInteractionId);
         }
 
-        const interaction = await ai.interactions.create(requestParams);
-
         return res.status(200).json({
-            reply: interaction.output_text || 'En este momento no pude generar una respuesta. Por favor comunícate al WhatsApp 305 430-1113.',
-            interactionId: interaction.id || null
+            reply:
+                result.reply ||
+                'En este momento no pude generar una respuesta. Por favor comunícate al WhatsApp 305 430-1113.',
+            interactionId: result.interactionId
         });
     } catch (error) {
-        console.error('[api/chat] Error consultando Gemini API:', error);
+        console.error('[api/chat] Error en el proveedor de IA:', error);
         return res.status(500).json({
             error: 'No fue posible procesar tu consulta en este momento. Puedes escribirnos al WhatsApp 305 430-1113.'
         });
     }
 }
-
