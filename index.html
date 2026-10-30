@@ -1159,7 +1159,7 @@
     <div id="chat-window" class="chat-window hidden">
         <div class="chat-header">
             <span>Asistente INAS 🤖</span>
-            <button id="close-chat" type="button" aria-label="Cerrar asistente">✕</button>
+            <button id="close-chat" type="button" aria-label="Cerrar asistente" onclick="toggleINASChat(false)">✕</button>
         </div>
         <div id="chat-history" class="chat-history">
             <div class="message bot">
@@ -1168,12 +1168,136 @@
         </div>
         <div class="chat-input-area">
             <input type="text" id="chat-input" placeholder="Escribe tu pregunta..." maxlength="1500" autocomplete="off" />
-            <button id="send-btn" type="button" aria-label="Enviar pregunta">➤</button>
+            <button id="send-btn" type="button" aria-label="Enviar pregunta" onclick="sendINASMessage()">➤</button>
         </div>
     </div>
-    <button id="chat-toggle-btn" class="chat-toggle-btn" type="button" aria-label="Abrir asistente virtual INAS" title="Hablar con Asistente INAS">
+    <button id="chat-toggle-btn" class="chat-toggle-btn" type="button" aria-label="Abrir asistente virtual INAS" title="Hablar con Asistente INAS" onclick="toggleINASChat(true)">
         <img src="assets/robot.png" alt="Asistente Virtual INAS" />
     </button>
+
+    <script>
+        function toggleINASChat(open) {
+            var w = document.getElementById('chat-window');
+            var b = document.getElementById('chat-toggle-btn');
+            var input = document.getElementById('chat-input');
+            if (!w || !b) return;
+            if (open) {
+                w.classList.remove('hidden');
+                b.classList.add('hidden');
+                if (input) setTimeout(function () { input.focus(); }, 60);
+            } else {
+                w.classList.add('hidden');
+                b.classList.remove('hidden');
+            }
+        }
+        window.toggleINASChat = toggleINASChat;
+        window.openChatBot = function () { toggleINASChat(true); };
+        window.closeChatBot = function () { toggleINASChat(false); };
+
+        var chatTurns = [];
+        var previousInteractionId = null;
+        var isSending = false;
+
+        function addMessageToUI(role, text) {
+            var historyEl = document.getElementById('chat-history');
+            if (!historyEl) return;
+            var msgDiv = document.createElement('div');
+            msgDiv.className = 'message ' + role;
+            msgDiv.textContent = text;
+            historyEl.appendChild(msgDiv);
+            historyEl.scrollTop = historyEl.scrollHeight;
+        }
+
+        async function sendINASMessage() {
+            var inputEl = document.getElementById('chat-input');
+            var sendBtn = document.getElementById('send-btn');
+            var historyEl = document.getElementById('chat-history');
+            if (!inputEl) return;
+            var text = inputEl.value.trim();
+            if (!text || isSending) return;
+
+            isSending = true;
+            if (sendBtn) sendBtn.disabled = true;
+
+            addMessageToUI('user', text);
+            inputEl.value = '';
+
+            addMessageToUI('bot', 'Escribiendo...');
+            var loadingMsg = historyEl ? historyEl.lastElementChild : null;
+
+            var endpoint = window.location.protocol === 'file:' 
+                ? 'http://localhost:8000/api/chat' 
+                : '/api/chat';
+
+            try {
+                var response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: text,
+                        history: chatTurns,
+                        previousInteractionId: previousInteractionId
+                    })
+                });
+
+                var data = await response.json().catch(function () { return {}; });
+                if (!response.ok) {
+                    throw new Error(data.error || ('HTTP ' + response.status));
+                }
+
+                if (data.interactionId) {
+                    previousInteractionId = data.interactionId;
+                }
+
+                chatTurns.push({ role: 'user', content: text });
+                chatTurns.push({ role: 'assistant', content: data.reply });
+                if (chatTurns.length > 10) chatTurns = chatTurns.slice(-10);
+
+                if (loadingMsg && loadingMsg.parentNode === historyEl) {
+                    historyEl.removeChild(loadingMsg);
+                }
+                addMessageToUI('bot', data.reply);
+            } catch (err) {
+                if (loadingMsg && loadingMsg.parentNode === historyEl) {
+                    historyEl.removeChild(loadingMsg);
+                }
+                addMessageToUI(
+                    'bot',
+                    '⚠️ En este momento el asistente está fuera de línea. Puedes escribirnos directo al WhatsApp de Secretaría: 305 430-1113.'
+                );
+                console.error('[chatbot]', err);
+            } finally {
+                isSending = false;
+                if (sendBtn) sendBtn.disabled = false;
+            }
+        }
+        window.sendINASMessage = sendINASMessage;
+
+        function initChatbotEvents() {
+            var inputEl = document.getElementById('chat-input');
+            if (inputEl && !inputEl._inasBound) {
+                inputEl._inasBound = true;
+                inputEl.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        sendINASMessage();
+                    }
+                });
+            }
+            document.addEventListener('click', function (e) {
+                var trigger = e.target.closest('[data-open-chat]');
+                if (trigger) {
+                    e.preventDefault();
+                    toggleINASChat(true);
+                }
+            });
+        }
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initChatbotEvents);
+        } else {
+            initChatbotEvents();
+        }
+    </script>
 
     <script type="module" src="chatbot.js"></script>
 </body>

@@ -3,7 +3,10 @@
 // (compatible con DEEPSEEK_API_KEY y GEMINI_API_KEY sin exponer llaves en el navegador).
 
 (function () {
-    // 1. Obtener o crear los elementos del widget
+    // Si la página ya tiene la lógica del chat (como index.html), no duplicar
+    if (window._inasChatInitialized) return;
+    window._inasChatInitialized = true;
+
     let windowEl = document.getElementById('chat-window');
     let toggleBtn = document.getElementById('chat-toggle-btn');
 
@@ -13,7 +16,7 @@
             <div id="chat-window" class="chat-window hidden">
                 <div class="chat-header">
                     <span>Asistente INAS 🤖</span>
-                    <button id="close-chat" type="button" aria-label="Cerrar asistente">✕</button>
+                    <button id="close-chat" type="button" aria-label="Cerrar asistente" onclick="window.toggleINASChat ? window.toggleINASChat(false) : this.closest('.chat-window').classList.add('hidden')">✕</button>
                 </div>
                 <div id="chat-history" class="chat-history">
                     <div class="message bot">
@@ -22,10 +25,10 @@
                 </div>
                 <div class="chat-input-area">
                     <input type="text" id="chat-input" placeholder="Escribe tu pregunta..." maxlength="1500" autocomplete="off" />
-                    <button id="send-btn" type="button" aria-label="Enviar pregunta">➤</button>
+                    <button id="send-btn" type="button" aria-label="Enviar pregunta" onclick="window.sendINASMessage && window.sendINASMessage()">➤</button>
                 </div>
             </div>
-            <button id="chat-toggle-btn" class="chat-toggle-btn" type="button" aria-label="Abrir asistente virtual INAS" title="Hablar con Asistente INAS">
+            <button id="chat-toggle-btn" class="chat-toggle-btn" type="button" aria-label="Abrir asistente virtual INAS" title="Hablar con Asistente INAS" onclick="window.toggleINASChat ? window.toggleINASChat(true) : (document.getElementById('chat-window').classList.remove('hidden'), this.classList.add('hidden'))">
                 <img src="assets/robot.png" alt="Asistente Virtual INAS" />
             </button>
         `;
@@ -34,62 +37,81 @@
         toggleBtn = document.getElementById('chat-toggle-btn');
     }
 
+    function toggleChat(open) {
+        if (!windowEl || !toggleBtn) return;
+        var inputEl = document.getElementById('chat-input');
+        if (open) {
+            windowEl.classList.remove('hidden');
+            toggleBtn.classList.add('hidden');
+            if (inputEl) setTimeout(function () { inputEl.focus(); }, 60);
+        } else {
+            windowEl.classList.add('hidden');
+            toggleBtn.classList.remove('hidden');
+        }
+    }
+
+    if (!window.toggleINASChat) {
+        window.toggleINASChat = toggleChat;
+        window.openChatBot = function () { toggleChat(true); };
+        window.closeChatBot = function () { toggleChat(false); };
+    }
+
     const closeBtn = document.getElementById('close-chat');
     const sendBtn = document.getElementById('send-btn');
     const inputEl = document.getElementById('chat-input');
     const historyEl = document.getElementById('chat-history');
 
-    // State - Memoria de conversación multi-turno (para DeepSeek y/o Gemini)
     let chatTurns = [];
     let previousInteractionId = null;
     let isSending = false;
 
-    function openChat() {
-        if (!windowEl || !toggleBtn) return;
-        windowEl.classList.remove('hidden');
-        toggleBtn.classList.add('hidden');
-        if (inputEl) inputEl.focus();
-    }
+    if (toggleBtn) toggleBtn.addEventListener('click', function () { window.toggleINASChat(true); });
+    if (closeBtn) closeBtn.addEventListener('click', function () { window.toggleINASChat(false); });
 
-    function closeChat() {
-        if (!windowEl || !toggleBtn) return;
-        windowEl.classList.add('hidden');
-        toggleBtn.classList.remove('hidden');
-    }
-
-    window.openChatBot = openChat;
-
-    // Toggle Chat
-    if (toggleBtn) toggleBtn.addEventListener('click', openChat);
-    if (closeBtn) closeBtn.addEventListener('click', closeChat);
-
-    // Botones y enlaces con data-open-chat que abren el bot
     document.addEventListener('click', (e) => {
         const trigger = e.target.closest('[data-open-chat]');
         if (trigger) {
             e.preventDefault();
-            openChat();
+            window.toggleINASChat(true);
         }
     });
 
-    // Send Message Flow
     async function sendMessage() {
-        if (!inputEl) return;
-        const text = inputEl.value.trim();
+        var input = document.getElementById('chat-input');
+        var send = document.getElementById('send-btn');
+        var hist = document.getElementById('chat-history');
+        if (!input) return;
+        const text = input.value.trim();
         if (!text || isSending) return;
 
         isSending = true;
-        if (sendBtn) sendBtn.disabled = true;
+        if (send) send.disabled = true;
 
-        // 1. Add User Message to UI
         addMessageToUI('user', text);
-        inputEl.value = '';
+        input.value = '';
 
         addMessageToUI('bot', 'Escribiendo...');
-        const loadingMsg = historyEl ? historyEl.lastElementChild : null;
+        const loadingMsg = hist ? hist.lastElementChild : null;
+
+        const endpoint = window.location.protocol === 'file:' 
+            ? 'http://localhost:8000/api/chat' 
+            : '/api/chat';
 
         try {
-            const data = await fetchAssistantResponse(text);
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    message: text,
+                    history: chatTurns,
+                    previousInteractionId
+                })
+            });
+
+            const data = await response.json().catch(() => ({}));
+            if (!response.ok) {
+                throw new Error(data.error || `HTTP ${response.status}`);
+            }
 
             if (data.interactionId) {
                 previousInteractionId = data.interactionId;
@@ -97,17 +119,15 @@
 
             chatTurns.push({ role: 'user', content: text });
             chatTurns.push({ role: 'assistant', content: data.reply });
-            if (chatTurns.length > 10) {
-                chatTurns = chatTurns.slice(-10);
-            }
+            if (chatTurns.length > 10) chatTurns = chatTurns.slice(-10);
 
-            if (loadingMsg && loadingMsg.parentNode === historyEl) {
-                historyEl.removeChild(loadingMsg);
+            if (loadingMsg && loadingMsg.parentNode === hist) {
+                hist.removeChild(loadingMsg);
             }
             addMessageToUI('bot', data.reply);
         } catch (error) {
-            if (loadingMsg && loadingMsg.parentNode === historyEl) {
-                historyEl.removeChild(loadingMsg);
+            if (loadingMsg && loadingMsg.parentNode === hist) {
+                hist.removeChild(loadingMsg);
             }
             addMessageToUI(
                 'bot',
@@ -116,21 +136,24 @@
             console.error('[chatbot]', error);
         } finally {
             isSending = false;
-            if (sendBtn) sendBtn.disabled = false;
+            if (send) send.disabled = false;
         }
     }
 
-    // Add to UI Helper
-    function addMessageToUI(role, text) {
-        if (!historyEl) return;
-        const msgDiv = document.createElement('div');
-        msgDiv.classList.add('message', role);
-        msgDiv.textContent = text;
-        historyEl.appendChild(msgDiv);
-        historyEl.scrollTop = historyEl.scrollHeight;
+    if (!window.sendINASMessage) {
+        window.sendINASMessage = sendMessage;
     }
 
-    // Event Listeners
+    function addMessageToUI(role, text) {
+        var hist = document.getElementById('chat-history');
+        if (!hist) return;
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'message ' + role;
+        msgDiv.textContent = text;
+        hist.appendChild(msgDiv);
+        hist.scrollTop = hist.scrollHeight;
+    }
+
     if (sendBtn) sendBtn.addEventListener('click', sendMessage);
     if (inputEl) {
         inputEl.addEventListener('keydown', (e) => {
@@ -139,26 +162,5 @@
                 sendMessage();
             }
         });
-    }
-
-    // Vercel Serverless Proxy Interaction (/api/chat)
-    async function fetchAssistantResponse(message) {
-        const response = await fetch('/api/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                message,
-                history: chatTurns,
-                previousInteractionId
-            })
-        });
-
-        const data = await response.json().catch(() => ({}));
-
-        if (!response.ok) {
-            throw new Error(data.error || `HTTP ${response.status}`);
-        }
-
-        return data;
     }
 })();
