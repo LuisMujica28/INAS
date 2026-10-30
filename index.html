@@ -1198,17 +1198,24 @@
         var previousInteractionId = null;
         var isSending = false;
 
+        function cleanChatText(text) {
+            if (!text || typeof text !== 'string') return '';
+            return text
+                .replace(/^\s*#+\s*/gm, '')              // Quitar encabezados markdown
+                .replace(/\*\*/g, '')                    // Quitar dobles asteriscos
+                .replace(/\*/g, '')                      // Quitar asteriscos simples
+                .replace(/_{2,}/g, '')                   // Quitar guiones bajos de formato
+                .replace(/`{1,3}[^`]*`{1,3}/g, '')       // Quitar bloques de código
+                .replace(/^[ \t]*[-•]\s*/gm, '• ')       // Normalizar viñetas al inicio de línea
+                .replace(/([^\n])\s+[-•]\s+/g, '$1\n• ') // Separar viñetas inline con salto de línea
+                .replace(/\n{3,}/g, '\n\n')              // Máximo dos saltos de línea
+                .trim();
+        }
+
         function addMessageToUI(role, text) {
             var historyEl = document.getElementById('chat-history');
             if (!historyEl) return;
-            var clean = (text || '')
-                .replace(/^\s*#+\s*/gm, '')
-                .replace(/^\s*[\*\-]\s+/gm, '• ')
-                .replace(/\*/g, '')
-                .replace(/_{2,}/g, '')
-                .replace(/`{1,3}[^`]*`{1,3}/g, '')
-                .replace(/\n{3,}/g, '\n\n')
-                .trim();
+            var clean = cleanChatText(text);
             var msgDiv = document.createElement('div');
             msgDiv.className = 'message ' + role;
             msgDiv.textContent = clean;
