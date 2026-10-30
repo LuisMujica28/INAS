@@ -10,10 +10,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600..800;1,9..144,600&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="preload" as="image" href="assets/hero_frames/frame_000.webp" fetchpriority="high">
-    <link rel="stylesheet" href="styles.css?v=202706">
+    <link rel="stylesheet" href="styles.css?v=202707">
     <link rel="stylesheet" href="hero-3d-scroll.css?v=202704">
     <link rel="stylesheet" href="admisiones.css?v=202704">
-    <link rel="stylesheet" href="responsive-mobile.css?v=202704">
+    <link rel="stylesheet" href="responsive-mobile.css?v=202707">
     <script src="navigation.js?v=202704" defer></script>
     <script src="hero-3d-scroll.js?v=202704" defer></script>
     <script src="admisiones.js?v=202704" defer></script>
@@ -251,6 +251,7 @@
     </div>
 
     <section class="services-section">
+        <p class="services-mobile-hint">Desliza para explorar accesos rápidos ↔</p>
         <div class="services-grid" id="quick-access-track">
 
             <!-- Card 1: Circulares -->
@@ -699,9 +700,6 @@
         </div>
     </section>
 
-    </div>
-    </section>
-
     <!-- Impressive Footer -->
     <footer class="main-footer">
         <div class="footer-overlay"></div>
@@ -938,67 +936,66 @@
             }, 250);
         };
 
-        // Quick Access Infinite Scroll & Drag Logic
+        // Quick Access Infinite Scroll & Drag Logic (Desktop Marquee + Mobile Native Touch)
         const track = document.getElementById('quick-access-track');
-        /* Ensure track exists before running */
         if (track) {
             let position = 0;
             let isDragging = false;
             let startX = 0;
             let startPos = 0;
-            let animationId;
-            const speed = 0.5; // Smooth auto-scroll speed
+            let animationId = null;
+            const speed = 0.5;
 
-            // Using unique items count to find reset point
-            // We have 5 unique items items duplicated -> 10 items total.
-            // Reset point is half the scrollWidth.
+            function isMobileView() {
+                return window.innerWidth <= 768;
+            }
 
             function animate() {
+                if (isMobileView()) {
+                    track.style.transform = '';
+                    animationId = requestAnimationFrame(animate);
+                    return;
+                }
                 if (!isDragging) {
                     position -= speed;
                     const resetWidth = track.scrollWidth / 2;
-
                     if (Math.abs(position) >= resetWidth) {
-                        position += resetWidth; // Seamless reset
+                        position += resetWidth;
                     }
                 }
-                track.style.transform = `translateX(${position}px)`;
+                track.style.transform = 'translateX(' + position + 'px)';
                 animationId = requestAnimationFrame(animate);
             }
 
-            // Start Loop
             animationId = requestAnimationFrame(animate);
 
-            // Drag Events
+            // Drag Events (Active solely on Desktop to prevent hijacking mobile page scroll)
             const startDrag = (e) => {
+                if (isMobileView()) return;
                 isDragging = true;
-                startX = e.pageX || e.touches[0].pageX;
+                startX = e.pageX;
                 startPos = position;
                 track.style.cursor = 'grabbing';
                 track.style.transition = 'none';
             };
 
             const doDrag = (e) => {
-                if (!isDragging) return;
-                const currentX = e.pageX || e.touches[0].pageX;
+                if (!isDragging || isMobileView()) return;
+                const currentX = e.pageX;
                 const diff = currentX - startX;
                 position = startPos + diff;
-                track.style.transform = `translateX(${position}px)`;
+                track.style.transform = 'translateX(' + position + 'px)';
             };
 
             const endDrag = () => {
+                if (isMobileView()) return;
                 isDragging = false;
                 track.style.cursor = 'grab';
             };
 
             track.addEventListener('mousedown', startDrag);
-            track.addEventListener('touchstart', startDrag, { passive: true });
-
             window.addEventListener('mousemove', doDrag);
-            window.addEventListener('touchmove', doDrag, { passive: true });
-
             window.addEventListener('mouseup', endDrag);
-            window.addEventListener('touchend', endDrag);
         }
 
         // Auto-select "deportivo" uniform on mobile to prevent empty description space

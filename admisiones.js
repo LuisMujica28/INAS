@@ -670,6 +670,9 @@
                 if (isSelected && options.focusButton) {
                     btn.focus();
                 }
+                if (isSelected && typeof btn.scrollIntoView === 'function') {
+                    btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                }
             });
 
             if (cycleEl) cycleEl.textContent = grade.cycle;
