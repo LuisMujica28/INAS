@@ -147,9 +147,17 @@
     function addMessageToUI(role, text) {
         var hist = document.getElementById('chat-history');
         if (!hist) return;
+        var clean = (text || '')
+            .replace(/^\s*#+\s*/gm, '')
+            .replace(/^\s*[\*\-]\s+/gm, '• ')
+            .replace(/\*/g, '')
+            .replace(/_{2,}/g, '')
+            .replace(/`{1,3}[^`]*`{1,3}/g, '')
+            .replace(/\n{3,}/g, '\n\n')
+            .trim();
         const msgDiv = document.createElement('div');
         msgDiv.className = 'message ' + role;
-        msgDiv.textContent = text;
+        msgDiv.textContent = clean;
         hist.appendChild(msgDiv);
         hist.scrollTop = hist.scrollHeight;
     }
