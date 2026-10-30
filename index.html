@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600..800;1,9..144,600&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="preload" as="image" href="assets/hero_frames/frame_000.webp" fetchpriority="high">
-    <link rel="stylesheet" href="styles.css?v=202704">
+    <link rel="stylesheet" href="styles.css?v=202706">
     <link rel="stylesheet" href="hero-3d-scroll.css?v=202704">
     <link rel="stylesheet" href="admisiones.css?v=202704">
     <link rel="stylesheet" href="responsive-mobile.css?v=202704">
@@ -1154,6 +1154,27 @@
 
     <script src="intro-animation.js?v=202704"></script>
     <script src="mobile-menu.js?v=202704"></script>
+    
+    <!-- Asistente Virtual INAS — Robot Flotante Permanente (Américo) -->
+    <div id="chat-window" class="chat-window hidden">
+        <div class="chat-header">
+            <span>Asistente INAS 🤖</span>
+            <button id="close-chat" type="button" aria-label="Cerrar asistente">✕</button>
+        </div>
+        <div id="chat-history" class="chat-history">
+            <div class="message bot">
+                ¡Hola! Soy el asistente virtual del INAS. ¿En qué puedo orientarte hoy sobre el proceso de admisiones 2027, requisitos, horarios o vida escolar?
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Escribe tu pregunta..." maxlength="1500" autocomplete="off" />
+            <button id="send-btn" type="button" aria-label="Enviar pregunta">➤</button>
+        </div>
+    </div>
+    <button id="chat-toggle-btn" class="chat-toggle-btn" type="button" aria-label="Abrir asistente virtual INAS" title="Hablar con Asistente INAS">
+        <img src="assets/robot.png" alt="Asistente Virtual INAS" />
+    </button>
+
     <script type="module" src="chatbot.js"></script>
 </body>
 
